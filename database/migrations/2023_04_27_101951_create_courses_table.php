@@ -21,6 +21,7 @@ return new class extends Migration
             $table->decimal("price", 8, 2);
             $table->date("scheduled_start");
             $table->integer("hours");
+            $table->string("img")->nullable();
             $table->date("created");
             $table->unsignedBigInteger("author_id");
             $table->foreign("author_id")->references("id")->on("users")->onDelete("cascade");

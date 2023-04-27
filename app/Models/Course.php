@@ -24,6 +24,7 @@ class Course extends Model
         "scheduled_start",
         "hours",
         "created",
+        "img",
         "author_id",
         "form_id",
     ];
@@ -34,5 +35,9 @@ class Course extends Model
 
     public function form() {
         return $this->belongsTo(Form::class);
+    }
+
+    public function enrollments() {
+        return $this->hasMany(Enrollment::class);
     }
 }
