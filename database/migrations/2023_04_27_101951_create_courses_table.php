@@ -16,10 +16,11 @@ return new class extends Migration
             $table->string("name")->unique();
             $table->string("language");
             $table->string("difficulty");
-            $table->string("form");
             $table->string("headquarter");
             $table->text("description");
             $table->decimal("price", 8, 2);
+            $table->date("scheduled_start");
+            $table->integer("hours");
             $table->date("created");
             $table->unsignedBigInteger("author_id");
             $table->foreign("author_id")->references("id")->on("users")->onDelete("cascade");

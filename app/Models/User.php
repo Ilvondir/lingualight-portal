@@ -24,7 +24,7 @@ class User extends Authenticatable
         "name",
         "surname",
         "registered",
-        "role"
+        "role_id"
     ];
 
     protected $attributes = ["role"=>3];
@@ -35,5 +35,9 @@ class User extends Authenticatable
 
     public function courses() {
         return $this->hasMany(Course::class);
+    }
+
+    public function role() {
+        return $this->belongsTo(Role::class);
     }
 }

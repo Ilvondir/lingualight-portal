@@ -18,15 +18,21 @@ class Course extends Model
         'name',
         'language',
         'difficulty',
-        "form",
         "headquarter",
         "description",
         "price",
+        "scheduled_start",
+        "hours",
         "created",
         "author_id",
+        "form_id",
     ];
 
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    public function form() {
+        return $this->belongsTo(Form::class);
     }
 }
