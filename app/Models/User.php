@@ -33,4 +33,7 @@ class User extends Authenticatable
         'password',
     ];
 
+    public function courses() {
+        return $this->hasMany(Course::class);
+    }
 }

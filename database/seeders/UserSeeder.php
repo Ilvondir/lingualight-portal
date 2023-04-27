@@ -13,7 +13,6 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::truncate();
         User::insert([
             [
                 "login"=>"admin", "password"=>hash("sha512", "admin"), "email"=>"administration@lingualight.com", "name"=>"John", "surname"=>"Ricko", "registered"=>date("Y-m-d"), "role"=>1,
