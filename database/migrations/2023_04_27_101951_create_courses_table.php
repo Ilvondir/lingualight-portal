@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string("name")->unique();
             $table->string("language");
-            $table->string("difficulty");
             $table->string("headquarter");
             $table->text("description");
             $table->decimal("price", 8, 2);

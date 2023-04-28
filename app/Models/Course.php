@@ -17,7 +17,6 @@ class Course extends Model
     protected $fillable = [
         'name',
         'language',
-        'difficulty',
         "headquarter",
         "description",
         "price",
@@ -27,6 +26,7 @@ class Course extends Model
         "img",
         "author_id",
         "form_id",
+        "difficulty_id"
     ];
 
     public function user() {
@@ -39,5 +39,9 @@ class Course extends Model
 
     public function enrollments() {
         return $this->hasMany(Enrollment::class);
+    }
+
+    public function difficulty() {
+        return $this->belongsTo(Difficulty::class);
     }
 }

@@ -17,7 +17,6 @@ return new class extends Migration
             $table->unsignedBigInteger("course_id");
             $table->date("enrollment_date");
             $table->decimal("to_pay", 8, 2);
-            $table->integer("payment");
             $table->date("payment_date")->nullable();
             $table->foreign("user_id")->references("id")->on("users")->onDelete("cascade");
             $table->foreign("course_id")->references("id")->on("courses")->onDelete("cascade");

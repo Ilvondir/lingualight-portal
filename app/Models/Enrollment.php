@@ -19,7 +19,6 @@ class Enrollment extends Model
         "course_id",
         "enrollment_date",
         "to_pay",
-        "payment",
         "payment_date",
     ];
 
