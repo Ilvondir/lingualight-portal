@@ -14,4 +14,8 @@ use App\Http\Controllers\Index;
 |
 */
 
-Route::get('/', [Index::class, 'show']);
+Route::get('/home', [Index::class, 'show'])->name("home");
+
+Route::get("/", function() {
+    return redirect()->route("home");
+});

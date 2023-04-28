@@ -79,6 +79,44 @@
             {{ $bestCourse->name }}
         </div>
 
+        <div class="mt-5">
+            <h3 class="mb-4">World language ranking</h3>
+            <div id="cardCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+
+                    @foreach ($descriptions as $description)
+                        <div class="carousel-item @if ($description[0][0]=="1. Chinese") active @endif">
+                            <div class="row">
+                                @foreach ($description as $d)
+
+                                <div class="d-flex col justify-content-center align-items-center">
+
+                                    <div class="card bg-black text-white" style="width: 18rem">
+                                        <img src="{{ asset("storage/img/flags")."/".$d[2] }}" class="card-img-top" alt="{{$d[2]}}">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ $d[0] }}</h5>
+                                            <p class="card-text">{{ $d[1] }}</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
+
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#cardCarousel" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#cardCarousel" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+        </div>
+
         @include("shared.footer")
     </div>
     <script>
