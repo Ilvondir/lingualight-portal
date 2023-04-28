@@ -29,7 +29,7 @@
                     </li>
                 @else
                     <li class="nav-item">
-                        <a class="nav-link " href="#">Zaloguj się...</a>
+                        <a class="nav-link " href="#">Logowanie</a>
                     </li>
                 @endif
             </ul>
