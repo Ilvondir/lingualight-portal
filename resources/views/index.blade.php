@@ -7,7 +7,7 @@
     @include("shared.navbar")
 
     <div class="container">
-        <div id="mainCarousel" class="carousel slide">
+        <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
             <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
             <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -46,29 +46,70 @@
             </button>
         </div>
 
-        <div class="mt-4">
+        <div class="mt-5">
             <h3>On our portal</h3>
 
             <div class="row text-center fs-3">
                 <div class="col-sm">
                     We have
-                    <h1 id="courses" class="mt-5 mb-5 display-1">0</h1>
+                    <h1 class="mt-5 mb-5 display-1">
+                        <input id="courses" value="0" size="2" disabled>
+                    </h1>
                     course offers that you can already apply for!
                 </div>
                 <div class="col-sm">
                     Together we have
-                    <h1 id="users" class="mt-5 mb-5 display-1">0</h1>
+                    <h1 id="users" class="mt-5 mb-5 display-1">
+                        <input id="users" value="0" size="2" disabled>
+                    </h1>
                     registered users who trusted us on their career path!
                 </div>
                 <div class="col-sm">
                     We have enrolled
-                    <h1 id="enrollments" class="mt-5 mb-5 display-1">0</h1>
+                    <h1 id="enrollments" class="mt-5 mb-5 display-1">
+                        <input id="enrollments" value="0" size="2" disabled>
+                    </h1>
                     people in our courses, which proves our popularity.
                 </div>
             </div>
         </div>
 
+        <div class="mt-5">
+            <h3>Most popular course</h3>
+            {{ $bestCourse->name }}
+        </div>
+
         @include("shared.footer")
     </div>
+    <script>
+        function animation() {
+            anime({
+                targets: '#courses',
+                value: [0, {{ $courses }}],
+                round: 1,
+                easing: 'linear'
+            });
+            anime({
+                targets: '#users',
+                value: [0, {{ $users }}],
+                round: 1,
+                easing: 'linear'
+            });
+            anime({
+                targets: '#enrollments',
+                value: [0, {{ $enrollments }}],
+                round: 1,
+                easing: 'linear'
+            });
+        }
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) animation();
+            });
+        });
+        const targetElement = document.querySelector('#courses');
+        observer.observe(targetElement);
+    </script>
 </body>
 </html>

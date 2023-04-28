@@ -36,10 +36,10 @@ class EnrollmentSeeder extends Seeder
                 "user_id"=>10, "course_id"=>3, "enrollment_date"=>date("Y-m-d", strtotime("-1 days")), "to_pay"=>800.00, "payment_date"=>null,
             ],
             [
-                "user_id"=>10, "course_id"=>3, "enrollment_date"=>date("Y-m-d"), "to_pay"=>617.50,"payment_date"=>null,
+                "user_id"=>10, "course_id"=>4, "enrollment_date"=>date("Y-m-d"), "to_pay"=>617.50,"payment_date"=>null,
             ],
             [
-                "user_id"=>5, "course_id"=>3, "enrollment_date"=>date("Y-m-d"), "to_pay"=>617.50, "payment_date"=>date("Y-m-d"),
+                "user_id"=>5, "course_id"=>4, "enrollment_date"=>date("Y-m-d"), "to_pay"=>617.50, "payment_date"=>date("Y-m-d"),
             ],
         ]
         );
