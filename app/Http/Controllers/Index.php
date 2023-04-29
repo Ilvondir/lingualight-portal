@@ -58,6 +58,13 @@ class Index extends Controller
         );
 
         $temp = [];
+        $occ = [];
+        foreach (Course::all() as $course) {
+            if (!isset($occ[$course->language])) {
+                $occ[$course->language] = 0;
+            }
+            $occ[$course->language]++;
+        }
 
         foreach (Enrollment::all() as $enrollment) {
             if (!isset($temp[Course::find($enrollment->course_id)->language])) {
@@ -75,6 +82,7 @@ class Index extends Controller
             $ranking[$iter][0] = $iter+1;
             $ranking[$iter][1] = $key;
             $ranking[$iter][2] = $value;
+            $ranking[$iter][3] = $occ[$key];
             $iter++;
         }
 

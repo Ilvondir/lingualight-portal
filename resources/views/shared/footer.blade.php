@@ -7,7 +7,7 @@
 
     <ul class="nav col-md-4 justify-content-end">
         <li class="nav-item"><a href="{{ route("home") }}" class="nav-link px-2 text-white">Home</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-white">Courses</a></li>
+        <li class="nav-item"><a href="{{ route("courses.index") }}" class="nav-link px-2 text-white">Courses</a></li>
         <li class="nav-item"><a href="#" class="nav-link px-2 text-white">Contact</a></li>
         <li class="nav-item"><a href="#" class="nav-link px-2 text-white">Login</a></li>
     </ul>
