@@ -80,6 +80,26 @@
         </div>
 
         <div class="mt-5">
+            <h3>Top 10 languages on portal</h3>
+            <div class="d-flex justify-content-center align-content-center mt-4">
+                <table class="table text-white w-50">
+                    <tr>
+                        <th>#</th>
+                        <th>Language</th>
+                        <th>Number of enrollments</th>
+                    </tr>
+                    @foreach ($ranking as $record)
+                        <tr>
+                            <td>{{ $record[0] }}.</td>
+                            <td>{{ $record[1] }}</td>
+                            <td>{{ $record[2] }}</td>
+                        </tr>
+                    @endforeach
+                </table>
+            </div>
+        </div>
+
+        <div class="mt-5">
             <h3 class="mb-4">World language ranking</h3>
             <div id="cardCarousel" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">

@@ -57,6 +57,27 @@ class Index extends Controller
             ]
         );
 
-        return view("home", ["courses"=>$courses, "enrollments"=>$enrollments, "users"=>$users, "bestCourse"=>$bestCourse, "descriptions"=>$descriptions]);
+        $temp = [];
+
+        foreach (Enrollment::all() as $enrollment) {
+            if (!isset($temp[Course::find($enrollment->course_id)->language])) {
+                $temp[Course::find($enrollment->course_id)->language] = 0;
+            }
+            $temp[Course::find($enrollment->course_id)->language]++;
+        }
+
+        arsort($temp);
+
+        $ranking = [];
+        $iter = 0;
+        foreach ($temp as $key => $value) {
+            if ($iter>=10) break;
+            $ranking[$iter][0] = $iter+1;
+            $ranking[$iter][1] = $key;
+            $ranking[$iter][2] = $value;
+            $iter++;
+        }
+
+        return view("home", ["courses"=>$courses, "enrollments"=>$enrollments, "users"=>$users, "bestCourse"=>$bestCourse, "descriptions"=>$descriptions, "ranking"=>$ranking]);
     }
 }
