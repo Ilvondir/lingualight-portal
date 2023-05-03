@@ -15,7 +15,7 @@
                 <a class="nav-link @if (str_contains(request()->path(), 'home')) active @endif" href="{{ route("home") }}">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link @if (str_contains(request()->path(), 'courses')) active @endif" href="{{ route("courses.index") }}">Courses</a>
+                <a class="nav-link @if (str_contains(request()->path(), 'course')) active @endif" href="{{ route("courses.index") }}">Courses</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Contact</a>

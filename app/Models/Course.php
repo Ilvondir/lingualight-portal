@@ -29,7 +29,7 @@ class Course extends Model
         "difficulty_id"
     ];
 
-    public function user() {
+    public function author() {
         return $this->belongsTo(User::class);
     }
 
@@ -46,7 +46,7 @@ class Course extends Model
     }
 
     public function scopeIdDescending($query)
-{
+    {
         return $query->orderBy('id','DESC');
-}
+    }
 }

@@ -37,9 +37,10 @@ class CourseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Course $course)
+    public function show(int $id)
     {
-        //
+        $course = Course::find($id);
+        return view("courses.show", ["c"=>$course]);
     }
 
     /**
