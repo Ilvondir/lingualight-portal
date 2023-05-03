@@ -44,4 +44,9 @@ class Course extends Model
     public function difficulty() {
         return $this->belongsTo(Difficulty::class);
     }
+
+    public function scopeIdDescending($query)
+{
+        return $query->orderBy('id','DESC');
+}
 }

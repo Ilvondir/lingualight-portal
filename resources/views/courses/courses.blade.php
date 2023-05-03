@@ -15,8 +15,45 @@
                     @csrf
                     <input type="text" placeholder="Title" title="Title" name="title" class="form-control">
 
+                    <select name="language" title="Language" class="form-select mt-3">
+                        <option value="All">All</option>
+                        @foreach ($languages as $l)
+                            <option value="{{ $l }}">{{ $l }}</option>
+                        @endforeach
+                    </select>
+
+                    <select name="difficulty" title="Difficulty" class="form-select mt-3">
+                        <option value="All">All</option>
+                        <option value="Easy">Easy</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Hard">Hard</option>
+                    </select>
+
+                    <select name="form" title="Form" class="form-select mt-3">
+                        <option value="All">All</option>
+                        <option value="Stationary">Stationary</option>
+                        <option value="Remote">Remote</option>
+                        <option value="Hybrid">Hybrid</option>
+                    </select>
+
+                    <select name="headquarter" title="Headquarter" class="form-select mt-3">
+                        <option value="All">All</option>
+                        @foreach ($headquarters as $l)
+                            <option value="{{ $l }}">{{ $l }}</option>
+                        @endforeach
+                    </select>
+
+                    <div class="input-group mt-3">
+                        <input type="number" class="form-control" name="minPrice" min="0" placeholder="Minimum price">
+                        <div class="border-black input-group-append input-group-prepend">
+                            <span class="input-group-text text-white bg-black border-black">to</span>
+                        </div>
+                        <input type="number" class="form-control" name="maxPrice" min="0" placeholder="Maximum price">
+                    </div>
+
+
                     <div class="text-center mt-4 w-100">
-                        <input type="submit" value="Search" class="btn btn-primary">
+                        <input type="submit" value="Search" class="btn btn-black">
                     </div>
                 </form>
 
@@ -24,7 +61,7 @@
             </div>
             <div class="col-9">
 
-                @foreach ($courses as $course)
+                @forelse ($courses as $course)
 
                 <a href="{{ route("course.show", ["id"=>$course->id]) }}" class="text-decoration-none">
                     <div class="card bg-black text-white mt-2 mb-2 p-2 rounded ">
@@ -50,15 +87,18 @@
 
                                 </div>
                                 <div class="col-2 text-end">
-                                    <h6>@if ($course->created != date("Y-m-d")) {{ $course->price}}$ @else <span style="color: #609097"><s>{{$course->price}}$</s><br>{{ $course->price*0.9 }}$</span> @endif</h6>
+                                    {{-- <h6>@if ($course->created != date("Y-m-d")) {{ $course->price }}$ @else <span style="color: #609097"><s>{{$course->price}}$</s><br>{{ $course->price*0.9 }}$</span> @endif</h6> --}}
+                                    {{ $course->price }}$
                                 </div>
                             </div>
 
                         </div>
                     </div>
                 </a>
+                @empty
+                <div class="w-100 text-center"><h2>We didn't find any courses&#128546;</h2></div>
 
-                @endforeach
+                @endforelse
 
             </div>
         </div>

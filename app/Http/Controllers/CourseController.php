@@ -15,7 +15,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        return view("courses.courses", ["courses"=>Course::all()]);
+        return view("courses.courses", ["courses"=>Course::idDescending()->get(), "languages" => $this->getLanguages(), "headquarters" => $this->getHeadquarters()]);
     }
 
     /**
@@ -71,9 +71,62 @@ class CourseController extends Controller
         $data = $request->validated();
 
         $name = $data["title"];
+        $language = $data["language"];
+        $dif = $data["difficulty"];
+        $form = $data["form"];
+        $headquarter = $data["headquarter"];
+        $minPrice = $data["minPrice"];
+        $maxPrice = $data["maxPrice"];
 
-        $courses = Course::where("name", "LIKE", "%".$name."%")->get();
+        $whereTable = [
+            ["name", "LIKE", "%".$name."%"],
+        ];
 
-        return view("courses.courses", ["courses"=>$courses]);
+        if ($language != "All") array_push($whereTable, ["language", "LIKE", "%".$language."%"]);
+
+        if ($dif != "All") {
+            if ($dif == "Easy") $dif = 1;
+            if ($dif == "Medium") $dif = 2;
+            if ($dif == "Hard") $dif = 3;
+            array_push($whereTable, ["difficulty_id", "=", $dif]);
+        }
+
+        if ($form != "All") {
+            if ($form == "Stationary") $form = 1;
+            if ($form == "Remote") $form = 2;
+            if ($form == "Hybrid") $form = 3;
+            array_push($whereTable, ["form_id", "=", $form]);
+        }
+
+        if ($minPrice!=null && $maxPrice!=null) {
+            array_push($whereTable, ["price", ">=", $minPrice]);
+            array_push($whereTable, ["price", "<=", $maxPrice]);
+        }
+
+        if ($headquarter != "All") array_push($whereTable, ["headquarter", "=", $headquarter]);
+
+        $courses = Course::idDescending()->where( $whereTable )->get();
+
+        return view("courses.courses", ["courses"=>$courses, "languages" => $this->getLanguages(), "headquarters" => $this->getHeadquarters()]);
+    }
+
+    public static function getLanguages() : array
+    {
+        $languages = [];
+        foreach (Course::all() as $course) {
+            if (!in_array($course->language, $languages)) array_push($languages, $course->language);
+        }
+
+        return $languages;
+    }
+
+    public static function getHeadquarters() : array
+    {
+        $heads = [];
+        foreach (Course::all() as $course) {
+            if (!in_array($course->headquarter, $heads)) array_push($heads, $course->headquarter);
+        }
+
+        return $heads;
     }
 }
