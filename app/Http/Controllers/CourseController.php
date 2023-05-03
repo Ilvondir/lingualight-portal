@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
+use App\Http\Requests\FilterCourseRequest;
+use Illuminate\Support\Facades\DB;
 
 class CourseController extends Controller
 {
@@ -62,5 +64,16 @@ class CourseController extends Controller
     public function destroy(Course $course)
     {
         //
+    }
+
+    public function filter(FilterCourseRequest $request) {
+
+        $data = $request->validated();
+
+        $name = $data["title"];
+
+        $courses = Course::where("name", "LIKE", "%".$name."%")->get();
+
+        return view("courses.courses", ["courses"=>$courses]);
     }
 }

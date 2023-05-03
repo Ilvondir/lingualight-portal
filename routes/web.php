@@ -24,6 +24,7 @@ Route::get("/", function() {
 Route::controller(CourseController::class)->group(function () {
     Route::get('/courses', 'index')->name('courses.index');
     Route::get('/course/{id}', 'show')->name('course.show');
+    Route::post("/courses", "filter")->name("course.filter");
     Route::get('/course/{id}/edit', 'edit')->name('course.edit');
     Route::put('/course/{id}', 'update')->name('course.update');
 });

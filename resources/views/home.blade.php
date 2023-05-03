@@ -120,7 +120,7 @@
                     </tr>
                     @foreach ($ranking as $record)
                         <tr>
-                            <td>{{ $record[0] }}.</td>
+                            <td><b>{{ $record[0] }}.</b></td>
                             <td>{{ $record[1] }}</td>
                             <td>{{ $record[2] }} in {{ $record[3] }} courses</td>
                         </tr>

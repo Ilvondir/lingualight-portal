@@ -7,12 +7,22 @@
     @include("shared.navbar")
 
     <div class="container">
-
+        <h2 class="mb-5">Check our courses</h2>
         <div class="row">
-            <div class="col-2">
+            <div class="col-3">
+
+                <form method="POST" class="form" action="#">
+                    @csrf
+                    <input type="text" placeholder="Title" title="Title" name="title" class="form-control">
+
+                    <div class="text-center mt-4 w-100">
+                        <input type="submit" value="Search" class="btn btn-primary">
+                    </div>
+                </form>
+
 
             </div>
-            <div class="col-10">
+            <div class="col-9">
 
                 @foreach ($courses as $course)
 
@@ -34,7 +44,7 @@
                                         </div>
                                         <div class="col-6">
                                             <p class="mt-3">Form: <b>{{ $course->form->name }}</b></p>
-                                            <p class="mb-0">Headquarters: <b>{{ $course->headquarter }}</b></p>
+                                            <p class="mb-0">Headquarter: <b>{{ $course->headquarter }}</b></p>
                                         </div>
                                     </div>
 
