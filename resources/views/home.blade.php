@@ -76,7 +76,95 @@
 
         <div class="mt-5">
             <h3>Most popular course</h3>
-            {{ $bestCourse->name }}
+            <a href="{{ route("course.show", ["id"=>$bestCourse->id]) }}" class="text-decoration-none">
+                <div class="card bg-black text-white mt-2 mb-2 p-2 rounded ">
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-2 d-flex justify-content-center align-items-center">
+                                <img src="@if ($bestCourse->img == NULL) {{asset('storage/img/courses/logo.png')}} @else {{asset('storage/img/courses')."/".$bestCourse->img}} @endif" width="120" height="120" class="rounded">
+                            </div>
+                            <div class="col-8">
+                                <h4>{{ $bestCourse->name }}</h4>
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p class="mt-3">Language: <b>{{ $bestCourse->language }}</b></p>
+                                        <p class="mb-0">Difficulty: <b>{{ $bestCourse->difficulty->level }}</b></p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p class="mt-3">Form: <b>{{ $bestCourse->form->name }}</b></p>
+                                        <p class="mb-0">Headquarters: <b>{{ $bestCourse->headquarter }}</b></p>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-2 text-end">
+                                <h6>@if ($bestCourse->created != date("Y-m-d")) {{ $bestCourse->price}}$ @else <span style="color: #609097"><s>{{$bestCourse->price}}$</s><br>{{ $bestCourse->price*0.9 }}$</span> @endif</h6>
+                            </div>
+                        </div>
+                        <p class="mb-0 mt-4" style="text-align: justify">{{$bestCourse->description}}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="mt-5">
+            <h3>Top 10 languages on portal</h3>
+            <div class="d-flex justify-content-center align-content-center mt-4">
+                <table class="table table-dark text-white w-50">
+                    <tr>
+                        <th>#</th>
+                        <th>Language</th>
+                        <th>Number of enrollments</th>
+                    </tr>
+                    @foreach ($ranking as $record)
+                        <tr>
+                            <td><b>{{ $record[0] }}.</b></td>
+                            <td>{{ $record[1] }}</td>
+                            <td>{{ $record[2] }} in {{ $record[3] }} courses</td>
+                        </tr>
+                    @endforeach
+                </table>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <h3 class="mb-4">World language ranking</h3>
+            <div id="cardCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+
+                    @foreach ($descriptions as $description)
+                        <div class="carousel-item @if ($description[0][0]=="1. Chinese") active @endif">
+                            <div class="row">
+                                @foreach ($description as $d)
+
+                                <div class="d-flex col justify-content-center align-items-center">
+
+                                    <div class="card bg-black text-white" style="width: 18rem">
+                                        <img src="{{ asset("storage/img/flags")."/".$d[2] }}" class="card-img-top" alt="{{$d[2]}}">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ $d[0] }}</h5>
+                                            <p class="card-text">{{ $d[1] }}</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
+
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#cardCarousel" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#cardCarousel" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
         </div>
 
         @include("shared.footer")

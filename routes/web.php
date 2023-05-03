@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CourseController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Index;
 
@@ -14,4 +15,16 @@ use App\Http\Controllers\Index;
 |
 */
 
-Route::get('/', [Index::class, 'show']);
+Route::get('/home', [Index::class, 'show'])->name("home");
+
+Route::get("/", function() {
+    return redirect()->route("home");
+});
+
+Route::controller(CourseController::class)->group(function () {
+    Route::get('/courses', 'index')->name('courses.index');
+    Route::post("/courses", "filter")->name("course.filter");
+    Route::get('/course/{id}', 'show')->name('course.show');
+    Route::get('/course/{id}/edit', 'edit')->name('course.edit');
+    Route::put('/course/{id}', 'update')->name('course.update');
+});

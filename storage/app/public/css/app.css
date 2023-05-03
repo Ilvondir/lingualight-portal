@@ -4,3 +4,13 @@
     background-color: #212529;
     text-align: center;
 }
+
+.btn-black {
+    background-color: black;
+    color: white;
+}
+
+.btn-black:hover {
+    background-color: #333;
+    color: white;
+}

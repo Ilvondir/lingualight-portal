@@ -1,7 +1,7 @@
 <nav class="navbar sticky-top bg-dark" data-bs-theme="dark">
     <div class="container-fluid">
 
-        <a class="navbar-brand text-light" href="">
+        <a class="navbar-brand text-light" href="{{ route("home") }}">
             <img src="{{ asset("storage/img/icon/icon.ico")}}" alt="Logo." width="35" height="35" class="d-inline-block align-text-top">
             LinguaLight
         </a>
@@ -12,10 +12,10 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <a class="nav-link @if (str_contains(request()->path(), 'home')) active @endif" href="{{ route("home") }}">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Courses</a>
+                <a class="nav-link @if (str_contains(request()->path(), 'course')) active @endif" href="{{ route("courses.index") }}">Courses</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Contact</a>
@@ -25,11 +25,11 @@
             <ul class="navbar-nav mb-2 mb-lg-0">
                 @if (Auth::check())
                     <li class="nav-item">
-                        <a class="nav-link" href="#">{{ Auth::user()->name }}, wyloguj się... </a>
+                        <a class="nav-link" href="#">{{ Auth::user()->name }}Logout</a>
                     </li>
                 @else
                     <li class="nav-item">
-                        <a class="nav-link " href="#">Logowanie</a>
+                        <a class="nav-link " href="#">Login</a>
                     </li>
                 @endif
             </ul>
