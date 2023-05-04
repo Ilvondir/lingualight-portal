@@ -20,16 +20,22 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">Contact</a>
               </li>
+
+              @auth
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Account</a>
+                </li>
+              @endauth
             </ul>
 
             <ul class="navbar-nav mb-2 mb-lg-0">
                 @if (Auth::check())
                     <li class="nav-item">
-                        <a class="nav-link" href="#">{{ Auth::user()->name }}Logout</a>
+                        <a class="nav-link" href="{{ route('auth.logout') }}"><b>{{ Auth::user()->name }} {{ Auth::user()->surname }}</b>, logout </a>
                     </li>
                 @else
                     <li class="nav-item">
-                        <a class="nav-link " href="#">Login</a>
+                        <a class="nav-link @if (str_contains(request()->path(), 'login')) active @endif" href="{{ route('auth.login') }}">Login</a>
                     </li>
                 @endif
             </ul>

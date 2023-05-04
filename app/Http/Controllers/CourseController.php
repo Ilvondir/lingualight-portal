@@ -6,7 +6,8 @@ use App\Models\Course;
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
 use App\Http\Requests\FilterCourseRequest;
-use Illuminate\Support\Facades\DB;
+use App\Models\Enrollment;
+use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
@@ -39,8 +40,23 @@ class CourseController extends Controller
      */
     public function show(int $id)
     {
+
         $course = Course::find($id);
-        return view("courses.show", ["c"=>$course]);
+        if (Auth::check()) {
+            if (Auth::user()->role_id != 3) return view("courses.show", ["c"=>$course, "already"=>false]);
+            else {
+                $enrollments = Enrollment::where("user_id", "=", Auth::user()->id)->get();
+
+                $already = false;
+                foreach ($enrollments as $e) {
+                    if ($e->course_id == $id) $already = true;
+                }
+
+                return view("courses.show", ["c"=>$course, "already"=>$already]);
+            }
+        }
+
+        return view("courses.show", ["c"=>$course, "already"=>false]);
     }
 
     /**

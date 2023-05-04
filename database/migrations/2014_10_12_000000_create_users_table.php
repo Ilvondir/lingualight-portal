@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->string("surname");
             $table->date("registered");
+            $table->rememberToken();
         });
     }
 

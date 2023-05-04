@@ -27,10 +27,9 @@ class User extends Authenticatable
         "role_id"
     ];
 
-    protected $attributes = ["role"=>3];
-
     protected $hidden = [
         'password',
+        'remember_token',
     ];
 
     public function courses() {
