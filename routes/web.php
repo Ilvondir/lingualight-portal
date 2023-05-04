@@ -3,6 +3,7 @@
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EnrollmentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Index;
 
@@ -44,3 +45,9 @@ Route::controller(UserController::class)->group(function () {
     Route::get("/users/register", "create")->name("users.register");
     Route::post("/users/register", "store")->name("users.store");
 });
+
+Route::controller(EnrollmentController::class)->group(function () {
+    Route::post("/course/{id}", "store")->name("enrollment.store");
+});
+
+?>

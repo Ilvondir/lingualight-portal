@@ -20,6 +20,12 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">Contact</a>
               </li>
+
+              @auth
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Account</a>
+                </li>
+              @endauth
             </ul>
 
             <ul class="navbar-nav mb-2 mb-lg-0">

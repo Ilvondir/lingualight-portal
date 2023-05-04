@@ -39,7 +39,7 @@
                         <option value="Trainer">Trainer</option>
                     </select>
 
-                    <div class="mt-2" id="info" style="text-align: justify;">As a user, you can enroll in all courses and use other resources of the application. If you want to create new course offerings, you need to change your role. This choice cannot be changed later</div>
+                    <div class="mt-2" id="info" style="text-align: justify;">As a user, you can enroll in all courses and use other resources of the application. If you want to create new course offerings, you need to change your role. This choice cannot be changed later!</div>
 
                     <div class="row">
                         <div class="col-6">
