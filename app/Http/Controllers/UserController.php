@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Role;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -21,7 +24,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        if (Auth::check()) return redirect()->route('home');
+        return view('users.register');
     }
 
     /**
@@ -29,7 +33,27 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $user = new User();
+
+        $user->name = $data["name"];
+        $user->surname = $data["surname"];
+        $user->login = $data["login"];
+        $user->email = $data["email"];
+        $user->password = Hash::make($data["password"]);
+
+        $roleID = 0;
+        if ($data["role"]=="Trainer") $roleID = 2;
+        if ($data["role"]=="User") $roleID = 3;
+
+        $user->role_id = $roleID;
+        $user->registered = date("Y-m-d");
+        $user->remember_token = null;
+
+        if ($user->save()) {
+            return view("users.success");
+        }
     }
 
     /**

@@ -39,7 +39,7 @@
                     </div>
                 @endif
 
-                <div></div>
+                <div class="mt-4">Don't have an account? <a class="text-decoration-none text-white" href="{{ route("users.register") }}"><b>Register here now!</b></a></div>
 
             </div>
         </div>

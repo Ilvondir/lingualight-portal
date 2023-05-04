@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
@@ -34,4 +35,12 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('/auth/login', 'login')->name('auth.login');
     Route::post('/auth/login', 'authenticate')->name('auth.login.authenticate');
     Route::get('/auth/logout', 'logout')->name('auth.logout');
+});
+
+Route::controller(UserController::class)->group(function () {
+    Route::get('/users', 'index')->name('users.index');
+    Route::get('/users/{id}/edit', 'edit')->name('users.edit');
+    Route::put('/users/{id}', 'update')->name('users.update');
+    Route::get("/users/register", "create")->name("users.register");
+    Route::post("/users/register", "store")->name("users.store");
 });

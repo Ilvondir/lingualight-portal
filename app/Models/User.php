@@ -12,6 +12,11 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $primaryKey = "id";
+    public $timestamps = false;
+
+    protected $connection = "mysql";
+
     protected $fillable = [
         'name',
         'password',
