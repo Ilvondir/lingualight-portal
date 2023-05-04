@@ -12,11 +12,6 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $primaryKey = "id";
-    public $timestamps = false;
-
-    protected $connection = "mysql";
-
     protected $fillable = [
         'name',
         'password',
@@ -27,10 +22,9 @@ class User extends Authenticatable
         "role_id"
     ];
 
-    protected $attributes = ["role"=>3];
-
     protected $hidden = [
         'password',
+        'remember_token',
     ];
 
     public function courses() {
