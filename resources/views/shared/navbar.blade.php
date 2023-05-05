@@ -17,13 +17,10 @@
               <li class="nav-item">
                 <a class="nav-link @if (str_contains(request()->path(), 'course')) active @endif" href="{{ route("courses.index") }}">Courses</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Contact</a>
-              </li>
 
               @auth
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Account</a>
+                    <a class="nav-link @if (str_contains(request()->path(), 'account')) active @endif" href="{{ route("account.menu") }}">Account</a>
                 </li>
               @endauth
             </ul>
