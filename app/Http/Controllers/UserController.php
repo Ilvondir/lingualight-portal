@@ -69,15 +69,27 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        if (!Auth::check()) return redirect()->route("home");
+        else return view("users.edit");
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request)
     {
-        //
+        if (!Auth::check()) return redirect()->route("home");
+        else {
+            $user = User::findOrFail(Auth::user()->id);
+            $data = $request->validated();
+            $user->name = $data["name"];
+            $user->surname = $data["surname"];
+            $user->login = $data["login"];
+            $user->email = $data["email"];
+            $user->save();
+            return view("account.success");
+        }
+
     }
 
     /**

@@ -37,9 +37,9 @@ class StoreUserRequest extends FormRequest
     }
 
     /**
- *
- * @param Validator $validator
- */
+     *
+     * @param Validator $validator
+     */
     protected function failedValidation(Validator $validator)
     {
         return back()->withErrors($validator->errors());

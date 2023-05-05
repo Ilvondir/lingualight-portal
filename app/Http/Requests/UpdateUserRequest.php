@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Validation\Validator;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -11,7 +13,8 @@ class UpdateUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        if (!Auth::check()) return false;
+        return true;
     }
 
     /**
@@ -22,7 +25,19 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "name" => "required|min:2|max:255",
+            "surname" => "required|min:2|max:255",
+            "login" => "required|min:6|max:30|unique:users",
+            "email" => "required|min:7|max:255|email",
         ];
+    }
+
+    /**
+     *
+     * @param Validator $validator
+     */
+    protected function failedValidation(Validator $validator)
+    {
+        return back()->withErrors($validator->errors());
     }
 }

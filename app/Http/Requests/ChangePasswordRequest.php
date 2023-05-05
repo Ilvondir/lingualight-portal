@@ -32,12 +32,12 @@ class ChangePasswordRequest extends FormRequest
     }
 
        /**
- *
- * @param Validator $validator
- */
-protected function failedValidation(Validator $validator)
-{
-    return back()->withErrors($validator->errors());
-}
+         *
+         * @param Validator $validator
+         */
+        protected function failedValidation(Validator $validator)
+        {
+            return back()->withErrors($validator->errors());
+        }
 
 }

@@ -10,7 +10,7 @@
 
         <div class="row mt-4 mb-4 text-center">
             <a href="{{ route('account.menu') }}" class="text-white text-decoration-none">
-                <h1>Password was changed successful. You can return to the account screen now.</h1>
+                <h1>Your data were changed successful. You can return to the account screen now.</h1>
             </a>
         </div>
 

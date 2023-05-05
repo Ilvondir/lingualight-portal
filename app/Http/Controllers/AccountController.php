@@ -30,7 +30,7 @@ class AccountController extends Controller
             $data["password"] = Hash::make($data["password"]);
             $user = User::findOrFail(Auth::user()->id);
             $user->update($data);
-            return view("account.passwordSuccess");
+            return view("account.password");
         } else {
             return back()->withErrors([
                 "error"=>"The old password is wrong.",

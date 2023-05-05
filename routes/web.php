@@ -40,11 +40,12 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 Route::controller(UserController::class)->group(function () {
-    Route::get('/users', 'index')->name('users.index');
-    Route::get('/users/{id}/edit', 'edit')->name('users.edit');
-    Route::put('/users/{id}', 'update')->name('users.update');
     Route::get("/users/register", "create")->name("users.register");
     Route::post("/users/register", "store")->name("users.store");
+    Route::get("/account/edit", "edit")->name("account.edit");
+    Route::post("/account/edit", "update")->name("account.edit.update");
+    Route::get("/account/delete")->name("account.delete");
+    Route::post("/account/delete")->name("account.delete.post");
 });
 
 Route::controller(EnrollmentController::class)->group(function () {
