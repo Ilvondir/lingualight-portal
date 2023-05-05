@@ -42,10 +42,6 @@ Route::controller(AuthController::class)->group(function () {
 Route::controller(UserController::class)->group(function () {
     Route::get("/users/register", "create")->name("users.register");
     Route::post("/users/register", "store")->name("users.store");
-    Route::get("/account/edit", "edit")->name("account.edit");
-    Route::post("/account/edit", "update")->name("account.edit.update");
-    Route::get("/account/delete")->name("account.delete");
-    Route::post("/account/delete")->name("account.delete.post");
 });
 
 Route::controller(EnrollmentController::class)->group(function () {
@@ -56,6 +52,10 @@ Route::controller(AccountController::class)->group(function () {
     Route::get("/account", "menu")->name("account.menu");
     Route::get("/account/password", "password")->name("account.password");
     Route::post("/account/password", "change")->name("account.password.change");
+    Route::get("/account/edit", "edit")->name("account.edit");
+    Route::post("/account/edit", "update")->name("account.edit.update");
+    Route::get("/account/delete", "delete")->name("account.delete");
+    Route::post("/account/delete", "destroy")->name("account.destroy");
 });
 
 ?>
