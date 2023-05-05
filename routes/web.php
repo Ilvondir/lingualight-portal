@@ -53,6 +53,8 @@ Route::controller(EnrollmentController::class)->group(function () {
 
 Route::controller(AccountController::class)->group(function () {
     Route::get("/account", "menu")->name("account.menu");
+    Route::get("/account/password", "password")->name("account.password");
+    Route::post("/account/password", "change")->name("account.password.change");
 });
 
 ?>

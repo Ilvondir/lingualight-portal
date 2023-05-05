@@ -31,7 +31,7 @@
             <a href="" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-bottom" style="font-size: 1.5rem">Update personal data</div></a>
 
 
-            <a href="" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-bottom" style="font-size: 1.5rem">Change password</div></a>
+            <a href=" {{ route("account.password") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-bottom" style="font-size: 1.5rem">Change password</div></a>
 
             @if (Auth::user()->role_id!=1)
                 <a href="" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-bottom" style="font-size: 1.5rem">Delete account</div></a>
