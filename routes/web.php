@@ -3,6 +3,7 @@
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\EnrollmentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Index;
@@ -39,15 +40,22 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 Route::controller(UserController::class)->group(function () {
-    Route::get('/users', 'index')->name('users.index');
-    Route::get('/users/{id}/edit', 'edit')->name('users.edit');
-    Route::put('/users/{id}', 'update')->name('users.update');
     Route::get("/users/register", "create")->name("users.register");
     Route::post("/users/register", "store")->name("users.store");
 });
 
 Route::controller(EnrollmentController::class)->group(function () {
     Route::post("/course/{id}", "store")->name("enrollment.store");
+});
+
+Route::controller(AccountController::class)->group(function () {
+    Route::get("/account", "menu")->name("account.menu");
+    Route::get("/account/password", "password")->name("account.password");
+    Route::post("/account/password", "change")->name("account.password.change");
+    Route::get("/account/edit", "edit")->name("account.edit");
+    Route::post("/account/edit", "update")->name("account.edit.update");
+    Route::get("/account/delete", "delete")->name("account.delete");
+    Route::post("/account/delete", "destroy")->name("account.destroy");
 });
 
 ?>

@@ -59,7 +59,7 @@
 
                             @else
                                 <div class="w-100 text-left mt-5">
-                                    <a href="" class="text-white text-decoration-none">
+                                    <a href="{{ route("account.menu") }}" class="text-white text-decoration-none">
                                         <h4>You have already enrolled in this course.</h4>
                                     </a>
                                 </div>
