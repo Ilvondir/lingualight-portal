@@ -21,7 +21,7 @@
 
         <div class="menu mt-5">
             @if (Auth::user()->role_id==3)
-                <a href="" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-top border-bottom" style="font-size: 1.5rem">Enrolled courses</div></a>
+                <a href="{{ route("account.courses") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-top border-bottom" style="font-size: 1.5rem">Enrolled courses</div></a>
             @endif
 
             @if (Auth::user()->role_id==2)

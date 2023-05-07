@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ChangePasswordRequest;
+use App\Http\Requests\FilterCourseRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Course;
+use App\Models\Enrollment;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -84,5 +87,133 @@ class AccountController extends Controller
                 return redirect()->route("home");
             }
         }
+    }
+
+    public function courses() {
+
+        if (!Auth::check()) return redirect()->route("home");
+        else {
+            if (Auth::user()->role_id != 3) return redirect()->route("home");
+            else {
+
+                $enrollments = Enrollment::where("user_id", "=", Auth::user()->id)->get();
+                $thisUserCourses = [];
+                foreach ($enrollments as $e) {
+                    if (!in_array($e->course_id, $thisUserCourses)) array_push($thisUserCourses, $e->course_id);
+                }
+
+                $courses = [];
+                foreach ($thisUserCourses as $id) {
+                    array_push($courses, Course::find($id));
+                }
+
+                return view("courses.courses", ["courses"=>$courses, "languages" => $this->getLanguages(), "headquarters" => $this->getHeadquarters()]);
+
+            }
+
+        }
+    }
+
+    public function filterCourse(FilterCourseRequest $request) {
+
+        if (!Auth::check()) return redirect()->route("home");
+        else {
+            if (Auth::user()->role_id != 3) return redirect()->route("home");
+            else {
+                $data = $request->validated();
+
+                $name = $data["title"];
+                $language = $data["language"];
+                $dif = $data["difficulty"];
+                $form = $data["form"];
+                $headquarter = $data["headquarter"];
+                $minPrice = $data["minPrice"];
+                $maxPrice = $data["maxPrice"];
+
+                $whereTable = [
+                    ["name", "LIKE", "%".$name."%"],
+                ];
+
+                if ($language != "All") array_push($whereTable, ["language", "LIKE", "%".$language."%"]);
+
+                if ($dif != "All") {
+                    if ($dif == "Easy") $dif = 1;
+                    if ($dif == "Medium") $dif = 2;
+                    if ($dif == "Hard") $dif = 3;
+                    array_push($whereTable, ["difficulty_id", "=", $dif]);
+                }
+
+                if ($form != "All") {
+                    if ($form == "Stationary") $form = 1;
+                    if ($form == "Remote") $form = 2;
+                    if ($form == "Hybrid") $form = 3;
+                    array_push($whereTable, ["form_id", "=", $form]);
+                }
+
+                if ($minPrice!=null && $maxPrice!=null) {
+                    array_push($whereTable, ["price", ">=", $minPrice]);
+                    array_push($whereTable, ["price", "<=", $maxPrice]);
+                }
+
+                if ($headquarter != "All") array_push($whereTable, ["headquarter", "=", $headquarter]);
+
+                $filteredCourses = Course::idDescending()->where( $whereTable )->get();
+
+                $enrollments = Enrollment::where("user_id", "=", Auth::user()->id)->get();
+                $thisUserCourses = [];
+                foreach ($enrollments as $e) {
+                    if (!in_array($e->course_id, $thisUserCourses)) array_push($thisUserCourses, $e->course_id);
+                }
+
+                $courses = [];
+                foreach ($filteredCourses as $c) {
+                    if (in_array($c->id, $thisUserCourses)) array_push($courses, $c);
+                }
+
+                return view("courses.courses", ["courses"=>$courses, "languages" => $this->getLanguages(), "headquarters" => $this->getHeadquarters()]);
+            }
+        }
+    }
+
+    public static function getLanguages() : array
+    {
+        $enrollments = Enrollment::where("user_id", "=", Auth::user()->id)->get();
+        $thisUserCourses = [];
+        foreach ($enrollments as $e) {
+            if (!in_array($e->course_id, $thisUserCourses)) array_push($thisUserCourses, $e->course_id);
+        }
+
+        $courses = [];
+        foreach ($thisUserCourses as $id) {
+            array_push($courses, Course::find($id));
+        }
+
+        $languages = [];
+        foreach ($courses as $c) {
+            array_push($languages, $c->language);
+        }
+
+        return $languages;
+    }
+
+    public static function getHeadquarters() : array
+    {
+        $enrollments = Enrollment::where("user_id", "=", Auth::user()->id)->get();
+        $thisUserCourses = [];
+        foreach ($enrollments as $e) {
+            if (!in_array($e->course_id, $thisUserCourses)) array_push($thisUserCourses, $e->course_id);
+        }
+
+        $courses = [];
+        foreach ($thisUserCourses as $id) {
+            array_push($courses, Course::find($id));
+        }
+
+        $heads = [];
+        foreach ($courses as $c) {
+            array_push($heads, $c->headquarter);
+        }
+
+        return $heads;
     }
 }

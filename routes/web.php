@@ -56,6 +56,8 @@ Route::controller(AccountController::class)->group(function () {
     Route::post("/account/edit", "update")->name("account.edit.update");
     Route::get("/account/delete", "delete")->name("account.delete");
     Route::post("/account/delete", "destroy")->name("account.destroy");
+    Route::get("/account/courses", "courses")->name("account.courses");
+    Route::post("/account/courses", "filterCourse")->name("account.filterCourse");
 });
 
 ?>

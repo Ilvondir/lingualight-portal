@@ -7,7 +7,7 @@
     @include("shared.navbar")
 
     <div class="container">
-        <h2 class="mb-5">Check our courses</h2>
+        <h2 class="mb-5"> @if (str_contains(request()->path(), 'account/courses')) Courses of user {{ Auth::user()->name }} {{ Auth::user()->surname }} @else Check our courses @endif</h2>
         <div class="row">
             <div class="col-3">
 
