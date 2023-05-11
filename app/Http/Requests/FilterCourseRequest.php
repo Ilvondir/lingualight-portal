@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Controllers\CourseController;
+use App\Models\Course;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -23,12 +24,13 @@ class FilterCourseRequest extends FormRequest
      */
     public function rules(): array
     {
-        $difficulties = ["All", "Easy", "Medium", "Hard"];
-        $languages = CourseController::getLanguages();
+        $crs = Course::get();
+        $difficulties = ["All", "A1", "A2", "B1", "B2", "C1", "C2"];
+        $languages = CourseController::getLanguages($crs);
         array_push($languages, "All");
         $forms = ["All", "Hybrid", "Stationary", "Remote"];
 
-        $headquarters = CourseController::getHeadquarters();
+        $headquarters = CourseController::getHeadquarters($crs);
         array_push($headquarters, "All");
 
         return [

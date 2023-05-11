@@ -16,7 +16,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-        return view("courses.courses", ["courses"=>Course::idDescending()->get(), "languages" => $this->getLanguages(), "headquarters" => $this->getHeadquarters()]);
+        $courses = Course::idDescending()->with(["author", "difficulty", "form"])->get();
+        return view("courses.courses", ["courses"=>$courses, "languages" => $this->getLanguages($courses), "headquarters" => $this->getHeadquarters($courses)]);
     }
 
     /**
@@ -102,9 +103,12 @@ class CourseController extends Controller
         if ($language != "All") array_push($whereTable, ["language", "LIKE", "%".$language."%"]);
 
         if ($dif != "All") {
-            if ($dif == "Easy") $dif = 1;
-            if ($dif == "Medium") $dif = 2;
-            if ($dif == "Hard") $dif = 3;
+            if ($dif == "A1") $dif = 1;
+            if ($dif == "A2") $dif = 2;
+            if ($dif == "B1") $dif = 3;
+            if ($dif == "B2") $dif = 4;
+            if ($dif == "C1") $dif = 5;
+            if ($dif == "C2") $dif = 6;
             array_push($whereTable, ["difficulty_id", "=", $dif]);
         }
 
@@ -123,24 +127,25 @@ class CourseController extends Controller
         if ($headquarter != "All") array_push($whereTable, ["headquarter", "=", $headquarter]);
 
         $courses = Course::idDescending()->where( $whereTable )->get();
+        $cToF = Course::get();
 
-        return view("courses.courses", ["courses"=>$courses, "languages" => $this->getLanguages(), "headquarters" => $this->getHeadquarters()]);
+        return view("courses.courses", ["courses"=>$courses, "languages" => $this->getLanguages($cToF), "headquarters" => $this->getHeadquarters($cToF)]);
     }
 
-    public static function getLanguages() : array
+    public static function getLanguages($courses) : array
     {
         $languages = [];
-        foreach (Course::all() as $course) {
+        foreach ($courses as $course) {
             if (!in_array($course->language, $languages)) array_push($languages, $course->language);
         }
 
         return $languages;
     }
 
-    public static function getHeadquarters() : array
+    public static function getHeadquarters($courses) : array
     {
         $heads = [];
-        foreach (Course::all() as $course) {
+        foreach ($courses as $course) {
             if (!in_array($course->headquarter, $heads)) array_push($heads, $course->headquarter);
         }
 

@@ -97,6 +97,7 @@ class AccountController extends Controller
             else {
 
                 $enrollments = Enrollment::where("user_id", "=", Auth::user()->id)->get();
+                $courses1 = Course::get();
                 $thisUserCourses = [];
                 foreach ($enrollments as $e) {
                     if (!in_array($e->course_id, $thisUserCourses)) array_push($thisUserCourses, $e->course_id);
@@ -104,10 +105,10 @@ class AccountController extends Controller
 
                 $courses = [];
                 foreach ($thisUserCourses as $id) {
-                    array_push($courses, Course::find($id));
+                    array_push($courses, $courses1->find($id));
                 }
 
-                return view("courses.courses", ["courses"=>$courses, "languages" => $this->getLanguages(), "headquarters" => $this->getHeadquarters()]);
+                return view("courses.courses", ["courses"=>$courses, "languages" => $this->getLanguages($enrollments, $courses1), "headquarters" => $this->getHeadquarters($enrollments, $courses1)]);
 
             }
 
@@ -137,9 +138,12 @@ class AccountController extends Controller
                 if ($language != "All") array_push($whereTable, ["language", "LIKE", "%".$language."%"]);
 
                 if ($dif != "All") {
-                    if ($dif == "Easy") $dif = 1;
-                    if ($dif == "Medium") $dif = 2;
-                    if ($dif == "Hard") $dif = 3;
+                    if ($dif == "A1") $dif = 1;
+                    if ($dif == "A2") $dif = 2;
+                    if ($dif == "B1") $dif = 3;
+                    if ($dif == "B2") $dif = 4;
+                    if ($dif == "C1") $dif = 5;
+                    if ($dif == "C2") $dif = 6;
                     array_push($whereTable, ["difficulty_id", "=", $dif]);
                 }
 
@@ -170,14 +174,15 @@ class AccountController extends Controller
                     if (in_array($c->id, $thisUserCourses)) array_push($courses, $c);
                 }
 
-                return view("courses.courses", ["courses"=>$courses, "languages" => $this->getLanguages(), "headquarters" => $this->getHeadquarters()]);
+                $crs = Course::get();
+
+                return view("courses.courses", ["courses"=>$courses, "languages" => $this->getLanguages($enrollments, $crs), "headquarters" => $this->getHeadquarters($enrollments, $crs)]);
             }
         }
     }
 
-    public static function getLanguages() : array
+    public static function getLanguages($enrollments, $crs) : array
     {
-        $enrollments = Enrollment::where("user_id", "=", Auth::user()->id)->get();
         $thisUserCourses = [];
         foreach ($enrollments as $e) {
             if (!in_array($e->course_id, $thisUserCourses)) array_push($thisUserCourses, $e->course_id);
@@ -185,20 +190,19 @@ class AccountController extends Controller
 
         $courses = [];
         foreach ($thisUserCourses as $id) {
-            array_push($courses, Course::find($id));
+            array_push($courses, $crs->find($id));
         }
 
         $languages = [];
         foreach ($courses as $c) {
-            array_push($languages, $c->language);
+            if (!in_array($c->language, $languages)) array_push($languages, $c->language);
         }
 
         return $languages;
     }
 
-    public static function getHeadquarters() : array
+    public static function getHeadquarters($enrollments, $crs) : array
     {
-        $enrollments = Enrollment::where("user_id", "=", Auth::user()->id)->get();
         $thisUserCourses = [];
         foreach ($enrollments as $e) {
             if (!in_array($e->course_id, $thisUserCourses)) array_push($thisUserCourses, $e->course_id);
@@ -206,12 +210,12 @@ class AccountController extends Controller
 
         $courses = [];
         foreach ($thisUserCourses as $id) {
-            array_push($courses, Course::find($id));
+            array_push($courses, $crs->find($id));
         }
 
         $heads = [];
         foreach ($courses as $c) {
-            array_push($heads, $c->headquarter);
+            if (!in_array($c->headquarter, $heads)) array_push($heads, $c->headquarter);
         }
 
         return $heads;

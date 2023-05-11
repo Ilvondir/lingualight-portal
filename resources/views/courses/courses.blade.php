@@ -24,9 +24,12 @@
 
                     <select name="difficulty" title="Difficulty" class="form-select mt-3">
                         <option value="All">All</option>
-                        <option value="Easy">Easy</option>
-                        <option value="Medium">Medium</option>
-                        <option value="Hard">Hard</option>
+                        <option value="A1">A1</option>
+                        <option value="A2">A2</option>
+                        <option value="B1">B1</option>
+                        <option value="B2">B2</option>
+                        <option value="C1">C1</option>
+                        <option value="C2">C2</option>
                     </select>
 
                     <select name="form" title="Form" class="form-select mt-3">
