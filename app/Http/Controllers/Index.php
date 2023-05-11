@@ -10,12 +10,15 @@ use App\Models\User;
 class Index extends Controller
 {
     public function show() {
-        $courses = Course::count();
+        $enrls = Enrollment::get();
+        $crs = Course::get();
+        $courses = $crs->count();
         $users = User::count();
-        $enrollments = Enrollment::count();
+        $enrollments = $enrls->count();
 
         $occurrences = [];
-        foreach (Enrollment::all() as $item) {
+
+        foreach ($enrls as $item) {
             if (!isset($occurrences[$item->course_id])) {
               $occurrences[$item->course_id] = 0;
             }
@@ -26,7 +29,7 @@ class Index extends Controller
         foreach ($occurrences as $l) if ($l >= $max) $max = $l;
         $key = array_search($max, $occurrences);
 
-        $bestCourse = Course::find($key);
+        $bestCourse = $crs->find($key);
 
         $languageData = array(
             array("1.3 billion speakers", "16.2%"),
@@ -59,18 +62,18 @@ class Index extends Controller
 
         $temp = [];
         $occ = [];
-        foreach (Course::all() as $course) {
+        foreach ($crs as $course) {
             if (!isset($occ[$course->language])) {
                 $occ[$course->language] = 0;
             }
             $occ[$course->language]++;
         }
 
-        foreach (Enrollment::all() as $enrollment) {
-            if (!isset($temp[Course::find($enrollment->course_id)->language])) {
-                $temp[Course::find($enrollment->course_id)->language] = 0;
+        foreach ($enrls as $enrollment) {
+            if (!isset($temp[$crs->find($enrollment->course_id)->language])) {
+                $temp[$crs->find($enrollment->course_id)->language] = 0;
             }
-            $temp[Course::find($enrollment->course_id)->language]++;
+            $temp[$crs->find($enrollment->course_id)->language]++;
         }
 
         arsort($temp);

@@ -31,6 +31,8 @@ Route::controller(CourseController::class)->group(function () {
     Route::get('/course/{id}', 'show')->name('course.show');
     Route::get('/course/{id}/edit', 'edit')->name('course.edit');
     Route::put('/course/{id}', 'update')->name('course.update');
+    Route::get("courses/create", "create")->name("courses.create");
+    Route::post("courses/create", "store")->name("courses.store");
 });
 
 Route::controller(AuthController::class)->group(function () {
@@ -56,6 +58,8 @@ Route::controller(AccountController::class)->group(function () {
     Route::post("/account/edit", "update")->name("account.edit.update");
     Route::get("/account/delete", "delete")->name("account.delete");
     Route::post("/account/delete", "destroy")->name("account.destroy");
+    Route::get("/account/courses", "courses")->name("account.courses");
+    Route::post("/account/courses", "filterCourse")->name("account.filterCourse");
 });
 
 ?>

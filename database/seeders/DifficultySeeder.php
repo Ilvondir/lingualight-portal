@@ -14,25 +14,44 @@ class DifficultySeeder extends Seeder
     {
         Difficulty::insert([
             [
-                "level"=>"Easy", "required"=>"Good mood and willingness to learn!", "nice_to_have"=>"Basic vocabulary.
-Present simple tense.
-Simple questions and answers.",
+                "level"=>"A1", "required"=>"Good mood and willingness to learn!", "nice_to_have"=>"Basic understanding of simple expressions and basic words in the target language.
+Ability to introduce oneself and ask simple questions.
+Familiarity with basic polite phrases.",
             ],
             [
-                "level"=>"Medium", "required"=>"Intermediate vocabulary.
-Complex sentence structures.
-Reading comprehension skills.", "nice_to_have"=>"Advanced speaking and listening skills.
-Advanced writing skills and composition techniques.
-Familiarity with cultural nuances and idiomatic expressions.
-Knowledge of industry-specific terminology and jargon.",
+                "level"=>"A2", "required"=>"Basic understanding of simple expressions and basic words in the target language.
+Ability to introduce oneself and ask simple questions.
+Familiarity with basic polite phrases.", "nice_to_have"=>"Ability to use simple expressions and phrases in everyday situations.
+Understanding of simple written texts and conversations on familiar topics.
+Basic skills in writing short messages and simple descriptions.",
             ],
             [
-                "level"=>"Hard", "required"=>"Advanced vocabulary.
-Complex idiomatic expressions.
-Advanced reading comprehension.", "nice_to_have"=>"Mastery of complex verb tenses and structures.
-Fluency in speaking and listening.
-Advanced writing skills and techniques.
-Understanding of cultural nuances and customs.",
+                "level"=>"B1", "required"=>"Ability to use simple expressions and phrases in everyday situations.
+Understanding of simple written texts and conversations on familiar topics.
+Basic skills in writing short messages and simple descriptions.", "nice_to_have"=>"Understanding of main points in clear spoken or written texts on familiar topics.
+Ability to participate in conversations on various subjects related to personal interests and experiences.
+Capability to write coherent texts on familiar topics.",
+            ],
+            [
+                "level"=>"B2", "required"=>"Understanding of main points in clear spoken or written texts on familiar topics.
+Ability to participate in conversations on various subjects related to personal interests and experiences.
+Capability to write coherent texts on familiar topics.", "nice_to_have"=>"Understanding of complex texts and abstract discussions on various topics.
+Proficiency in expressing opinions, arguments, and thoughts fluently.
+Ability to write clear and detailed texts on diverse subjects.",
+            ],
+            [
+                "level"=>"C1", "required"=>"Understanding of complex texts and abstract discussions on various topics.
+Proficiency in expressing opinions, arguments, and thoughts fluently.
+Ability to write clear and detailed texts on diverse subjects.", "nice_to_have"=>"Advanced understanding of complex texts, including academic and professional materials.
+Fluency in expressing ideas, opinions, and arguments in a precise and nuanced manner.
+Capability to produce clear and well-structured texts on complex topics.",
+            ],
+            [
+                "level"=>"C2", "required"=>"Advanced understanding of complex texts, including academic and professional materials.
+Fluency in expressing ideas, opinions, and arguments in a precise and nuanced manner.
+Capability to produce clear and well-structured texts on complex topics.", "nice_to_have"=>"Mastery of the language, approaching native-like fluency.
+Proficiency in understanding and producing complex texts, including abstract and specialized materials.
+Ability to communicate effectively in any situation and produce polished and sophisticated written texts.",
             ],
         ]);
     }

@@ -10,14 +10,6 @@ use Illuminate\Support\Facades\Auth;
 class EnrollmentController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreEnrollmentRequest $request, int $courseId)
