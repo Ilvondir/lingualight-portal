@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateCourseRequest;
 use App\Http\Requests\FilterCourseRequest;
 use App\Models\Enrollment;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class CourseController extends Controller
 {
@@ -25,7 +26,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        return view("courses.create");
     }
 
     /**
@@ -33,7 +34,45 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $c = new Course();
+
+        $c->name = $data["name"];
+        $c->language = $data["language"];
+        $c->headquarter = $data["headquarter"];
+        $c->scheduled_start = $data["start"];
+        $c->hours = $data["hours"];
+        $c->img = null;
+        $c->description = $data["description"];
+        $c->price = $data["price"];
+        $c->author_id = Auth::user()->id;
+        $c->created = date("Y-m-d");
+
+        if ($data["difficulty"]=="A1") $c->difficulty_id = 1;
+        if ($data["difficulty"]=="A2") $c->difficulty_id = 2;
+        if ($data["difficulty"]=="B1") $c->difficulty_id = 3;
+        if ($data["difficulty"]=="B2") $c->difficulty_id = 4;
+        if ($data["difficulty"]=="C1") $c->difficulty_id = 5;
+        if ($data["difficulty"]=="C2") $c->difficulty_id = 6;
+
+        if ($data["form"]=="Stationary") $c->form_id = 1;
+        if ($data["form"]=="Remote") $c->form_id = 2;
+        if ($data["form"]=="Hybrid") $c->form_id = 3;
+
+        if ($data["img"]!=null) {
+            $max = Course::max("id")+1;
+            $name = $max.".png";
+            $c->img = $name;
+
+            if(Storage::exists('public/img/courses/'.$name)) Storage::delete('public/img/courses/'.$name);
+            Storage::putFileAs("public/img/courses", $data["img"], $name);
+        }
+
+        $c->save();
+
+        return view("courses.success");
+
     }
 
     /**

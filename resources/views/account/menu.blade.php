@@ -20,12 +20,17 @@
         <div><h4>Email: {{ Auth::user()->email }}</h4></div>
 
         <div class="menu mt-5">
+
+            @if (Auth::user()->role_id==2)
+                <a href="{{ route("courses.create") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-top border-bottom" style="font-size: 1.5rem">Create course</div></a>
+            @endif
+
             @if (Auth::user()->role_id==3)
                 <a href="{{ route("account.courses") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-top border-bottom" style="font-size: 1.5rem">Enrolled courses</div></a>
             @endif
 
             @if (Auth::user()->role_id==2)
-                <a href="" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-top border-bottom" style="font-size: 1.5rem">Your courses</div></a>
+                <a href="" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-bottom" style="font-size: 1.5rem">Your courses</div></a>
             @endif
 
             <a href="{{ route("account.edit") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-bottom" style="font-size: 1.5rem">Update personal data</div></a>

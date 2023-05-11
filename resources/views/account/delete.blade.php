@@ -19,7 +19,7 @@
                     <div>Are you sure you want to delete your account? This operation is irreversible.</div>
 
                     <div class="w-100 text-center">
-                        <button class="btn btn-dark mt-4" type="submit">Delete</button>
+                        <button class="btn btn-dark mt-4" type="submit"><i class="fa fa-trash"></i>  Delete</button>
                     </div>
 
                 </form>
