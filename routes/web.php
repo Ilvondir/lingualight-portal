@@ -60,6 +60,8 @@ Route::controller(AccountController::class)->group(function () {
     Route::post("/account/delete", "destroy")->name("account.destroy");
     Route::get("/account/courses", "courses")->name("account.courses");
     Route::post("/account/courses", "filterCourse")->name("account.filterCourse");
+    Route::get("/account/your_courses", "your_courses")->name("account.your_courses");
+    Route::post("/account/your_courses", "filter_your_courses")->name("account.filter_your_courses");
 });
 
 ?>

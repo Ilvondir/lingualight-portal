@@ -220,4 +220,26 @@ class AccountController extends Controller
 
         return $heads;
     }
+
+    public function your_courses () {
+        $courses = Course::where("author_id", "=", Auth::user()->id)->get();
+
+        return view("courses.courses", ["courses" => $courses, "languages" => $this->getLanguagesForTrainer($courses), "headquarters" => $this->getHeadquartersForTrainer($courses)]);
+    }
+
+    public function getLanguagesForTrainer ($courses) {
+        $langs = [];
+        foreach ($courses as $c) {
+            if (in_array($c->language, $langs)) array_push($langs, $c->language);
+        }
+        return $langs;
+    }
+
+    public function getHeadquartersForTrainer ($courses) {
+        $heads = [];
+        foreach ($courses as $c) {
+            if (in_array($c->headquarter, $heads)) array_push($langs, $c->headquarter);
+        }
+        return $heads;
+    }
 }
