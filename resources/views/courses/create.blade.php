@@ -17,6 +17,14 @@
                 <form action="{{ route("courses.store") }}" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
                     @csrf
 
+                    @if ($errors->any())
+                        <div class="mb-3 text-danger">
+                            @foreach ($errors->all() as $error)
+                                {{ $error }}<br>
+                            @endforeach
+                        </div>
+                    @endif
+
                     <div class="form-group mb-2">
                         <label for="name">Name</label>
                         <input id="name" name="name" type="text" class="form-control" required>
@@ -93,24 +101,7 @@
                         <button class="btn btn-dark mt-4" type="submit"><i class="fa fa-gear"></i>  Create</button>
                     </div>
 
-                    @if ($errors->any())
-                        <div class="mt-3">
-                            @foreach ($errors->all() as $error)
-                                {{ $error }}<br>
-                            @endforeach
-                        </div>
-                    @endif
-
                 </form>
-
-                @if ($errors->any())
-                    <div class="mt-3">
-                        @foreach ($errors->all() as $error)
-                            {{ $error }}<br>
-                        @endforeach
-                    </div>
-                @endif
-
             </div>
         </div>
 

@@ -16,6 +16,15 @@
             <div class="rounded bg-black text-white p-5 w-50">
                 <form action="{{ route("users.store") }}" method="POST">
                     @csrf
+
+                    @if ($errors->any())
+                        <div class="mb-3 text-danger">
+                            @foreach ($errors->all() as $error)
+                                {{ $error }}<br>
+                            @endforeach
+                        </div>
+                    @endif
+
                     <div class="row">
                         <div class="col-6">
                             <label for="name">Name</label>
@@ -61,15 +70,6 @@
                     </div>
 
                 </form>
-
-                @if ($errors->any())
-                    <div class="mt-3">
-                        @foreach ($errors->all() as $error)
-                            {{ $error }}<br>
-                        @endforeach
-                    </div>
-                @endif
-
 
                 <div class="mt-4">Do you have an account? <a class="text-decoration-none text-white" href="{{ route("auth.login") }}"><b>Login here now!</b></a></div>
 
