@@ -30,7 +30,7 @@ Route::controller(CourseController::class)->group(function () {
     Route::post("/courses", "filter")->name("course.filter");
     Route::get('/course/{id}', 'show')->name('course.show');
     Route::get('/course/{id}/edit', 'edit')->name('course.edit');
-    Route::put('/course/{id}', 'update')->name('course.update');
+    Route::post('/course/{id}/edit', 'update')->name('course.update');
     Route::get("courses/create", "create")->name("courses.create");
     Route::post("courses/create", "store")->name("courses.store");
 });

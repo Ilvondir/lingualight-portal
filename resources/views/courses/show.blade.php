@@ -16,6 +16,18 @@
                 <p class="mt-4">Author: <b>{{ $c->author->name }} {{ $c->author->surname }}</b></p>
                 <p>Created: <b>{{ $c->created }}</b></p>
                 <p>Contact: <b>{{ $c->author->email }}</b></p>
+
+
+                @auth
+                    @if ($c->author_id == Auth::user()->id || Auth::user()->id == 1)
+                        <div>
+                            <a href="{{ route("course.edit", ["id" => $c->id]) }}">
+                                <button class="btn btn-black p-3 w-100 mt-3" id="fontUp">Edit course</button>
+                            </a>
+                        </div>
+                    @endif
+                @endauth
+
             </div>
             <div class="col-9">
                 <h1>{{ $c->name }}</h1>
@@ -109,7 +121,7 @@
         </div>
 
         @if (Auth::check())
-            @if (Auth::user()->id == $c->author_id)
+            @if (Auth::user()->id == $c->author_id || Auth::user()->id == 1)
                 <h2 class="mb-5 mt-5">Enrolled users</h2>
 
                 <table class="table table-dark text-white w-100">

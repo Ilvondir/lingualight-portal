@@ -27,7 +27,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        return view("courses.create");
+        return view("courses.form");
     }
 
     /**
@@ -95,7 +95,7 @@ class CourseController extends Controller
                 return view("courses.show", ["c"=>$course, "already"=>$already]);
             }
 
-            if (Auth::user()->role_id==2 && $course->author_id == Auth::user()->id) {
+            if ($course->author_id == Auth::user()->id || Auth::user()->id == 1) {
                 $enrollments = Enrollment::where("course_id", "=", $course->id)->get();
                 $users = User::all();
 
@@ -126,17 +126,45 @@ class CourseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Course $course)
+    public function edit(int $id)
     {
-        //
+        if (Auth::user()->id == 3) return redirect()->route("auth.login");
+        return view("courses.form", ["c" => Course::find($id)]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCourseRequest $request, Course $course)
+    public function update(UpdateCourseRequest $request, int $id)
     {
-        //
+        if (Auth::user()->id == 3) return redirect()->route("auth.login");
+        else {
+            $c = Course::find($id);
+            $data = $request->validated();
+
+            $c->name = $data["name"];
+            $c->language = $data["language"];
+            $c->headquarter = $data["headquarter"];
+            $c->scheduled_start = $data["start"];
+            $c->hours = $data["hours"];
+            $c->description = $data["description"];
+            $c->price = $data["price"];
+
+            if ($data["difficulty"]=="A1") $c->difficulty_id = 1;
+            if ($data["difficulty"]=="A2") $c->difficulty_id = 2;
+            if ($data["difficulty"]=="B1") $c->difficulty_id = 3;
+            if ($data["difficulty"]=="B2") $c->difficulty_id = 4;
+            if ($data["difficulty"]=="C1") $c->difficulty_id = 5;
+            if ($data["difficulty"]=="C2") $c->difficulty_id = 6;
+
+            if ($data["form"]=="Stationary") $c->form_id = 1;
+            if ($data["form"]=="Remote") $c->form_id = 2;
+            if ($data["form"]=="Hybrid") $c->form_id = 3;
+
+            $c->save();
+
+            return view("courses.success");
+        }
     }
 
     /**

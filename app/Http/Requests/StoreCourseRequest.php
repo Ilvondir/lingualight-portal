@@ -13,8 +13,8 @@ class StoreCourseRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        if (Auth::user()->role_id == 2) return true;
-        return false;
+        if (Auth::user()->role_id == 3) return false;
+        return true;
     }
 
     /**
