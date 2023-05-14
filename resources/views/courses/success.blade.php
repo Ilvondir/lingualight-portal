@@ -9,8 +9,8 @@
     <div class="container">
 
         <div class="row mt-4 mb-4 text-center">
-            <a href="{{ route('home') }}" class="text-white text-decoration-none">
-                <h1>Your course has been created! Go to your course page to edit it.</h1>
+            <a href="{{ route('courses.index') }}" class="text-white text-decoration-none">
+                <h1>Your data has been saved! Go to course page to check them.</h1>
             </a>
         </div>
 

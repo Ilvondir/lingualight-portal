@@ -13,8 +13,8 @@ class StoreCourseRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        if (Auth::user()->role_id == 2) return true;
-        return false;
+        if (Auth::user()->role_id == 3) return false;
+        return true;
     }
 
     /**
@@ -28,16 +28,15 @@ class StoreCourseRequest extends FormRequest
 
         return [
             "name" => "required|min:10|unique:courses|max:255",
-            "language" => "required|min:3|max:255",
+            "language" => 'required|min:3|max:255',
             "difficulty" => Rule::in($difs),
-            "headquarter" => "required|min:2|max:255",
-            "language" => "required|min:3",
+            "headquarter" => 'required|min:2|max:255',
             "price" => "required|numeric|min:0",
             "start" => "required|date|after:today",
             "hours" => "required|integer|min:0",
             "form" => Rule::in(["Stationary", "Hybrid", "Remote"]),
             "img" => "nullable|file",
-            "description" => "required",
+            "description" => "required|min:50",
         ];
     }
 }

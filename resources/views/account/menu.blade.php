@@ -30,7 +30,7 @@
             @endif
 
             @if (Auth::user()->role_id==2)
-                <a href="" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-bottom" style="font-size: 1.5rem">Your courses</div></a>
+                <a href="{{ route("account.your_courses") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-bottom" style="font-size: 1.5rem">Your courses</div></a>
             @endif
 
             <a href="{{ route("account.edit") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-bottom" style="font-size: 1.5rem">Update personal data</div></a>

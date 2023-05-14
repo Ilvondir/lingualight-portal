@@ -7,6 +7,7 @@ use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
 use App\Http\Requests\FilterCourseRequest;
 use App\Models\Enrollment;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -26,7 +27,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        return view("courses.create");
+        return view("courses.form");
     }
 
     /**
@@ -83,8 +84,7 @@ class CourseController extends Controller
 
         $course = Course::find($id);
         if (Auth::check()) {
-            if (Auth::user()->role_id != 3) return view("courses.show", ["c"=>$course, "already"=>false]);
-            else {
+            if (Auth::user()->role_id == 3) {
                 $enrollments = Enrollment::where("user_id", "=", Auth::user()->id)->get();
 
                 $already = false;
@@ -94,6 +94,30 @@ class CourseController extends Controller
 
                 return view("courses.show", ["c"=>$course, "already"=>$already]);
             }
+
+            if ($course->author_id == Auth::user()->id || Auth::user()->id == 1) {
+                $enrollments = Enrollment::where("course_id", "=", $course->id)->get();
+                $users = User::all();
+
+                $enrolled = [];
+
+                foreach ($enrollments as $e) {
+
+                    $tab = [];
+                    $user = $users->find($e->user_id);
+                    $tab["name"] = $user->name;
+                    $tab["surname"] = $user->surname;
+                    $tab["email"] = $user->email;
+                    $tab["enrolled_date"] = $e->enrollment_date;
+                    $tab["payment"] = "No";
+                    if ($e->payment_date != null) $tab["payment"] = "Yes";
+
+
+                    array_push($enrolled, $tab);
+                }
+
+                return view("courses.show", ["c"=>$course, "enrolled" => $enrolled]);
+            }
         }
 
         return view("courses.show", ["c"=>$course, "already"=>false]);
@@ -102,17 +126,45 @@ class CourseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Course $course)
+    public function edit(int $id)
     {
-        //
+        if (Auth::user()->id == 3) return redirect()->route("auth.login");
+        return view("courses.form", ["c" => Course::find($id)]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCourseRequest $request, Course $course)
+    public function update(UpdateCourseRequest $request, int $id)
     {
-        //
+        if (Auth::user()->id == 3) return redirect()->route("auth.login");
+        else {
+            $c = Course::find($id);
+            $data = $request->validated();
+
+            $c->name = $data["name"];
+            $c->language = $data["language"];
+            $c->headquarter = $data["headquarter"];
+            $c->scheduled_start = $data["start"];
+            $c->hours = $data["hours"];
+            $c->description = $data["description"];
+            $c->price = $data["price"];
+
+            if ($data["difficulty"]=="A1") $c->difficulty_id = 1;
+            if ($data["difficulty"]=="A2") $c->difficulty_id = 2;
+            if ($data["difficulty"]=="B1") $c->difficulty_id = 3;
+            if ($data["difficulty"]=="B2") $c->difficulty_id = 4;
+            if ($data["difficulty"]=="C1") $c->difficulty_id = 5;
+            if ($data["difficulty"]=="C2") $c->difficulty_id = 6;
+
+            if ($data["form"]=="Stationary") $c->form_id = 1;
+            if ($data["form"]=="Remote") $c->form_id = 2;
+            if ($data["form"]=="Hybrid") $c->form_id = 3;
+
+            $c->save();
+
+            return view("courses.success");
+        }
     }
 
     /**

@@ -17,27 +17,27 @@
                 <form action="{{ route("auth.login.authenticate") }}" method="POST" class="needs-validation" novalidate>
                     @csrf
 
+                    @if ($errors->any())
+                        <div class="mb-3 text-danger">
+                            @foreach ($errors->all() as $error)
+                                {{ $error }}<br>
+                            @endforeach
+                        </div>
+                    @endif
+
                     <div class="form-group mb-2">
                         <label for="login">Login</label>
-                        <input id="login" name="login" type="text" class="form-control">
+                        <input id="login" name="login" type="text" class="form-control" required>
                     </div>
                     <div class="form-group mb-2">
                         <label for="pass">Password</label>
-                        <input id="pass" name="password" type="password" class="form-control">
+                        <input id="pass" name="password" type="password" class="form-control" required>
                     </div>
 
                     <div class="w-100 text-center">
                         <button class="btn btn-dark mt-4" type="submit"><i class="fa fa-key"></i>  Login</button>
                     </div>
                 </form>
-
-                @if ($errors->any())
-                    <div class="mt-3">
-                        @foreach ($errors->all() as $error)
-                            {{ $error }}<br>
-                        @endforeach
-                    </div>
-                @endif
 
                 <div class="mt-4">Don't have an account? <a class="text-decoration-none text-white" href="{{ route("users.register") }}"><b>Register here now!</b></a></div>
 
