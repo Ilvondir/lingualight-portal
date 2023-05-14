@@ -7,6 +7,7 @@ use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
 use App\Http\Requests\FilterCourseRequest;
 use App\Models\Enrollment;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -83,8 +84,7 @@ class CourseController extends Controller
 
         $course = Course::find($id);
         if (Auth::check()) {
-            if (Auth::user()->role_id != 3) return view("courses.show", ["c"=>$course, "already"=>false]);
-            else {
+            if (Auth::user()->role_id == 3) {
                 $enrollments = Enrollment::where("user_id", "=", Auth::user()->id)->get();
 
                 $already = false;
@@ -93,6 +93,30 @@ class CourseController extends Controller
                 }
 
                 return view("courses.show", ["c"=>$course, "already"=>$already]);
+            }
+
+            if (Auth::user()->role_id==2 && $course->author_id == Auth::user()->id) {
+                $enrollments = Enrollment::where("course_id", "=", $course->id)->get();
+                $users = User::all();
+
+                $enrolled = [];
+
+                foreach ($enrollments as $e) {
+
+                    $tab = [];
+                    $user = $users->find($e->user_id);
+                    $tab["name"] = $user->name;
+                    $tab["surname"] = $user->surname;
+                    $tab["email"] = $user->email;
+                    $tab["enrolled_date"] = $e->enrollment_date;
+                    $tab["payment"] = "No";
+                    if ($e->payment_date != null) $tab["payment"] = "Yes";
+
+
+                    array_push($enrolled, $tab);
+                }
+
+                return view("courses.show", ["c"=>$course, "enrolled" => $enrolled]);
             }
         }
 

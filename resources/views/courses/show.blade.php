@@ -59,7 +59,7 @@
 
                             @else
                                 <div class="w-100 text-left mt-5">
-                                    <a href="{{ route("account.menu") }}" class="text-white text-decoration-none">
+                                    <a href="{{ route("account.courses") }}" class="text-white text-decoration-none">
                                         <h4>You have already enrolled in this course.</h4>
                                     </a>
                                 </div>
@@ -107,6 +107,32 @@
 
             </div>
         </div>
+
+        @if (Auth::check())
+            @if (Auth::user()->id == $c->author_id)
+                <h2 class="mb-5 mt-5">Enrolled users</h2>
+
+                <table class="table table-dark text-white w-100">
+                    <tr>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Email contact</th>
+                        <th>Date of enrollment</th>
+                        <th>Payment</th>
+                    </tr>
+
+                    @foreach ($enrolled as $e)
+                        <tr>
+                            <td>{{ $e["name"] }}</td>
+                            <td>{{ $e["surname"] }}</td>
+                            <td>{{ $e["email"] }}</td>
+                            <td>{{ $e["enrolled_date"] }}</td>
+                            <td>{{ $e["payment"] }}</td>
+                        </tr>
+                    @endforeach
+                </table>
+            @endif
+        @endif
 
         @include("shared.footer")
     </div>
