@@ -29,6 +29,8 @@ Route::controller(CourseController::class)->group(function () {
     Route::get('/courses', 'index')->name('courses.index');
     Route::post("/courses", "filter")->name("course.filter");
     Route::get('/course/{id}', 'show')->name('course.show');
+    Route::get("/course/{id}/delete", "delete")->name("courses.delete");
+    Route::post("/course/{id}/delete", "destroy")->name("courses.destroy");
     Route::get('/course/{id}/edit', 'edit')->name('course.edit');
     Route::post('/course/{id}/edit', 'update')->name('course.update');
     Route::get("courses/create", "create")->name("courses.create");

@@ -25,6 +25,12 @@
                                 <button class="btn btn-black p-3 w-100 mt-3" id="fontUp">Edit course</button>
                             </a>
                         </div>
+
+                        <div>
+                            <a href="{{ route("courses.delete", ["id" => $c->id]) }}">
+                                <button class="btn btn-black p-3 w-100 mt-3" id="fontUp">Delete course</button>
+                            </a>
+                        </div>
                     @endif
                 @endauth
 
