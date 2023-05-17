@@ -46,6 +46,9 @@
                     <select class="form-select" id="role" name="role" onchange="infobox()" required>
                         <option value="User">User</option>
                         <option value="Trainer">Trainer</option>
+                        @if (Auth::check())
+                            <option value="Administrator">Administrator</option>
+                        @endif
                     </select>
 
                     <div class="mt-2" id="info" style="text-align: justify;">As a user, you can enroll in all courses and use other resources of the application. If you want to create new course offerings, you need to change your role. This choice cannot be changed later!</div>
@@ -85,6 +88,10 @@
         function infobox() {
             if (sel.value == "User") info.innerHTML = "As a user, you can enroll in all courses and use other resources of the application. If you want to create new course offerings, you need to change your role. This choice cannot be changed later!";
             if (sel.value == "Trainer") info.innerHTML = "As a trainer, you can create course announcements and recruit students for them. You can see all users who have enrolled in your courses. However, you cannot enroll in courses yourself. If you want to participate in courses, you need to change your role. This choice cannot be changed later!";
+            @if (Auth::check())
+            if (sel.value == "Administrator") info.innerHTML = "Portal administrator user with access to all application resources.";
+
+            @endif
         }
     </script>
 </body>

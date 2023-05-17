@@ -21,6 +21,10 @@
 
         <div class="menu mt-5">
 
+            @if (Auth::user()->role_id==1)
+                <a href="{{ route("users.index") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-top border-bottom" style="font-size: 1.5rem">Users panel</div></a>
+            @endif
+
             @if (Auth::user()->role_id==2)
                 <a href="{{ route("courses.create") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-top border-bottom" style="font-size: 1.5rem">Create course</div></a>
             @endif

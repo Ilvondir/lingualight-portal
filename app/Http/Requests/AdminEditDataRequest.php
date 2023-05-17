@@ -3,11 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
 use Illuminate\Contracts\Validation\Validator;
 
-class StoreUserRequest extends FormRequest
+class AdminEditDataRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,17 +22,13 @@ class StoreUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        $roles = ["User", "Trainer"];
-        if (Auth::user()->id == 1) $roles = ["User", "Trainer", "Administrator"];
-
         return [
             "name" => 'required|min:2|max:255',
             "surname" => 'required|min:2|max:255',
-            "login" => "required|min:6|max:30|unique:users",
-            "email" => "required|min:7|max:255|unique:users|email",
-            "password" => "required|min:7|max:255|required_with:repeatPassword|same:repeatPassword",
-            "repeatPassword" => "required|min:7|max:255",
-            "role" => Rule::in($roles),
+            "login" => "required|min:6|max:30",
+            "email" => "required|min:7|max:255|email",
+            "password" => "nullable|min:7|max:255|required_with:repeatPassword|same:repeatPassword",
+            "repeatPassword" => "nullable|min:7|max:255",
         ];
     }
 

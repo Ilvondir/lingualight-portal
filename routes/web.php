@@ -29,6 +29,8 @@ Route::controller(CourseController::class)->group(function () {
     Route::get('/courses', 'index')->name('courses.index');
     Route::post("/courses", "filter")->name("course.filter");
     Route::get('/course/{id}', 'show')->name('course.show');
+    Route::get("/course/{id}/delete", "delete")->name("courses.delete");
+    Route::post("/course/{id}/delete", "destroy")->name("courses.destroy");
     Route::get('/course/{id}/edit', 'edit')->name('course.edit');
     Route::post('/course/{id}/edit', 'update')->name('course.update');
     Route::get("courses/create", "create")->name("courses.create");
@@ -44,6 +46,11 @@ Route::controller(AuthController::class)->group(function () {
 Route::controller(UserController::class)->group(function () {
     Route::get("/users/register", "create")->name("users.register");
     Route::post("/users/register", "store")->name("users.store");
+    Route::get("/users/index", "index")->name("users.index");
+    Route::get("/users/{id}/delete", "delete")->name("users.delete");
+    Route::post("/users/{id}/delete", "destroy")->name("users.destroy");
+    Route::get("/users/{id}/edit", "edit")->name("users.edit");
+    Route::post("/users/{id}/edit", "update")->name("users.update");
 });
 
 Route::controller(EnrollmentController::class)->group(function () {

@@ -167,12 +167,24 @@ class CourseController extends Controller
         }
     }
 
+
+    public function delete(int $id) {
+        if (!Auth::check()) return redirect()->route("auth.login");
+        if (Auth::user()->role_id == 3) return redirect()->route("home");
+        $c = Course::find($id);
+        return view("courses.delete", ["c" => $c]);
+    }
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Course $course)
+    public function destroy(int $id)
     {
-        //
+        if (!Auth::check()) return redirect()->route("auth.login");
+        if (Auth::user()->role_id == 3) return redirect()->route("home");
+        $c = Course::find($id);
+        $c->delete();
+        return redirect()->route("courses.index");
     }
 
     public function filter(FilterCourseRequest $request) {
