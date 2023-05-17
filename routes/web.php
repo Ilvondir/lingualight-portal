@@ -46,6 +46,9 @@ Route::controller(AuthController::class)->group(function () {
 Route::controller(UserController::class)->group(function () {
     Route::get("/users/register", "create")->name("users.register");
     Route::post("/users/register", "store")->name("users.store");
+    Route::get("/users/index", "index")->name("users.index");
+    Route::get("/users/{id}/delete", "delete")->name("users.delete");
+    Route::post("/users/{id}/delete", "destroy")->name("users.destroy");
 });
 
 Route::controller(EnrollmentController::class)->group(function () {

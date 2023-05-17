@@ -16,7 +16,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        if (!Auth::check()) return redirect()->route("auth/login");
+        if (Auth::user()->id != 1) return redirect()->route("home");
+
+        $users = User::with("role")->where([["id", "!=", Auth::user()->id]])->get();
+        return view("users.index", ["users"=>$users]);
     }
 
     /**
@@ -43,7 +47,7 @@ class UserController extends Controller
         $user->email = $data["email"];
         $user->password = Hash::make($data["password"]);
 
-        $roleID = 0;
+        $roleID = 1;
         if ($data["role"]=="Trainer") $roleID = 2;
         if ($data["role"]=="User") $roleID = 3;
 
@@ -54,14 +58,6 @@ class UserController extends Controller
         if ($user->save()) {
             return view("users.success");
         }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(User $user)
-    {
-        //
     }
 
     /**
@@ -80,11 +76,24 @@ class UserController extends Controller
 
     }
 
+    public function delete(int $id) {
+        if (!Auth::check()) return redirect()->route("auth/login");
+        if (Auth::user()->id != 1) return redirect()->route("home");
+        $user = User::find($id);
+        return view("users.delete", ["user"=>$user]);
+    }
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(int $id)
     {
-        //
+        if (!Auth::check()) return redirect()->route("auth/login");
+        if (Auth::user()->id != 1) return redirect()->route("home");
+
+        $user = User::find($id);
+        $user->delete();
+
+        return redirect()->route("users.index");
     }
 }
