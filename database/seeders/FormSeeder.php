@@ -13,7 +13,6 @@ class FormSeeder extends Seeder
     public function run(): void
     {
         Form::insert([
-            ["name"=>"Stationary"],
             ["name"=>"Remote"],
             ["name"=>"Hybrid"],
         ]);

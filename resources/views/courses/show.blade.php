@@ -19,7 +19,7 @@
 
 
                 @auth
-                    @if ($c->author_id == Auth::user()->id || Auth::user()->id == 1)
+                    @if (($c->author_id == Auth::user()->id || Auth::user()->role_id == 1) && $c->visible==1)
                         <div>
                             <a href="{{ route("course.edit", ["id" => $c->id]) }}">
                                 <button class="btn btn-black p-3 w-100 mt-3" id="fontUp">Edit course</button>
@@ -65,6 +65,12 @@
                         </div>
 
                     @else
+
+                        @if ($c->visible==0)
+                        <div class="w-100 text-left mt-5">
+                            <h4>This course is archived.</h4>
+                        </div>
+                        @endif
 
                         @if (Auth::user()->role_id==3)
                             @if (!$already)
