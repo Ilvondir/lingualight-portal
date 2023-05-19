@@ -93,7 +93,7 @@ class AccountController extends Controller
 
         if (!Auth::check()) return redirect()->route("auth.login");
         else {
-            if (Auth::user()->role_id != 3) return redirect()->route("auth.login");
+            if (Auth::user()->role_id != 3) return redirect()->route("account.menu");
             else {
 
                 $enrollments = Enrollment::where("user_id", "=", Auth::user()->id)->get();
@@ -119,7 +119,7 @@ class AccountController extends Controller
 
         if (!Auth::check()) return redirect()->route("auth.login");
         else {
-            if (Auth::user()->role_id != 3) return redirect()->route("auth.login");
+            if (Auth::user()->role_id != 3) return redirect()->route("account.menu");
             else {
                 $data = $request->validated();
 
@@ -226,7 +226,7 @@ class AccountController extends Controller
 
         if (!Auth::check()) return redirect()->route("auth.login");
         else {
-            if (Auth::user()->role_id != 2) return redirect()->route("auth.login");
+            if (Auth::user()->role_id != 2 || Auth::user()->confirmed==0) return redirect()->route("account.menu");
             else {
 
                 $courses = Course::where([["author_id", "=", Auth::user()->id], ["visible", "=", 1]])->get();
@@ -238,7 +238,7 @@ class AccountController extends Controller
     public function filter_your_courses (FilterCourseRequest $request) {
         if (!Auth::check()) return redirect()->route("auth.login");
         else {
-            if (Auth::user()->role_id != 2) return redirect()->route("auth.login");
+            if (Auth::user()->role_id != 2 || Auth::user()->confirmed==0) return redirect()->route("account.menu");
             else {
 
                 $data = $request->validated();

@@ -101,7 +101,7 @@
                     @endif
                     <div class="form-group mb-2">
                         <label for="description">Description</label>
-                        <textarea class="form-control" id="description" name="description" required>@if (str_contains(request()->path(), 'edit')){{ $c->description }} @endif</textarea>
+                        <textarea class="form-control" id="description" name="description" rows="8" required>@if (str_contains(request()->path(), 'edit')){{ $c->description }} @endif</textarea>
                     </div>
 
                     <div class="w-100 text-center">

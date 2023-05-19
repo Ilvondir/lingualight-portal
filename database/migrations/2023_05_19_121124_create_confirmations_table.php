@@ -18,7 +18,8 @@ return new class extends Migration
             $table->text("message");
             $table->string("date");
             $table->string("file");
-            $table->foreign("trainer_id")->references("id")->on("users");
+            $table->integer("considered");
+            $table->foreign("trainer_id")->references("id")->on("users")->onDelete("cascade");
         });
     }
 
