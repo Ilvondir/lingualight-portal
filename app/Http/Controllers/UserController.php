@@ -57,6 +57,10 @@ class UserController extends Controller
         $user->registered = date("Y-m-d");
         $user->remember_token = null;
 
+        $user->confirmed = null;
+        if ($roleID == 2) $user->confirmed = 0;
+
+
         if ($user->save()) {
             return view("users.success");
         }

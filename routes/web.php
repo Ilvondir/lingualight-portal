@@ -4,6 +4,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\ConfirmationController;
 use App\Http\Controllers\EnrollmentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Index;
@@ -69,6 +70,15 @@ Route::controller(AccountController::class)->group(function () {
     Route::post("/account/courses", "filterCourse")->name("account.filterCourse");
     Route::get("/account/your_courses", "your_courses")->name("account.your_courses");
     Route::post("/account/your_courses", "filter_your_courses")->name("account.filter_your_courses");
+});
+
+
+Route::controller(ConfirmationController::class)->group(function () {
+    Route::get("/account/confirmation", "create")->name("confirmation.create");
+    Route::post("/account/confirmation", "store")->name("confirmation.store");
+    Route::get("/confirmations/index", "index")->name("confirmations.index");
+    Route::get("/confirmations/{id}", "show")->name("confirmations.show");
+    Route::post("/confirmations/{id}", "verdict")->name("confirmations.verdict");
 });
 
 ?>

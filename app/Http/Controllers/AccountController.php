@@ -93,14 +93,14 @@ class AccountController extends Controller
 
         if (!Auth::check()) return redirect()->route("auth.login");
         else {
-            if (Auth::user()->role_id != 3) return redirect()->route("auth.login");
+            if (Auth::user()->role_id != 3) return redirect()->route("account.menu");
             else {
 
                 $enrollments = Enrollment::where("user_id", "=", Auth::user()->id)->get();
-                $courses1 = Course::get();
+                $courses1 = Course::where("visible", "=", 1)->get();
                 $thisUserCourses = [];
                 foreach ($enrollments as $e) {
-                    if (!in_array($e->course_id, $thisUserCourses)) array_push($thisUserCourses, $e->course_id);
+                    if ($e->course->visible!=0 && !in_array($e->course_id, $thisUserCourses)) array_push($thisUserCourses, $e->course_id);
                 }
 
                 $courses = [];
@@ -119,7 +119,7 @@ class AccountController extends Controller
 
         if (!Auth::check()) return redirect()->route("auth.login");
         else {
-            if (Auth::user()->role_id != 3) return redirect()->route("auth.login");
+            if (Auth::user()->role_id != 3) return redirect()->route("account.menu");
             else {
                 $data = $request->validated();
 
@@ -133,6 +133,7 @@ class AccountController extends Controller
 
                 $whereTable = [
                     ["name", "LIKE", "%".$name."%"],
+                    ["visible", "=", 1],
                 ];
 
                 if ($language != "All") array_push($whereTable, ["language", "LIKE", "%".$language."%"]);
@@ -166,7 +167,7 @@ class AccountController extends Controller
                 $enrollments = Enrollment::where("user_id", "=", Auth::user()->id)->get();
                 $thisUserCourses = [];
                 foreach ($enrollments as $e) {
-                    if (!in_array($e->course_id, $thisUserCourses)) array_push($thisUserCourses, $e->course_id);
+                    if ($e->course->visible!=0 && !in_array($e->course_id, $thisUserCourses)) array_push($thisUserCourses, $e->course_id);
                 }
 
                 $courses = [];
@@ -185,7 +186,7 @@ class AccountController extends Controller
     {
         $thisUserCourses = [];
         foreach ($enrollments as $e) {
-            if (!in_array($e->course_id, $thisUserCourses)) array_push($thisUserCourses, $e->course_id);
+            if ($e->course->visible!=0 && !in_array($e->course_id, $thisUserCourses)) array_push($thisUserCourses, $e->course_id);
         }
 
         $courses = [];
@@ -205,7 +206,7 @@ class AccountController extends Controller
     {
         $thisUserCourses = [];
         foreach ($enrollments as $e) {
-            if (!in_array($e->course_id, $thisUserCourses)) array_push($thisUserCourses, $e->course_id);
+            if ($e->course->visible!=0 && !in_array($e->course_id, $thisUserCourses)) array_push($thisUserCourses, $e->course_id);
         }
 
         $courses = [];
@@ -225,10 +226,10 @@ class AccountController extends Controller
 
         if (!Auth::check()) return redirect()->route("auth.login");
         else {
-            if (Auth::user()->role_id != 2) return redirect()->route("auth.login");
+            if (Auth::user()->role_id != 2 || Auth::user()->confirmed==0) return redirect()->route("account.menu");
             else {
 
-                $courses = Course::where("author_id", "=", Auth::user()->id)->get();
+                $courses = Course::where([["author_id", "=", Auth::user()->id], ["visible", "=", 1]])->get();
                 return view("courses.courses", ["courses" => $courses, "languages" => $this->getLanguagesForTrainer($courses), "headquarters" => $this->getHeadquartersForTrainer($courses)]);
             }
         }
@@ -237,7 +238,7 @@ class AccountController extends Controller
     public function filter_your_courses (FilterCourseRequest $request) {
         if (!Auth::check()) return redirect()->route("auth.login");
         else {
-            if (Auth::user()->role_id != 2) return redirect()->route("auth.login");
+            if (Auth::user()->role_id != 2 || Auth::user()->confirmed==0) return redirect()->route("account.menu");
             else {
 
                 $data = $request->validated();
@@ -252,6 +253,7 @@ class AccountController extends Controller
 
                 $whereTable = [
                     ["name", "LIKE", "%".$name."%"],
+                    ["visible", "=", 1],
                 ];
 
                 if ($language != "All") array_push($whereTable, ["language", "LIKE", "%".$language."%"]);
@@ -284,7 +286,7 @@ class AccountController extends Controller
 
                 $courses = Course::idDescending()->where( $whereTable )->get();
 
-                $crs = Course::where("author_id", "=", Auth::user()->id)->get();
+                $crs = Course::where([["author_id", "=", Auth::user()->id], ["visible", "=", 1]])->get();
 
                 return view("courses.courses", ["courses"=>$courses, "languages" => $this->getLanguagesForTrainer($crs), "headquarters" => $this->getHeadquartersForTrainer($crs)]);
             }

@@ -55,7 +55,7 @@
                     <h1 class="mt-5 mb-5 display-1">
                         <input id="courses" value="0" size="2" disabled>
                     </h1>
-                    course offers that you can already apply for!
+                    course offers in our database!
                 </div>
                 <div class="col-sm">
                     Together we have

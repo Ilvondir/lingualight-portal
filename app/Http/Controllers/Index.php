@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\Enrollment;
 use App\Models\User;
@@ -10,24 +9,26 @@ use App\Models\User;
 class Index extends Controller
 {
     public function show() {
-        $enrls = Enrollment::get();
+        $enrls = Enrollment::with("course")->get();
         $crs = Course::get();
         $courses = $crs->count();
         $users = User::count();
         $enrollments = $enrls->count();
 
-        $occurrences = [];
+        $occurrencesToBest = [];
 
         foreach ($enrls as $item) {
-            if (!isset($occurrences[$item->course_id])) {
-              $occurrences[$item->course_id] = 0;
+            if ($item->course->visible==1) {
+                if (!isset($occurrencesToBest[$item->course_id])) {
+                    $occurrencesToBest[$item->course_id] = 0;
+                }
+                $occurrencesToBest[$item->course_id] += 1;
             }
-            $occurrences[$item->course_id] += 1;
         }
 
         $max = 0;
-        foreach ($occurrences as $l) if ($l >= $max) $max = $l;
-        $key = array_search($max, $occurrences);
+        foreach ($occurrencesToBest as $l) if ($l >= $max) $max = $l;
+        $key = array_search($max, $occurrencesToBest);
 
         $bestCourse = $crs->find($key);
 

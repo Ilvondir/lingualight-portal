@@ -24,6 +24,7 @@ class Course extends Model
         "hours",
         "created",
         "img",
+        "visible",
         "author_id",
         "form_id",
         "difficulty_id"

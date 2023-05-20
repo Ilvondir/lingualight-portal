@@ -18,7 +18,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::idDescending()->with(["author", "difficulty", "form"])->get();
+        $courses = Course::idDescending()->with(["author", "difficulty", "form"])->where("visible", "=", 1)->get();
         return view("courses.courses", ["courses"=>$courses, "languages" => $this->getLanguages($courses), "headquarters" => $this->getHeadquarters($courses)]);
     }
 
@@ -27,7 +27,11 @@ class CourseController extends Controller
      */
     public function create()
     {
-        return view("courses.form");
+        if (Auth::check()) {
+            if (Auth::user()->role_id==2) return view("courses.form");
+            else return redirect()->route("courses.index");
+        }
+        return redirect()->route("courses.index");
     }
 
     /**
@@ -49,6 +53,7 @@ class CourseController extends Controller
         $c->price = $data["price"];
         $c->author_id = Auth::user()->id;
         $c->created = date("Y-m-d");
+        $c->visible = 1;
 
         if ($data["difficulty"]=="A1") $c->difficulty_id = 1;
         if ($data["difficulty"]=="A2") $c->difficulty_id = 2;
@@ -84,6 +89,9 @@ class CourseController extends Controller
 
         $course = Course::find($id);
         if (Auth::check()) {
+
+            if ($course->visible==0 && Auth::user()->role_id!=1) return redirect()->route("courses.index");
+
             if (Auth::user()->role_id == 3) {
                 $enrollments = Enrollment::where("user_id", "=", Auth::user()->id)->get();
 
@@ -120,7 +128,8 @@ class CourseController extends Controller
             }
         }
 
-        return view("courses.show", ["c"=>$course, "already"=>false]);
+        if ($course->visible==1) return view("courses.show", ["c"=>$course, "already"=>false]);
+        else return redirect()->route("courses.index");
     }
 
     /**
@@ -128,8 +137,11 @@ class CourseController extends Controller
      */
     public function edit(int $id)
     {
-        if (Auth::user()->id == 3) return redirect()->route("auth.login");
-        return view("courses.form", ["c" => Course::find($id)]);
+        if (Auth::check()) {
+            if (Auth::user()->id == 3) return redirect()->route("courses.index");
+            return view("courses.form", ["c" => Course::find($id)]);
+        }
+        return redirect()->route("auth.login");
     }
 
     /**
@@ -183,7 +195,8 @@ class CourseController extends Controller
         if (!Auth::check()) return redirect()->route("auth.login");
         if (Auth::user()->role_id == 3) return redirect()->route("home");
         $c = Course::find($id);
-        $c->delete();
+        $c->visible = 0;
+        $c->save();
         return redirect()->route("courses.index");
     }
 
@@ -201,6 +214,7 @@ class CourseController extends Controller
 
         $whereTable = [
             ["name", "LIKE", "%".$name."%"],
+            ["visible", "=", 1],
         ];
 
         if ($language != "All") array_push($whereTable, ["language", "LIKE", "%".$language."%"]);
