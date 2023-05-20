@@ -16,6 +16,6 @@ class Confirmation extends Model
 
     public function trainer()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 }

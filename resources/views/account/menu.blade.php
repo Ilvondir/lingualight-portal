@@ -22,6 +22,8 @@
         <div class="menu mt-5">
 
             @if (Auth::user()->role_id==1)
+                <a href="{{ route("confirmations.index") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-top" style="font-size: 1.5rem">Confirmation requests</div></a>
+
                 <a href="{{ route("users.index") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-top border-bottom" style="font-size: 1.5rem">Users panel</div></a>
             @endif
 
@@ -29,7 +31,7 @@
                 <a href="{{ route("courses.create") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-top border-bottom" style="font-size: 1.5rem">Create course</div></a>
 
                 <a href="{{ route("account.your_courses") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-bottom" style="font-size: 1.5rem">Your courses</div></a>
-            @else
+            @elseif (Auth::user()->role_id==2 && Auth::user()->confirmed==0)
                 <a href="{{ route("confirmation.create") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-top border-bottom" style="font-size: 1.5rem">Confirm trainer account</div></a>
             @endif
 

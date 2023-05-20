@@ -76,6 +76,8 @@ Route::controller(AccountController::class)->group(function () {
 Route::controller(ConfirmationController::class)->group(function () {
     Route::get("/account/confirmation", "create")->name("confirmation.create");
     Route::post("/account/confirmation", "store")->name("confirmation.store");
+    Route::get("/confirmations/index", "index")->name("confirmations.index");
+    Route::get("/confirmations/{id}", "show")->name("confirmations.show");
 });
 
 ?>

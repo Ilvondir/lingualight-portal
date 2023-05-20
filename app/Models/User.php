@@ -46,6 +46,6 @@ class User extends Authenticatable
 
     public function confirmation()
     {
-        return $this->hasOne(Confirmation::class);
+        return $this->hasMany(Confirmation::class);
     }
 }

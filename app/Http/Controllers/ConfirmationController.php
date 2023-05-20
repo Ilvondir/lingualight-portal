@@ -15,7 +15,17 @@ class ConfirmationController extends Controller
      */
     public function index()
     {
-        //
+        if (!Auth::check()) return redirect()->route("auth.login");
+        else {
+            if (Auth::user()->role_id!=1) return redirect()->route("account.menu");
+            else {
+                $requests = Confirmation::with("trainer")->get();
+                $new = $requests->where("considered", "=", 0);
+                $old = $requests->where("considered", "=", 1);
+
+                return view("confirmations.index", ["new" => $new, "old" => $old]);
+            }
+        }
     }
 
     /**
@@ -44,6 +54,7 @@ class ConfirmationController extends Controller
         $c->date = date("Y-m-d");
         $name = Auth::user()->id."-".$_FILES["competences"]["name"];
         $c->file = $name;
+        $c->considered = 0;
 
         if(Storage::exists('public/archives/'.$name)) Storage::delete('public/archives/'.$name);
         Storage::putFileAs("public/archives/", $data["competences"], $name);
