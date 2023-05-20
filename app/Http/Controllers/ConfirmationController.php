@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreConfirmationRequest;
 use App\Models\Confirmation;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -67,32 +68,42 @@ class ConfirmationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $id)
     {
-        //
+        if (!Auth::check()) return redirect()->route("auth.login");
+        else {
+            if (Auth::user()->role_id!=1) return redirect()->route("account.menu");
+            else {
+                $requests = Confirmation::with("trainer")->get();
+
+                $r = $requests->find($id);
+
+                return view("confirmations.show", ["confirmation" => $r]);
+            }
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+    public function verdict(int $id) {
+        if (!Auth::check()) return redirect()->route("auth.login");
+        else {
+            if (Auth::user()->role_id!=1) return redirect()->route("account.menu");
+            else {
+                $c = Confirmation::find($id);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+                $verdict = $_POST["submit"];
+                print($verdict);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+                $c->considered = 1;
+                $c->save();
+
+                if ($verdict == "Confirm account") {
+                    $trainer = User::find($c->trainer_id);
+                    $trainer->confirmed = 1;
+                    $trainer->save();
+                }
+
+                return redirect()->route("confirmations.index");
+            }
+        }
     }
 }

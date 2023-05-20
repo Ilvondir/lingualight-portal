@@ -45,7 +45,7 @@
             </a>
 
         @empty
-            No new requests
+            No archived requests
         @endforelse
 
 
