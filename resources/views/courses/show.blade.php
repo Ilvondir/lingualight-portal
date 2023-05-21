@@ -51,11 +51,11 @@
 
                 <div class="row">
 
-                    <div class="col-5">
+                    <div class="col-4">
                         <h3 class="mt-5 mb-5 w-100">Price: {{ $c->price }}$</h3>
                     </div>
 
-                    <div class="col-7">
+                    <div class="col-8">
 
                     @if (Auth::guest())
                         <div class="w-100 text-left mt-5">
@@ -75,18 +75,34 @@
                         @if (Auth::user()->role_id==3)
                             @if (!$already)
                                 <div class="w-100 text-left mt-4">
-                                    <form method="POST" action="{{ route("enrollment.store", ["id"=>request()->id]) }}">
+                                    <form method="POST" action="{{ route("enrollment.form", ["id"=>$c->id]) }}">
                                         @csrf
-                                        <button class="btn btn-black p-3" id="fontUp" type="submit"><i class="fa fa-check"></i> Enroll in the course.</button>
+                                        <button value="Enroll in the course" name="submit" class="btn btn-black p-3" id="fontUp" type="submit"><i class="fa fa-check"></i> Enroll in the course</button>
                                     </form>
                                 </div>
 
                             @else
-                                <div class="w-100 text-left mt-5">
-                                    <a href="{{ route("account.courses") }}" class="text-white text-decoration-none">
-                                        <h4>You have already enrolled in this course.</h4>
-                                    </a>
+
+                                @if ($payment)
+
+                                    <div class="w-100 text-left mt-5">
+                                        <a href="{{ route("account.courses") }}" class="text-white text-center text-decoration-none">
+                                            <h4>You have already fully enrolled in this course. Please wait for information from trainer.</h4>
+                                        </a>
+                                    </div>
+
+                                @else
+
+                                <div class="w-100 text-center mt-4">
+                                    <form method="POST" action="{{ route("enrollment.form", ["id"=>$c->id]) }}">
+                                        @csrf
+                                        <button type="submit" name="submit" class="btn btn-black p-3" id="fontUp" value="Pay for course"><i class="fa fa-money"></i>  Pay for course</button>
+
+                                        <button class="btn btn-black p-3" name="submit" value="Unenroll from course" id="fontUp" type="submit"><i class="fa fa-close"></i>  Unenroll from course</button>
+                                    </form>
                                 </div>
+
+                                @endif
 
                             @endif
 

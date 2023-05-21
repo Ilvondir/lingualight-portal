@@ -55,7 +55,7 @@ Route::controller(UserController::class)->group(function () {
 });
 
 Route::controller(EnrollmentController::class)->group(function () {
-    Route::post("/course/{id}", "store")->name("enrollment.store");
+    Route::post("/course/{id}", "form")->name("enrollment.form");
 });
 
 Route::controller(AccountController::class)->group(function () {

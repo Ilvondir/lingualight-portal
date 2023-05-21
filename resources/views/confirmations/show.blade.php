@@ -27,21 +27,30 @@
             </div>
         </div>
 
-        @if ($confirmation->considered==0)
+        @if (Auth::user()->role_id == 1)
+            @if ($confirmation->considered==0)
+
+                <div class="text-center w-100">
+                    <form action="{{ route("confirmations.verdict", ["id"=>$confirmation->id]) }}" method="POST">
+                        @csrf
+                        <input type="submit" class="btn btn-black mr-5" name="submit" value="Confirm account">
+                        <input type="submit" class="btn btn-black ml-5" name="submit" value="Reject confirmation">
+
+                    </form>
+                </div>
+
+            @else
 
             <div class="text-center w-100">
-                <form action="{{ route("confirmations.verdict", ["id"=>$confirmation->id]) }}" method="POST">
-                    @csrf
-                    <input type="submit" class="btn btn-black mr-5" name="submit" value="Confirm account">
-                    <input type="submit" class="btn btn-black ml-5" name="submit" value="Reject confirmation">
-
-                </form>
+                <p>This request is archived.</p>
             </div>
+
+            @endif
 
         @else
 
         <div class="text-center w-100">
-            <p>This request is archived.</p>
+            <p>You must wait for confirmation from the administrator.</p>
         </div>
 
         @endif

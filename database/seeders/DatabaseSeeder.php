@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             DifficultySeeder::class,
             CourseSeeder::class,
             EnrollmentSeeder::class,
+            ConfirmationSeeder::class,
         ]);
     }
 }

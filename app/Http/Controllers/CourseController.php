@@ -96,11 +96,15 @@ class CourseController extends Controller
                 $enrollments = Enrollment::where("user_id", "=", Auth::user()->id)->get();
 
                 $already = false;
+                $payment = false;
                 foreach ($enrollments as $e) {
-                    if ($e->course_id == $id) $already = true;
+                    if ($e->course_id == $id) {
+                        $already = true;
+                        if ($e->payment_date != null) $payment = true;
+                    }
                 }
 
-                return view("courses.show", ["c"=>$course, "already"=>$already]);
+                return view("courses.show", ["c"=>$course, "already"=>$already, 'payment'=>$payment]);
             }
 
             if ($course->author_id == Auth::user()->id || Auth::user()->id == 1) {
