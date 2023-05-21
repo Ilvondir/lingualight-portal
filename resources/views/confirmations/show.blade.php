@@ -9,14 +9,14 @@
     <div class="container">
 
         <div class="row">
-            <div class="col-9">
+            <div class="col-lg-9 col-12">
                 <div><h1>{{ $confirmation->subject }}</h1></div>
                 <p>Author: <b>{{ $confirmation->trainer->name }} {{ $confirmation->trainer->surname }}</b></p>
                 <p>Sended: <b>{{ $confirmation->date }}</b></p>
             </div>
-            <div class="col-3">
+            <div class="col-lg-3 col-12">
                 <a href="{{ asset("storage/archives/".$confirmation->file) }}" download>
-                    <button style="font-size: 1.8rem" class="btn btn-black"><i class="fa fa-download"></i> Download documents</button>
+                    <button style="font-size: 1.8rem" class="btn mb-3 mb-lg-0 btn-black"><i class="fa fa-download"></i> Download documents</button>
                 </a>
             </div>
         </div>

@@ -236,9 +236,8 @@ class CourseController extends Controller
         }
 
         if ($form != "All") {
-            if ($form == "Stationary") $form = 1;
-            if ($form == "Remote") $form = 2;
-            if ($form == "Hybrid") $form = 3;
+            if ($form == "Remote") $form = 1;
+            if ($form == "Hybrid") $form = 2;
             array_push($whereTable, ["form_id", "=", $form]);
         }
 

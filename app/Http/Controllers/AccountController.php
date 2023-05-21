@@ -149,9 +149,8 @@ class AccountController extends Controller
                 }
 
                 if ($form != "All") {
-                    if ($form == "Stationary") $form = 1;
-                    if ($form == "Remote") $form = 2;
-                    if ($form == "Hybrid") $form = 3;
+                    if ($form == "Remote") $form = 1;
+                    if ($form == "Hybrid") $form = 2;
                     array_push($whereTable, ["form_id", "=", $form]);
                 }
 
@@ -162,7 +161,7 @@ class AccountController extends Controller
 
                 if ($headquarter != "All") array_push($whereTable, ["headquarter", "=", $headquarter]);
 
-                $filteredCourses = Course::idDescending()->where( $whereTable )->get();
+                $filteredCourses = Course::idDescending()->with("form")->where( $whereTable )->get();
 
                 $enrollments = Enrollment::where("user_id", "=", Auth::user()->id)->get();
                 $thisUserCourses = [];
@@ -269,9 +268,8 @@ class AccountController extends Controller
                 }
 
                 if ($form != "All") {
-                    if ($form == "Stationary") $form = 1;
-                    if ($form == "Remote") $form = 2;
-                    if ($form == "Hybrid") $form = 3;
+                    if ($form == "Remote") $form = 1;
+                    if ($form == "Hybrid") $form = 2;
                     array_push($whereTable, ["form_id", "=", $form]);
                 }
 
@@ -284,7 +282,7 @@ class AccountController extends Controller
 
                 array_push($whereTable, ["author_id", "=", Auth::user()->id]);
 
-                $courses = Course::idDescending()->where( $whereTable )->get();
+                $courses = Course::idDescending()->with("form")->where( $whereTable )->get();
 
                 $crs = Course::where([["author_id", "=", Auth::user()->id], ["visible", "=", 1]])->get();
 

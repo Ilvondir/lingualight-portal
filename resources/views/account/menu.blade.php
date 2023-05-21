@@ -9,15 +9,15 @@
     <div class="container">
 
         <div class="row">
-            <div class="col-6">
+            <div class="col-lg-6 col-12">
                 <h1>{{ Auth::user()->name }} {{ Auth::user()->surname }}</h1>
+                <div><h4>Login: {{ Auth::user()->login }}</h4></div>
+                <div><h4>Email: {{ Auth::user()->email }}</h4></div>
             </div>
-            <div class="col-6">
-                <h4 style="text-align:right">Registered: {{ Auth::user()->registered }}</h4>
+            <div class="col-lg-6 col-12 text-lg-end">
+                <h4>Registered: {{ Auth::user()->registered }}</h4>
             </div>
         </div>
-        <div><h4>Login: {{ Auth::user()->login }}</h4></div>
-        <div><h4>Email: {{ Auth::user()->email }}</h4></div>
 
         <div class="menu mt-5">
 

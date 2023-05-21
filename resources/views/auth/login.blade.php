@@ -12,8 +12,8 @@
             <h1>Login</h1>
         </div>
 
-        <div class="form w-100 d-flex justify-content-center align-items-center">
-            <div class="rounded bg-black text-white p-5 w-50">
+        <div class="form offset-lg-3 col-12 col-lg-6 d-flex justify-content-center align-items-center">
+            <div class="rounded bg-black text-white p-5 w-100">
                 <form action="{{ route("auth.login.authenticate") }}" method="POST" class="needs-validation" novalidate>
                     @csrf
 

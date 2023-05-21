@@ -18,8 +18,8 @@
 
         </div>
 
-        <div class="form w-100 d-flex justify-content-center align-items-center">
-            <div class="rounded bg-black text-white p-5 w-75">
+        <div class="form offset-lg-2 col-12 col-lg-8 d-flex justify-content-center align-items-center">
+            <div class="rounded bg-black text-white p-5 w-100">
                 <form action="@if (!str_contains(request()->path(), 'edit')) {{ route("courses.store") }} @else {{ route("course.update", ["id"=>$c->id]) }} @endif" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
                     @csrf
 
@@ -37,7 +37,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-12 col-md-6">
 
                             <div class="form-group mb-2">
                                 <label for="language">Language</label>
@@ -55,7 +55,7 @@
                             </div>
 
                         </div>
-                        <div class="col-6">
+                        <div class="col-12 col-md-6">
 
                             <div class="form-group mb-2">
                                 <label for="difficulty">Difficulty</label>
