@@ -32,7 +32,11 @@ class EnrollmentController extends Controller
                     $enrollment->user_id = Auth::user()->id;
                     $enrollment->course_id = $id;
                     $enrollment->enrollment_date = date("Y-m-d");
-                    $enrollment->to_pay = Course::find($id)->price;
+
+                    $c = Course::find($id);
+                    $enrollment->to_pay = $c->price;
+                    if ($c->created == date("Y-m-d")) $enrollment->to_pay =  $enrollment->to_pay*0.95;
+
                     $enrollment->payment_date = null;
 
                     $enrollment->save();
@@ -54,6 +58,8 @@ class EnrollmentController extends Controller
                             'currency' => 'usd',
                             'source' => 'tok_visa',
                             'description' => 'Payment for course "'. $e->course->name. '"',
+                            "receipt_email" => $e->user->email,
+                            "statement_descriptor" => "LinguaLight.com",
                         ]);
 
                         $e->payment_date = date("Y-m-d");

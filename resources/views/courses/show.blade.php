@@ -51,11 +51,35 @@
 
                 <div class="row">
 
-                    <div class="col-4">
-                        <h3 class="mt-5 mb-5 w-100">Price: {{ $c->price }}$</h3>
+                    <div class="col-5">
+                        <h3 class="mt-5 mb-5 w-100">
+
+                            @if (Auth::check())
+
+                                @if (Auth::user()->role_id==3)
+
+                                    @if ($already)
+                                        Your price: {{ number_format($price, 2, ".", " ") }}$
+                                    @else
+                                        Price:
+                                        @if ($c->created != date("Y-m-d")) {{ $c->price }}$ @else <span style="color: #609097">{{ number_format($c->price*0.95, 2, ".", " ") }}$</span> @endif
+                                    @endif
+
+                                @else
+                                    Price:
+                                    @if ($c->created != date("Y-m-d")) {{ $c->price }}$ @else <span style="color: #609097">{{ number_format($c->price*0.95, 2, ".", " ") }}$</span> @endif
+                                @endif
+
+                            @else
+                                Price:
+                                @if ($c->created != date("Y-m-d")) {{ $c->price }}$ @else <span style="color: #609097">{{ number_format($c->price*0.95, 2, ".", " ") }}$</span> @endif
+                            @endif
+
+
+                    </h3>
                     </div>
 
-                    <div class="col-8">
+                    <div class="col-7">
 
                     @if (Auth::guest())
                         <div class="w-100 text-left mt-5">

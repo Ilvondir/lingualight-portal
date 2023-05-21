@@ -16,6 +16,15 @@
                 Check our courses
             @endif
         </h2>
+
+
+        <div class="card rounded mb-5" style="color: red; background: rgba(255,0,0,0.3); border: .1rem solid red">
+            <div class="card-body">
+                <h4>Happiness favors the swift!</h4>
+                <p style="text-align: justify">We are excited to announce a special offer for our newly launched course! If you enroll in the course on the day of its release, you will receive a 5% discount. Don't miss out on this opportunity to join our program at a reduced price. Take advantage of this limited-time offer and secure your spot today!</p>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-3">
 
@@ -98,8 +107,7 @@
 
                                 </div>
                                 <div class="col-2 text-end">
-                                    {{-- <h6>@if ($course->created != date("Y-m-d")) {{ $course->price }}$ @else <span style="color: #609097"><s>{{$course->price}}$</s><br>{{ $course->price*0.9 }}$</span> @endif</h6> --}}
-                                    {{ $course->price }}$
+                                    <h6>@if ($course->created != date("Y-m-d")) {{ $course->price }}$ @else <span style="color: #609097"><s>{{$course->price}}$</s><br>{{ number_format($course->price*0.95, 2, ".", " ") }}$</span> @endif</h6>
                                 </div>
                             </div>
 

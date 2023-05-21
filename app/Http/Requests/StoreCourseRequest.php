@@ -35,7 +35,7 @@ class StoreCourseRequest extends FormRequest
             "start" => "required|date|after:today",
             "hours" => "required|integer|min:0",
             "form" => Rule::in(["Stationary", "Hybrid", "Remote"]),
-            "img" => "nullable|file",
+            "img" => "nullable",
             "description" => "required|min:50",
         ];
     }

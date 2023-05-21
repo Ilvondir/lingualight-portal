@@ -86,7 +86,6 @@
                     <div class="form-group mb-2">
                         <label for="form">Form</label>
                         <select name="form" id="form" class="form-select"  required>
-                            <option value="Stationary" @if (str_contains(request()->path(), 'edit')) @if ($c->form_id==1) selected @endif @endif>Stationary</option>
                             <option value="Remote" @if (str_contains(request()->path(), 'edit')) @if ($c->form_id==2) selected @endif @endif>Remote</option>
                             <option value="Hybrid" @if (str_contains(request()->path(), 'edit')) @if ($c->form_id==3) selected @endif @endif>Hybrid</option>
                         </select>

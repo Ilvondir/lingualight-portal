@@ -25,6 +25,7 @@
                 <th>Email</th>
                 <th>Role</th>
                 <th>Registered</th>
+                <th>Confirmed</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -37,6 +38,11 @@
                     <td>{{ $u->email }}</td>
                     <td>{{ $u->role->name }}</td>
                     <td>{{ $u->registered }}</td>
+                    <td>
+                        @if ($u->confirmed === 0) No @endif
+                        @if ($u->confirmed === 1) Yes @endif
+                        @if ($u->confirmed === null) - @endif
+                    </td>
                     <td>
                         <a href="{{ route("users.edit", ["id"=>$u->id]) }}">
                             <button class="btn btn-black">Edit</button>

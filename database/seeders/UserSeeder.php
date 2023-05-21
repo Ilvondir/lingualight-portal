@@ -28,9 +28,6 @@ class UserSeeder extends Seeder
                 "login"=>"john", "password"=>Hash::make("1234"), "email"=>"doe@gmail.com", "name"=>"John", "surname"=>"Doe", "registered"=>date("Y-m-d", strtotime("-3 days")), "role_id"=>2,  "confirmed" => 1,
             ],
             [
-                "login"=>"Jacky", "password"=>Hash::make("1234"), "email"=>"jBoe@gmail.com", "name"=>"Jack", "surname"=>"Boe", "registered"=>date("Y-m-d", strtotime("-4 days")), "role_id"=>2,  "confirmed" => 0,
-            ],
-            [
                 "login"=>"Ilvondir", "password"=>Hash::make("user"), "email"=>"ilvondir@gmail.com", "name"=>"Micheal", "surname"=>"Fuzzy", "registered"=>date("Y-m-d", strtotime("-1 days")), "role_id"=>3,  "confirmed" => null,
             ],
             [
@@ -47,6 +44,9 @@ class UserSeeder extends Seeder
             ],
             [
                 "login"=>"Johael", "password"=>Hash::make("user"), "email"=>"j.feal@gmail.com", "name"=>"Johannes", "surname"=>"Fael", "registered"=>date("Y-m-d"), "role_id"=>3, "confirmed" => null,
+            ],
+            [
+                "login"=>"Jacky", "password"=>Hash::make("1234"), "email"=>"jBoe@gmail.com", "name"=>"Jack", "surname"=>"Boe", "registered"=>date("Y-m-d", strtotime("-4 days")), "role_id"=>2,  "confirmed" => 0,
             ],
         ]
         );

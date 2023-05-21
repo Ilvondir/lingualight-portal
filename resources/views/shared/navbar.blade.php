@@ -32,7 +32,7 @@
                     </li>
                 @else
                     <li class="nav-item">
-                        <a class="nav-link @if (str_contains(request()->path(), 'login')) active @endif" href="{{ route('auth.login') }}">Login</a>
+                        <a class="nav-link @if (str_contains(request()->path(), 'login') || str_contains(request()->path(),"register")) active @endif" href="{{ route('auth.login') }}">Login</a>
                     </li>
                 @endif
             </ul>
