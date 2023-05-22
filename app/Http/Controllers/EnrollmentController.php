@@ -11,6 +11,17 @@ use Stripe\Charge;
 
 class EnrollmentController extends Controller
 {
+
+    public function payed(int $id) {
+
+        $enrl = Enrollment::where([["course_id", "=", $id], ["user_id", "=", Auth::user()->id]])->get();
+        $e = Enrollment::find($enrl[0]->id);
+        $e->payment_date = date("Y-m-d");
+        $e->save();
+
+        return redirect()->route("course.show", ["id"=>$id]);
+    }
+
     public function form(int $id) {
         if (!Auth::check()) return redirect()->route("courses.index");
         else {
@@ -46,26 +57,32 @@ class EnrollmentController extends Controller
 
                 if ($action == "Pay for course") {
 
-                    Stripe::setApiKey("sk_test_51NA93CDCjkSWfv1NeFTtsT1QE1lEbCn3XX98nX8rtDUWwicIqvK5k5Gt6Nw6gR4iBduVGStXe4g1qtbtk7OiauNV00Cg812Qy0");
+                    Stripe::setApiKey(env("STRIPE_SECRET"));
 
                     try {
 
                         $enrl = Enrollment::where([["course_id", "=", $id], ["user_id", "=", Auth::user()->id]])->get();
                         $e = Enrollment::find($enrl[0]->id);
 
-                        $charge = Charge::create([
-                            'amount' => $e->to_pay*100,
-                            'currency' => 'usd',
-                            'source' => 'tok_visa',
-                            'description' => 'Payment for course "'. $e->course->name. '"',
-                            "receipt_email" => $e->user->email,
-                            "statement_descriptor" => "LinguaLight.com",
+                        $checkout_session = \Stripe\Checkout\Session::create([
+                            "line_items" => [
+                                [
+                                    'price_data' => [
+                                        'currency' => 'usd',
+                                        'product_data' => [
+                                            'name' => $e->course->name,
+                                        ],
+                                        'unit_amount' => $e->to_pay*100,
+                                    ],
+                                    'quantity' => 1,
+                                ]
+                            ],
+                            'mode' => 'payment',
+                            'success_url' => route("enrollment.payed", ["id"=>$id]),
+                            'cancel_url' => request()->fullUrl(),
                         ]);
 
-                        $e->payment_date = date("Y-m-d");
-                        $e->save();
-
-                        return redirect()->route("course.show", ["id"=>$id]);
+                        return redirect($checkout_session->url);
 
                     } catch (Exception $e) {
                         return $e->getMessage();

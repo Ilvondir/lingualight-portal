@@ -33,8 +33,8 @@
 
 
                     <label class="mt-3" for="competences">Competences</label>
-                    <input type="file" id="competences" name="competences" class="form-control" accept=".zip,.rar,.7z" required>
-                    <p>Please send your documents packed in one archive. The field accepts files with the extension .zip, .rar and .7z.</p>
+                    <input type="file" id="competences" name="competences" class="form-control" accept=".pdf,.zip,.rar,.7z" required>
+                    <p>Please send your documents packed in one archive or send single pdf file. The field accepts files with the extension .pdf, .zip, .rar and .7z.</p>
 
                     <div class="w-100 text-center">
                         <button class="btn btn-dark mt-4" type="submit"><i class="fa fa-send"></i>  Send</button>

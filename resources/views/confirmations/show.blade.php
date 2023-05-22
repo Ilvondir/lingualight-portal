@@ -15,9 +15,11 @@
                 <p>Sended: <b>{{ $confirmation->date }}</b></p>
             </div>
             <div class="col-lg-3 col-12">
-                <a href="{{ asset("storage/archives/".$confirmation->file) }}" download>
-                    <button style="font-size: 1.8rem" class="btn mb-3 mb-lg-0 btn-black"><i class="fa fa-download"></i> Download documents</button>
-                </a>
+                @if ($confirmation->considered==0)
+                    <a href="{{ asset("storage/archives/".$confirmation->file) }}" download>
+                        <button style="font-size: 1.8rem" class="btn mb-3 mb-lg-0 btn-black"><i class="fa fa-download"></i> Download documents</button>
+                    </a>
+                @endif
             </div>
         </div>
 

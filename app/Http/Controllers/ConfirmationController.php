@@ -115,6 +115,8 @@ class ConfirmationController extends Controller
                     $trainer->save();
                 }
 
+                Storage::delete('public/archives/'.$c->file);
+
                 return redirect()->route("confirmations.index");
             }
         }

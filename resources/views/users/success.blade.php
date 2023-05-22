@@ -9,9 +9,9 @@
     <div class="container">
 
         <div class="row mt-4 mb-4 text-center">
-            @if (!Auth::check())
+            @if (Auth::user()->role_id!=1)
                 <a href="{{ route('home') }}" class="text-white text-decoration-none">
-                    <h1>Registration was successful. Please return to the homepage and log in to your new account.</h1>
+                    <h1>Registration was successful. We've automatically logged you into your new account.</h1>
                 </a>
             @else
                 <a href="{{ route('users.index') }}" class="text-white text-decoration-none">
