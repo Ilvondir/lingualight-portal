@@ -17,7 +17,9 @@
               <li class="nav-item">
                 <a class="nav-link @if (str_contains(request()->path(), 'course') && !str_contains(request()->path(), 'account')) active @endif" href="{{ route("courses.index") }}">Courses</a>
               </li>
-
+              <li class="nav-item">
+                <a class="nav-link @if (str_contains(request()->path(), 'contact') && !str_contains(request()->path(), 'account')) active @endif" href="{{ route("contact") }}">Contact</a>
+              </li>
             </ul>
 
             <ul class="nav navbar-nav mb-2 mb-lg-0 mr-auto">
