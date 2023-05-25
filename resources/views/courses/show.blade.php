@@ -9,7 +9,7 @@
     <div class="container">
 
         <div class="mt-4 row">
-            <div class="col-3">
+            <div class="col-12 col-lg-3">
                 <div class="d-flex justify-content-center align-items-center">
                     <img src="@if ($c->img == NULL) {{asset('storage/img/courses/logo.png')}} @else {{asset('storage/img/courses')."/".$c->img}} @endif" width="240" height="240" class="rounded">
                 </div>
@@ -35,7 +35,7 @@
                 @endauth
 
             </div>
-            <div class="col-9">
+            <div class="col-12 mt-lg-0 mt-5 col-lg-9">
                 <h1>{{ $c->name }}</h1>
 
                 <div class="row">
@@ -51,11 +51,35 @@
 
                 <div class="row">
 
-                    <div class="col-5">
-                        <h3 class="mt-5 mb-5 w-100">Price: {{ $c->price }}$</h3>
+                    <div class="col-12 col-lg-5">
+                        <h3 class="mt-lg-5 mt-4 mb-lg-5 mb-4 w-100">
+
+                            @if (Auth::check())
+
+                                @if (Auth::user()->role_id==3)
+
+                                    @if ($already)
+                                        Your price: {{ number_format($price, 2, ".", " ") }}$
+                                    @else
+                                        Price:
+                                        @if ($c->created != date("Y-m-d")) {{ $c->price }}$ @else <span style="color: #609097">{{ number_format($c->price*0.95, 2, ".", " ") }}$</span> @endif
+                                    @endif
+
+                                @else
+                                    Price:
+                                    @if ($c->created != date("Y-m-d")) {{ $c->price }}$ @else <span style="color: #609097">{{ number_format($c->price*0.95, 2, ".", " ") }}$</span> @endif
+                                @endif
+
+                            @else
+                                Price:
+                                @if ($c->created != date("Y-m-d")) {{ $c->price }}$ @else <span style="color: #609097">{{ number_format($c->price*0.95, 2, ".", " ") }}$</span> @endif
+                            @endif
+
+
+                    </h3>
                     </div>
 
-                    <div class="col-7">
+                    <div class="col-12 col-lg-7">
 
                     @if (Auth::guest())
                         <div class="w-100 text-left mt-5">
@@ -74,19 +98,35 @@
 
                         @if (Auth::user()->role_id==3)
                             @if (!$already)
-                                <div class="w-100 text-left mt-4">
-                                    <form method="POST" action="{{ route("enrollment.store", ["id"=>request()->id]) }}">
+                                <div class="w-100 text-center mt-0 mb-5 mb-lg-0 mt-lg-4">
+                                    <form method="POST" action="{{ route("enrollment.form", ["id"=>$c->id]) }}">
                                         @csrf
-                                        <button class="btn btn-black p-3" id="fontUp" type="submit"><i class="fa fa-check"></i> Enroll in the course.</button>
+                                        <button value="Enroll in the course" name="submit" class="mt-3 mt-lg-0 btn btn-black p-3" id="fontUp" type="submit"><i class="fa fa-check"></i> Enroll in the course</button>
                                     </form>
                                 </div>
 
                             @else
-                                <div class="w-100 text-left mt-5">
-                                    <a href="{{ route("account.courses") }}" class="text-white text-decoration-none">
-                                        <h4>You have already enrolled in this course.</h4>
-                                    </a>
+
+                                @if ($payment)
+
+                                    <div class="w-100 text-left mt-5 mb-5">
+                                        <a href="{{ route("account.courses") }}" class="text-white text-center text-decoration-none">
+                                            <h4>You have already fully enrolled in this course. Please wait for information from trainer.</h4>
+                                        </a>
+                                    </div>
+
+                                @else
+
+                                <div class="w-100 text-center mt-2 mb-4 mb-lg-0 mt-lg-4">
+                                    <form method="POST" action="{{ route("enrollment.form", ["id"=>$c->id]) }}">
+                                        @csrf
+                                        <button type="submit" name="submit" class="btn btn-black p-3" id="fontUp" value="Pay for course"><i class="fa fa-money"></i>  Pay for course</button>
+
+                                        <button class="mt-3 mt-lg-0 btn btn-black p-3" name="submit" value="Unenroll from course" id="fontUp" type="submit"><i class="fa fa-close"></i>  Unenroll from course</button>
+                                    </form>
                                 </div>
+
+                                @endif
 
                             @endif
 
@@ -135,26 +175,27 @@
         @if (Auth::check())
             @if (Auth::user()->id == $c->author_id || Auth::user()->id == 1)
                 <h2 class="mb-5 mt-5">Enrolled users</h2>
-
-                <table class="table table-dark text-white w-100">
-                    <tr>
-                        <th>Name</th>
-                        <th>Surname</th>
-                        <th>Email contact</th>
-                        <th>Date of enrollment</th>
-                        <th>Payment</th>
-                    </tr>
-
-                    @foreach ($enrolled as $e)
+                <div class="overflow-auto">
+                    <table class="table table-dark text-white w-100">
                         <tr>
-                            <td>{{ $e["name"] }}</td>
-                            <td>{{ $e["surname"] }}</td>
-                            <td>{{ $e["email"] }}</td>
-                            <td>{{ $e["enrolled_date"] }}</td>
-                            <td>{{ $e["payment"] }}</td>
+                            <th>Name</th>
+                            <th>Surname</th>
+                            <th>Email contact</th>
+                            <th>Date of enrollment</th>
+                            <th>Payment</th>
                         </tr>
-                    @endforeach
-                </table>
+
+                        @foreach ($enrolled as $e)
+                            <tr>
+                                <td>{{ $e["name"] }}</td>
+                                <td>{{ $e["surname"] }}</td>
+                                <td>{{ $e["email"] }}</td>
+                                <td>{{ $e["enrolled_date"] }}</td>
+                                <td>{{ $e["payment"] }}</td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
             @endif
         @endif
 

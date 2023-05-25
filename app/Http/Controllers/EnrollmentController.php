@@ -3,35 +3,91 @@
 namespace App\Http\Controllers;
 
 use App\Models\Enrollment;
-use App\Http\Requests\StoreEnrollmentRequest;
 use App\Models\Course;
+use Exception;
 use Illuminate\Support\Facades\Auth;
+use Stripe\Stripe;
 
 class EnrollmentController extends Controller
 {
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreEnrollmentRequest $request, int $courseId)
-    {
-        $enrollment = new Enrollment();
 
-        $enrollment->user_id = Auth::user()->id;
-        $enrollment->course_id = $courseId;
-        $enrollment->enrollment_date = date("Y-m-d");
-        $enrollment->to_pay = Course::find($courseId)->price;
-        $enrollment->payment_date = null;
+    public function payed(int $id) {
 
-        $enrollment->save();
+        $enrl = Enrollment::where([["course_id", "=", $id], ["user_id", "=", Auth::user()->id]])->get();
+        $e = Enrollment::find($enrl[0]->id);
+        $e->payment_date = date("Y-m-d");
+        $e->save();
 
-        return redirect()->route("course.show", ["id"=>$courseId]);
+        return redirect()->route("course.show", ["id"=>$id]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Enrollment $enrollment)
-    {
-        //
+    public function form(int $id) {
+        if (!Auth::check()) return redirect()->route("courses.index");
+        else {
+            if (Auth::user()->role_id != 3) return redirect()->route("courses.index");
+            else {
+
+                $action = $_POST["submit"];
+
+                if ($action == "Unenroll from course") {
+                    $enrl = Enrollment::where([["course_id", "=", $id], ["user_id", "=", Auth::user()->id]])->get();
+                    $e = Enrollment::find($enrl[0]->id);
+                    $e->delete();
+                    return redirect()->route("course.show", ["id"=>$id]);
+                }
+
+                if ($action == "Enroll in the course") {
+                    $enrollment = new Enrollment();
+
+                    $enrollment->user_id = Auth::user()->id;
+                    $enrollment->course_id = $id;
+                    $enrollment->enrollment_date = date("Y-m-d");
+
+                    $c = Course::find($id);
+                    $enrollment->to_pay = $c->price;
+                    if ($c->created == date("Y-m-d")) $enrollment->to_pay =  $enrollment->to_pay*0.95;
+
+                    $enrollment->payment_date = null;
+
+                    $enrollment->save();
+
+                    return redirect()->route("course.show", ["id"=>$id]);
+                }
+
+                if ($action == "Pay for course") {
+
+                    Stripe::setApiKey(env("STRIPE_SECRET"));
+
+                    try {
+
+                        $enrl = Enrollment::where([["course_id", "=", $id], ["user_id", "=", Auth::user()->id]])->get();
+                        $e = Enrollment::find($enrl[0]->id);
+
+                        $checkout_session = \Stripe\Checkout\Session::create([
+                            "line_items" => [
+                                [
+                                    'price_data' => [
+                                        'currency' => 'usd',
+                                        'product_data' => [
+                                            'name' => $e->course->name,
+                                        ],
+                                        'unit_amount' => $e->to_pay*100,
+                                    ],
+                                    'quantity' => 1,
+                                ]
+                            ],
+                            'mode' => 'payment',
+                            'success_url' => route("enrollment.payed", ["id"=>$id]),
+                            'cancel_url' => request()->fullUrl(),
+                        ]);
+
+                        return redirect($checkout_session->url);
+
+                    } catch (Exception $e) {
+                        return $e->getMessage();
+                    }
+                }
+            }
+        }
     }
 }

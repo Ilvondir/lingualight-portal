@@ -62,17 +62,18 @@ class CourseController extends Controller
         if ($data["difficulty"]=="C1") $c->difficulty_id = 5;
         if ($data["difficulty"]=="C2") $c->difficulty_id = 6;
 
-        if ($data["form"]=="Stationary") $c->form_id = 1;
-        if ($data["form"]=="Remote") $c->form_id = 2;
-        if ($data["form"]=="Hybrid") $c->form_id = 3;
+        if ($data["form"]=="Remote") $c->form_id = 1;
+        if ($data["form"]=="Hybrid") $c->form_id = 2;
 
-        if ($data["img"]!=null) {
-            $max = Course::max("id")+1;
-            $name = $max.".png";
-            $c->img = $name;
+        if (isset($data["img"])) {
+            if ($data["img"]!=null) {
+                $max = Course::max("id")+1;
+                $name = $max.".png";
+                $c->img = $name;
 
-            if(Storage::exists('public/img/courses/'.$name)) Storage::delete('public/img/courses/'.$name);
-            Storage::putFileAs("public/img/courses", $data["img"], $name);
+                if(Storage::exists('public/img/courses/'.$name)) Storage::delete('public/img/courses/'.$name);
+                Storage::putFileAs("public/img/courses", $data["img"], $name);
+            }
         }
 
         $c->save();
@@ -96,11 +97,17 @@ class CourseController extends Controller
                 $enrollments = Enrollment::where("user_id", "=", Auth::user()->id)->get();
 
                 $already = false;
+                $payment = false;
+                $price = 0;
                 foreach ($enrollments as $e) {
-                    if ($e->course_id == $id) $already = true;
+                    if ($e->course_id == $id) {
+                        $already = true;
+                        $price = $e->to_pay;
+                        if ($e->payment_date != null) $payment = true;
+                    }
                 }
 
-                return view("courses.show", ["c"=>$course, "already"=>$already]);
+                return view("courses.show", ["c"=>$course, "already"=>$already, 'payment'=>$payment, "price"=>$price]);
             }
 
             if ($course->author_id == Auth::user()->id || Auth::user()->id == 1) {
@@ -169,9 +176,8 @@ class CourseController extends Controller
             if ($data["difficulty"]=="C1") $c->difficulty_id = 5;
             if ($data["difficulty"]=="C2") $c->difficulty_id = 6;
 
-            if ($data["form"]=="Stationary") $c->form_id = 1;
-            if ($data["form"]=="Remote") $c->form_id = 2;
-            if ($data["form"]=="Hybrid") $c->form_id = 3;
+            if ($data["form"]=="Remote") $c->form_id = 1;
+            if ($data["form"]=="Hybrid") $c->form_id = 2;
 
             $c->save();
 
@@ -230,9 +236,8 @@ class CourseController extends Controller
         }
 
         if ($form != "All") {
-            if ($form == "Stationary") $form = 1;
-            if ($form == "Remote") $form = 2;
-            if ($form == "Hybrid") $form = 3;
+            if ($form == "Remote") $form = 1;
+            if ($form == "Hybrid") $form = 2;
             array_push($whereTable, ["form_id", "=", $form]);
         }
 

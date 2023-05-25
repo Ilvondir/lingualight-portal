@@ -12,8 +12,8 @@
             <h1>Edit data</h1>
         </div>
 
-        <div class="form w-100 d-flex justify-content-center align-items-center">
-            <div class="rounded bg-black text-white p-5 w-50">
+        <div class="form offset-lg-3 col-12 col-lg-6 d-flex justify-content-center align-items-center">
+            <div class="rounded bg-black text-white p-5 w-100">
                 <form action="{{ route("account.edit.update") }}" method="POST">
                     @csrf
 
@@ -26,15 +26,15 @@
                     @endif
 
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-lg-6 col-12">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" name="name" value="{{ Auth::user()->name }}" required>
 
                             <label class="mt-3" for="email">Email</label>
                             <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" required>
                         </div>
-                        <div class="col-6">
-                            <label for="surname">Surname</label>
+                        <div class="col-lg-6 col-12">
+                            <label class="mt-3 mt-lg-0" for="surname">Surname</label>
                             <input type="text" class="form-control" id="surname" name="surname" value="{{ Auth::user()->surname }}" required>
 
                             <label class="mt-3" for="login">Login</label>

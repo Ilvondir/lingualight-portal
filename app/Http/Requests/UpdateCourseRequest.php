@@ -27,7 +27,7 @@ class UpdateCourseRequest extends FormRequest
         $difs = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
         return [
-            "name" => "required|min:10|max:255",
+            "name" => ["required", "min:10", "max:255", Rule::unique('courses')->ignore(request()->route("id"))],
             "language" => 'required|min:3|max:255',
             "difficulty" => Rule::in($difs),
             "headquarter" => 'required|min:2|max:255',
@@ -35,7 +35,7 @@ class UpdateCourseRequest extends FormRequest
             "start" => "required|date|after:today",
             "hours" => "required|integer|min:0",
             "form" => Rule::in(["Stationary", "Hybrid", "Remote"]),
-            "description" => "required|min:50",
+            "description" => ["required", "min:50", Rule::unique('courses')->ignore(request()->route("id"))],
         ];
     }
 }

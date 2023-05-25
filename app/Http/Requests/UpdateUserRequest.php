@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\Rule;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -27,8 +28,8 @@ class UpdateUserRequest extends FormRequest
         return [
             "name" => 'required|min:2|max:255',
             "surname" => 'required|min:2|max:255',
-            "login" => "required|min:6|max:30",
-            "email" => "required|min:7|max:255|email",
+            "login" => ["required", "min:6", "max:30", Rule::unique('users')->ignore(Auth::user()->id)],
+            "email" => ["required", "min:7", "max:255", "email", Rule::unique('users')->ignore(Auth::user()->id)],
         ];
     }
 

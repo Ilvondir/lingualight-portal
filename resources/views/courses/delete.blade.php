@@ -12,8 +12,8 @@
             <h1>Delete course</h1>
         </div>
 
-        <div class="form w-100 d-flex justify-content-center align-items-center">
-            <div class="rounded bg-black text-white p-5 w-50">
+        <div class="form offset-lg-3 col-12 col-lg-6 d-flex justify-content-center align-items-center">
+            <div class="rounded bg-black text-white p-5 w-100">
                 <form action="{{ route("courses.destroy", ["id" => $c->id]) }}" method="POST">
                     @csrf
                     <div>Are you sure you want to delete course "<b>{{ $c->name }}</b>"? All enrolled users will be deleted and their data will be irretrievably lost. This operation is irreversible!</div>

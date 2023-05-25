@@ -5,6 +5,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ConfirmationController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EnrollmentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Index;
@@ -55,7 +56,8 @@ Route::controller(UserController::class)->group(function () {
 });
 
 Route::controller(EnrollmentController::class)->group(function () {
-    Route::post("/course/{id}", "store")->name("enrollment.store");
+    Route::post("/course/{id}", "form")->name("enrollment.form");
+    Route::get("/course/{id}/payed", "payed")->name("enrollment.payed");
 });
 
 Route::controller(AccountController::class)->group(function () {
@@ -80,5 +82,11 @@ Route::controller(ConfirmationController::class)->group(function () {
     Route::get("/confirmations/{id}", "show")->name("confirmations.show");
     Route::post("/confirmations/{id}", "verdict")->name("confirmations.verdict");
 });
+
+Route::controller(ContactController::class)->group(function () {
+    Route::get("/contact", "index")->name("contact");
+    Route::get("/contact/edit", "edit")->name("contact.edit");
+    Route::post("/contact/edit", "update")->name("contact.update");
+})
 
 ?>

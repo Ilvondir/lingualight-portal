@@ -25,7 +25,9 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         $roles = ["User", "Trainer"];
-        if (Auth::user()->id == 1) $roles = ["User", "Trainer", "Administrator"];
+        if (Auth::check()) {
+            if (Auth::user()->id == 1) $roles = ["User", "Trainer", "Administrator"];
+        }
 
         return [
             "name" => 'required|min:2|max:255',

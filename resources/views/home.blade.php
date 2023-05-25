@@ -16,21 +16,21 @@
             <div class="carousel-inner">
             <div class="carousel-item active">
                 <img src="{{ asset("storage/img/carousel/carousel1.png") }}" class="d-block w-100" alt="Carousel1.">
-                <div class="carousel-caption d-none d-md-block">
+                <div class="carousel-caption d-none d-lg-block">
                 <h5>Unlock a world of opportunity</h5>
                 <p>Discover new cultures and connect with people from around the globe by learning a new language.</p>
                 </div>
             </div>
             <div class="carousel-item">
                 <img src="{{ asset("storage/img/carousel/carousel2.png") }}" class="d-block w-100" alt="Carousel2.">
-                <div class="carousel-caption d-none d-md-block">
+                <div class="carousel-caption d-none d-lg-block">
                 <h5>Language learning made easy</h5>
                 <p>With our expert trainers and user-friendly online platform, mastering a new language has never been more accessible.</p>
                 </div>
             </div>
             <div class="carousel-item">
                 <img src="{{ asset("storage/img/carousel/carousel3.png") }}" class="d-block w-100" alt="Carousel3.">
-                <div class="carousel-caption d-none d-md-block">
+                <div class="carousel-caption d-none d-lg-block">
                 <h5>Transform your future with language</h5>
                 <p>Gain a competitive edge in the job market and open doors to new opportunities with language skills that will last a lifetime.</p>
                 </div>
@@ -50,21 +50,21 @@
             <h3>On our portal</h3>
 
             <div class="row text-center fs-3">
-                <div class="col-sm">
+                <div class="col-12 col-lg-4 mb-4 mb-lg-0">
                     We have
                     <h1 class="mt-5 mb-5 display-1">
                         <input id="courses" value="0" size="2" disabled>
                     </h1>
                     course offers in our database!
                 </div>
-                <div class="col-sm">
+                <div class="col-12 col-lg-4 mb-4 mb-lg-0">
                     Together we have
                     <h1 id="users" class="mt-5 mb-5 display-1">
                         <input id="users" value="0" size="2" disabled>
                     </h1>
                     registered users who trusted us on their career path!
                 </div>
-                <div class="col-sm">
+                <div class="col-12 col-lg-4">
                     We have enrolled
                     <h1 id="enrollments" class="mt-5 mb-5 display-1">
                         <input id="enrollments" value="0" size="2" disabled>
@@ -81,10 +81,10 @@
                     <div class="card-body">
 
                         <div class="row">
-                            <div class="col-2 d-flex justify-content-center align-items-center">
+                            <div class="col-12 col-lg-2 mb-lg-0 mb-4 d-flex justify-content-center align-items-center">
                                 <img src="@if ($bestCourse->img == NULL) {{asset('storage/img/courses/logo.png')}} @else {{asset('storage/img/courses')."/".$bestCourse->img}} @endif" width="120" height="120" class="rounded">
                             </div>
-                            <div class="col-8">
+                            <div class="col-12 col-lg-8">
                                 <h4>{{ $bestCourse->name }}</h4>
 
                                 <div class="row">
@@ -99,8 +99,8 @@
                                 </div>
 
                             </div>
-                            <div class="col-2 text-end">
-                                <h6>@if ($bestCourse->created != date("Y-m-d")) {{ $bestCourse->price}}$ @else <span style="color: #609097"><s>{{$bestCourse->price}}$</s><br>{{ $bestCourse->price*0.9 }}$</span> @endif</h6>
+                            <div class="col-12 col-lg-2 text-center mt-4 mt-lg-0">
+                                <h6>Price: @if ($bestCourse->created != date("Y-m-d")) {{ $bestCourse->price}}$ @else <span style="color: #609097"><s>{{$bestCourse->price}}$</s><br>{{ $bestCourse->price*0.9 }}$</span> @endif</h6>
                             </div>
                         </div>
                         <p class="mb-0 mt-4" style="text-align: justify">{{$bestCourse->description}}</p>
@@ -111,8 +111,8 @@
 
         <div class="mt-5">
             <h3>Top 10 languages on portal</h3>
-            <div class="d-flex justify-content-center align-content-center mt-4">
-                <table class="table table-dark text-white w-50">
+            <div class="d-flex justify-content-center align-content-center col-12 col-lg-6 offset-lg-3 mt-4">
+                <table class="table table-dark text-white w-100">
                     <tr>
                         <th>#</th>
                         <th>Language</th>
@@ -141,7 +141,7 @@
 
                                 <div class="d-flex col justify-content-center align-items-center">
 
-                                    <div class="card bg-black text-white" style="width: 18rem">
+                                    <div class="card mb-4 mb-lg-0 bg-black text-white" style="width: 18rem">
                                         <img src="{{ asset("storage/img/flags")."/".$d[2] }}" class="card-img-top" alt="{{$d[2]}}">
                                         <div class="card-body">
                                             <h5 class="card-title">{{ $d[0] }}</h5>

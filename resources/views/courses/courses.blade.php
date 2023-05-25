@@ -16,8 +16,17 @@
                 Check our courses
             @endif
         </h2>
+
+
+        <div class="card rounded mb-5" style="color: red; background: rgba(255,0,0,0.3); border: .1rem solid red">
+            <div class="card-body">
+                <h4>Happiness favors the swift!</h4>
+                <p style="text-align: justify">We are excited to announce a special offer for our newly launched course! If you enroll in the course on the day of its release, you will receive a 5% discount. Don't miss out on this opportunity to join our program at a reduced price. Take advantage of this limited-time offer and secure your spot today!</p>
+            </div>
+        </div>
+
         <div class="row">
-            <div class="col-3">
+            <div class="col-12 col-lg-3">
 
                 <form method="POST" class="form" action="#">
                     @csrf
@@ -42,7 +51,6 @@
 
                     <select name="form" title="Form" class="form-select mt-3">
                         <option value="All">All</option>
-                        <option value="Stationary">Stationary</option>
                         <option value="Remote">Remote</option>
                         <option value="Hybrid">Hybrid</option>
                     </select>
@@ -70,7 +78,7 @@
 
 
             </div>
-            <div class="col-9">
+            <div class="col-12 col-lg-9">
 
                 @forelse ($courses as $course)
 
@@ -79,10 +87,10 @@
                         <div class="card-body">
 
                             <div class="row">
-                                <div class="col-2 d-flex justify-content-center align-items-center">
+                                <div class="col-12 mb-4 mb-lg-0 col-lg-2 d-flex justify-content-center align-items-center">
                                     <img src="@if ($course->img == NULL) {{asset('storage/img/courses/logo.png')}} @else {{asset('storage/img/courses')."/".$course->img}} @endif" width="120" height="120" class="rounded">
                                 </div>
-                                <div class="col-8">
+                                <div class="col-12 col-lg-8">
                                     <h4>{{ $course->name }}</h4>
 
                                     <div class="row">
@@ -97,9 +105,8 @@
                                     </div>
 
                                 </div>
-                                <div class="col-2 text-end">
-                                    {{-- <h6>@if ($course->created != date("Y-m-d")) {{ $course->price }}$ @else <span style="color: #609097"><s>{{$course->price}}$</s><br>{{ $course->price*0.9 }}$</span> @endif</h6> --}}
-                                    {{ $course->price }}$
+                                <div class="col-12 col-lg-2 text-center mt-4 mt-lg-0">
+                                    <h6>Price: @if ($course->created != date("Y-m-d")) {{ $course->price }}$ @else <span style="color: #609097"><s>{{$course->price}}$</s><br>{{ number_format($course->price*0.95, 2, ".", " ") }}$</span> @endif</h6>
                                 </div>
                             </div>
 

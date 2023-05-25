@@ -37,7 +37,21 @@ class ConfirmationController extends Controller
         if (!Auth::check()) return redirect()->route("auth.login");
         else {
             if (Auth::user()->role_id!=2 || Auth::user()->confirmed==1) return redirect()->route("account.menu");
-            else return view("confirmations.create");
+            else {
+
+                $confs = Confirmation::where("trainer_id", "=", Auth::user()->id)->get();
+                $confirmation = new Confirmation();
+
+                $allConsidered = true;
+
+                foreach ($confs as $c) if ($c->considered==0) {
+                    $allConsidered = false;
+                    $confirmation = $c;
+                }
+
+                if ($confs->count()==0 || $allConsidered) return view("confirmations.create");
+                else return view("confirmations.show", ["confirmation"=>$confirmation]);
+            }
         }
     }
 
@@ -91,7 +105,6 @@ class ConfirmationController extends Controller
                 $c = Confirmation::find($id);
 
                 $verdict = $_POST["submit"];
-                print($verdict);
 
                 $c->considered = 1;
                 $c->save();
@@ -101,6 +114,8 @@ class ConfirmationController extends Controller
                     $trainer->confirmed = 1;
                     $trainer->save();
                 }
+
+                Storage::delete('public/archives/'.$c->file);
 
                 return redirect()->route("confirmations.index");
             }

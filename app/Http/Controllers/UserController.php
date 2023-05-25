@@ -62,6 +62,7 @@ class UserController extends Controller
 
 
         if ($user->save()) {
+            Auth::login($user);
             return view("users.success");
         }
     }

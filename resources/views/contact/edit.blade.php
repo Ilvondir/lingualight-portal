@@ -9,12 +9,12 @@
     <div class="container">
 
         <div class="row mt-4 mb-4 text-center">
-            <h1>Login</h1>
+            <h1>Edit contact</h1>
         </div>
 
         <div class="form offset-lg-3 col-12 col-lg-6 d-flex justify-content-center align-items-center">
             <div class="rounded bg-black text-white p-5 w-100">
-                <form action="{{ route("auth.login.authenticate") }}" method="POST" class="needs-validation" novalidate>
+                <form action="{{ route("contact.update") }}" method="POST">
                     @csrf
 
                     @if ($errors->any())
@@ -25,21 +25,21 @@
                         </div>
                     @endif
 
-                    <div class="form-group mb-2">
-                        <label for="login">Login</label>
-                        <input id="login" name="login" type="text" class="form-control" required>
+                    <div>
+                        <label class="mt-3" for="phone">Phone number</label>
+                        <input type="text" class="form-control" id="phone" name="phone" value="{{ $phone }}" required>
+
+                        <label class="mt-3" for="email">Email</label>
+                        <input type="text" class="form-control" id="email" name="email" value="{{ $email }}" required>
                     </div>
-                    <div class="form-group mb-2">
-                        <label for="pass">Password</label>
-                        <input id="pass" name="password" type="password" class="form-control" required>
-                    </div>
+
 
                     <div class="w-100 text-center">
-                        <button class="btn btn-dark mt-4" type="submit"><i class="fa fa-key"></i>  Login</button>
+                        <button class="btn btn-dark mt-4 mr-5" type="reset">Reset</button>
+                        <button class="btn btn-dark mt-4" type="submit">Change</button>
                     </div>
-                </form>
 
-                <div class="mt-4">Don't have an account? <a class="text-decoration-none text-white" href="{{ route("users.register") }}"><b>Register here now!</b></a></div>
+                </form>
 
             </div>
         </div>

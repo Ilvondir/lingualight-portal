@@ -31,11 +31,11 @@ class StoreCourseRequest extends FormRequest
             "language" => 'required|min:3|max:255',
             "difficulty" => Rule::in($difs),
             "headquarter" => 'required|min:2|max:255',
-            "price" => "required|numeric|min:0",
+            "price" => "required|numeric|min:0|max:50000",
             "start" => "required|date|after:today",
-            "hours" => "required|integer|min:0",
-            "form" => Rule::in(["Stationary", "Hybrid", "Remote"]),
-            "img" => "nullable|file",
+            "hours" => "required|integer|min:0|max:1000",
+            "form" => Rule::in(["Hybrid", "Remote"]),
+            "img" => "nullable",
             "description" => "required|min:50",
         ];
     }
