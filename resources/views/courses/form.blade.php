@@ -43,20 +43,8 @@
                                 <label for="language">Language</label>
                                 <input id="language" name="language" @if (str_contains(request()->path(), 'edit')) value="{{ $c->language }}" @endif type="text" class="form-control" required>
                             </div>
-
-                            <div class="form-group mb-2">
-                                <label for="head">Headquarter</label>
-                                <input id="head" name="headquarter" @if (str_contains(request()->path(), 'edit')) value="{{ $c->headquarter }}" @endif type="text" class="form-control" required>
-                            </div>
-
-                            <div class="form-group mb-2">
-                                <label for="start">Scheduled start</label><br>
-                                <input id="start" name="start" @if (str_contains(request()->path(), 'edit')) value="{{ $c->scheduled_start }}" @endif type="date" class="form-control" required>
-                            </div>
-
                         </div>
                         <div class="col-12 col-md-6">
-
                             <div class="form-group mb-2">
                                 <label for="difficulty">Difficulty</label>
                                 <select name="difficulty" id="difficulty" class="form-select" required>
@@ -68,12 +56,35 @@
                                     <option value="C2" @if (str_contains(request()->path(), 'edit')) @if ($c->difficulty_id==6) selected @endif @endif>C2</option>
                                 </select>
                             </div>
+                        </div>
 
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="form-group mb-2">
+                                <label for="head">Headquarter</label>
+                                <input id="head" name="headquarter" @if (str_contains(request()->path(), 'edit')) value="{{ $c->headquarter }}" @endif type="text" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
                             <div class="form-group mb-2">
                                 <label for="price">Price</label>
                                 <input id="price" @if (str_contains(request()->path(), 'edit')) value="{{ $c->price }}"  @endif name="price" type="number" min="0" step="0.01" class="form-control" required>
                             </div>
+                        </div>
 
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="form-group mb-2">
+                                <label for="start">Scheduled start</label><br>
+                                <input id="start" name="start" @if (str_contains(request()->path(), 'edit')) value="{{ $c->scheduled_start }}" @endif type="date" class="form-control" required>
+                            </div>
+
+                        </div>
+                        <div class="col-12 col-md-6">
                             <div class="form-group mb-2">
                                 <label for="hours">Number of hours</label><br>
                                 <input id="hours" @if (str_contains(request()->path(), 'edit')) value="{{ $c->hours }}" @endif name="hours" type="number" min="0" class="form-control" required>

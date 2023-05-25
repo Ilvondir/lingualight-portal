@@ -111,7 +111,7 @@
 
         <div class="mt-5">
             <h3>Top 10 languages on portal</h3>
-            <div class="d-flex justify-content-center align-content-center mt-4">
+            <div class="d-flex justify-content-center align-content-center col-12 col-lg-6 offset-lg-3 mt-4">
                 <table class="table table-dark text-white w-100">
                     <tr>
                         <th>#</th>

@@ -7,7 +7,6 @@ use App\Models\Course;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Stripe\Stripe;
-use Stripe\Charge;
 
 class EnrollmentController extends Controller
 {

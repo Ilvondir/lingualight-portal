@@ -29,14 +29,19 @@
                         <div class="col-lg-6 col-12">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" name="name" required>
-
-                            <label class="mt-3" for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
                         </div>
                         <div class="col-lg-6 col-12">
                             <label class="mt-3 mt-lg-0" for="surname">Surname</label>
                             <input type="text" class="form-control" id="surname" name="surname" required>
+                        </div>
+                    </div>
 
+                    <div class="row">
+                        <div class="col-lg-6 col-12">
+                            <label class="mt-3" for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="col-lg-6 col-12">
                             <label class="mt-3" for="login">Login</label>
                             <input type="text" class="form-control" id="login" name="login" required>
                         </div>
