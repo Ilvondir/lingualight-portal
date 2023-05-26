@@ -82,49 +82,61 @@
                     <div class="col-12 col-lg-7">
 
                     @if (Auth::guest())
-                        <div class="w-100 text-left mt-5">
-                            <a href="{{ route("auth.login") }}" class="text-white text-decoration-none">
-                                <h4>Log in to enroll in the course!</h4>
-                            </a>
-                        </div>
+
+                        @if (strtotime(date("Y-m-d")) < strtotime($c->scheduled_start))
+                            <div class="w-100 text-left mt-5">
+                                <a href="{{ route("auth.login") }}" class="text-white text-decoration-none">
+                                    <h4>Log in to enroll in the course!</h4>
+                                </a>
+                            </div>
+                        @endif
 
                     @else
 
-                        @if ($c->visible==0)
+                    @if ($c->visible==0)
                         <div class="w-100 text-left mt-5">
                             <h4>This course is archived.</h4>
                         </div>
-                        @endif
+                    @endif
 
                         @if (Auth::user()->role_id==3)
                             @if (!$already)
-                                <div class="w-100 text-center mt-0 mb-5 mb-lg-0 mt-lg-4">
-                                    <form method="POST" action="{{ route("enrollment.form", ["id"=>$c->id]) }}">
-                                        @csrf
-                                        <button value="Enroll in the course" name="submit" class="mt-3 mt-lg-0 btn btn-black p-3" id="fontUp" type="submit"><i class="fa fa-check"></i> Enroll in the course</button>
-                                    </form>
-                                </div>
+
+                                @if (date("Y-m-d")<$c->scheduled_start)
+                                    <div class="w-100 text-center mt-0 mb-5 mb-lg-0 mt-lg-4">
+                                        <form method="POST" action="{{ route("enrollment.form", ["id"=>$c->id]) }}">
+                                            @csrf
+                                            <button value="Enroll in the course" name="submit" class="mt-3 mt-lg-0 btn btn-black p-3" id="fontUp" type="submit"><i class="fa fa-check"></i> Enroll in the course</button>
+                                        </form>
+                                    </div>
+                                @endif
 
                             @else
 
-                                @if ($payment)
+                                    @if ($payment)
 
-                                    <div class="w-100 text-left mt-5 mb-5">
-                                        <a href="{{ route("account.courses") }}" class="text-white text-center text-decoration-none">
-                                            <h4>You have already fully enrolled in this course. Please wait for information from trainer.</h4>
-                                        </a>
-                                    </div>
+                                        <div class="w-100 text-left mt-5 mb-5">
+                                            <a href="{{ route("account.courses") }}" class="text-white text-center text-decoration-none">
+                                                <h4>You have already fully enrolled in this course. Please wait for information from trainer.</h4>
+                                            </a>
+                                        </div>
 
-                                @else
+                                    @else
 
-                                <div class="w-100 text-center mt-2 mb-4 mb-lg-0 mt-lg-4">
-                                    <form method="POST" action="{{ route("enrollment.form", ["id"=>$c->id]) }}">
-                                        @csrf
-                                        <button type="submit" name="submit" class="btn btn-black p-3" id="fontUp" value="Pay for course"><i class="fa fa-money"></i>  Pay for course</button>
+                                    @if (date("Y-m-d")<$c->scheduled_start)
 
-                                        <button class="mt-3 mt-lg-0 btn btn-black p-3" name="submit" value="Unenroll from course" id="fontUp" type="submit"><i class="fa fa-close"></i>  Unenroll from course</button>
-                                    </form>
-                                </div>
+                                        <div class="w-100 text-center mt-2 mb-4 mb-lg-0 mt-lg-4">
+                                            <form method="POST" action="{{ route("enrollment.form", ["id"=>$c->id]) }}">
+                                                @csrf
+                                                <button type="submit" name="submit" class="btn btn-black p-3" id="fontUp" value="Pay for course"><i class="fa fa-money"></i>  Pay for course</button>
+
+                                                <button class="mt-3 mt-lg-0 btn btn-black p-3" name="submit" value="Unenroll from course" id="fontUp" type="submit"><i class="fa fa-close"></i>  Unenroll from course</button>
+                                            </form>
+                                        </div>
+
+                                    @endif
+
+
 
                                 @endif
 
