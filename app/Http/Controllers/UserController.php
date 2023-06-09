@@ -72,8 +72,7 @@ class UserController extends Controller
      */
     public function edit(int $id)
     {
-        if (!Auth::check()) return redirect()->route("auth/login");
-        if (Auth::user()->role_id != 1) return redirect()->route("home");
+        if (Auth::user()->role_id != 1) return redirect()->route("account.menu");
 
         $user = User::find($id);
 
@@ -85,8 +84,7 @@ class UserController extends Controller
      */
     public function update(AdminEditDataRequest $request, int $id)
     {
-        if (!Auth::check()) return redirect()->route("auth/login");
-        if (Auth::user()->role_id != 1) return redirect()->route("home");
+        if (Auth::user()->role_id != 1) return redirect()->route("account.menu");
 
         $u = User::find($id);
 
@@ -105,8 +103,7 @@ class UserController extends Controller
     }
 
     public function delete(int $id) {
-        if (!Auth::check()) return redirect()->route("auth/login");
-        if (Auth::user()->role_id != 1) return redirect()->route("home");
+        if (Auth::user()->role_id != 1) return redirect()->route("account.menu");
         $user = User::find($id);
         return view("users.delete", ["user"=>$user]);
     }
@@ -116,8 +113,7 @@ class UserController extends Controller
      */
     public function destroy(int $id)
     {
-        if (!Auth::check()) return redirect()->route("auth/login");
-        if (Auth::user()->role_id != 1) return redirect()->route("home");
+        if (Auth::user()->role_id != 1) return redirect()->route("account.menu");
 
         $user = User::find($id);
         $user->delete();

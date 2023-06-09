@@ -16,16 +16,13 @@ class ConfirmationController extends Controller
      */
     public function index()
     {
-        if (!Auth::check()) return redirect()->route("auth.login");
+        if (Auth::user()->role_id!=1) return redirect()->route("account.menu");
         else {
-            if (Auth::user()->role_id!=1) return redirect()->route("account.menu");
-            else {
-                $requests = Confirmation::with("trainer")->get();
-                $new = $requests->where("considered", "=", 0);
-                $old = $requests->where("considered", "=", 1);
+            $requests = Confirmation::with("trainer")->get();
+            $new = $requests->where("considered", "=", 0);
+            $old = $requests->where("considered", "=", 1);
 
-                return view("confirmations.index", ["new" => $new, "old" => $old]);
-            }
+            return view("confirmations.index", ["new" => $new, "old" => $old]);
         }
     }
 
@@ -34,24 +31,21 @@ class ConfirmationController extends Controller
      */
     public function create()
     {
-        if (!Auth::check()) return redirect()->route("auth.login");
+        if (Auth::user()->role_id!=2 || Auth::user()->confirmed==1) return redirect()->route("account.menu");
         else {
-            if (Auth::user()->role_id!=2 || Auth::user()->confirmed==1) return redirect()->route("account.menu");
-            else {
 
-                $confs = Confirmation::where("trainer_id", "=", Auth::user()->id)->get();
-                $confirmation = new Confirmation();
+            $confs = Confirmation::where("trainer_id", "=", Auth::user()->id)->get();
+            $confirmation = new Confirmation();
 
-                $allConsidered = true;
+            $allConsidered = true;
 
-                foreach ($confs as $c) if ($c->considered==0) {
-                    $allConsidered = false;
-                    $confirmation = $c;
-                }
-
-                if ($confs->count()==0 || $allConsidered) return view("confirmations.create");
-                else return view("confirmations.show", ["confirmation"=>$confirmation]);
+            foreach ($confs as $c) if ($c->considered==0) {
+                $allConsidered = false;
+                $confirmation = $c;
             }
+
+            if ($confs->count()==0 || $allConsidered) return view("confirmations.create");
+            else return view("confirmations.show", ["confirmation"=>$confirmation]);
         }
     }
 
@@ -84,41 +78,35 @@ class ConfirmationController extends Controller
      */
     public function show(int $id)
     {
-        if (!Auth::check()) return redirect()->route("auth.login");
+        if (Auth::user()->role_id!=1) return redirect()->route("account.menu");
         else {
-            if (Auth::user()->role_id!=1) return redirect()->route("account.menu");
-            else {
-                $requests = Confirmation::with("trainer")->get();
+            $requests = Confirmation::with("trainer")->get();
 
-                $r = $requests->find($id);
+            $r = $requests->find($id);
 
-                return view("confirmations.show", ["confirmation" => $r]);
-            }
+            return view("confirmations.show", ["confirmation" => $r]);
         }
     }
 
     public function verdict(int $id) {
-        if (!Auth::check()) return redirect()->route("auth.login");
+        if (Auth::user()->role_id!=1) return redirect()->route("account.menu");
         else {
-            if (Auth::user()->role_id!=1) return redirect()->route("account.menu");
-            else {
-                $c = Confirmation::find($id);
+            $c = Confirmation::find($id);
 
-                $verdict = $_POST["submit"];
+            $verdict = $_POST["submit"];
 
-                $c->considered = 1;
-                $c->save();
+            $c->considered = 1;
+            $c->save();
 
-                if ($verdict == "Confirm account") {
-                    $trainer = User::find($c->trainer_id);
-                    $trainer->confirmed = 1;
-                    $trainer->save();
-                }
-
-                Storage::delete('public/archives/'.$c->file);
-
-                return redirect()->route("confirmations.index");
+            if ($verdict == "Confirm account") {
+                $trainer = User::find($c->trainer_id);
+                $trainer->confirmed = 1;
+                $trainer->save();
             }
+
+            Storage::delete('public/archives/'.$c->file);
+
+            return redirect()->route("confirmations.index");
         }
     }
 }

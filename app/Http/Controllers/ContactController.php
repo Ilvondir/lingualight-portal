@@ -23,13 +23,10 @@ class ContactController extends Controller
      */
     public function edit()
     {
-        if (!Auth::check()) return redirect()->route("auth.login");
+        if (Auth::user()->role_id != 1) return redirect()->route("contact");
         else {
-            if (Auth::user()->role_id != 1) return redirect()->route("contact");
-            else {
-                $data = Contact::get();
-                return view("contact.edit", [ "email"=>$data[0]->email, "phone"=>$data[0]->phone ]);
-            }
+            $data = Contact::get();
+            return view("contact.edit", [ "email"=>$data[0]->email, "phone"=>$data[0]->phone ]);
         }
     }
 
@@ -38,19 +35,15 @@ class ContactController extends Controller
      */
     public function update(UpdateContactRequest $request)
     {
-
-        if (!Auth::check()) return redirect()->route("auth.login");
+        if (Auth::user()->role_id != 1) return redirect()->route("contact");
         else {
-            if (Auth::user()->role_id != 1) return redirect()->route("contact");
-            else {
-                $data = $request->validated();
-                $c = Contact::find(1);
-                $c->email = $data["email"];
-                $c->phone = $data["phone"];
-                $c->save();
+            $data = $request->validated();
+            $c = Contact::find(1);
+            $c->email = $data["email"];
+            $c->phone = $data["phone"];
+            $c->save();
 
-                return redirect()->route("contact");
-            }
+            return redirect()->route("contact");
         }
     }
 }

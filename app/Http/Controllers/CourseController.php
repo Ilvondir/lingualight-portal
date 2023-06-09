@@ -27,11 +27,8 @@ class CourseController extends Controller
      */
     public function create()
     {
-        if (Auth::check()) {
-            if (Auth::user()->role_id==2) return view("courses.form");
-            else return redirect()->route("courses.index");
-        }
-        return redirect()->route("courses.index");
+        if (Auth::user()->role_id==2) return view("courses.form");
+        else return redirect()->route("courses.index");
     }
 
     /**
@@ -145,7 +142,7 @@ class CourseController extends Controller
     public function edit(int $id)
     {
         if (Auth::check()) {
-            if (Auth::user()->id == 3) return redirect()->route("courses.index");
+            if (Auth::user()->role_id == 3) return redirect()->route("courses.index");
             return view("courses.form", ["c" => Course::find($id)]);
         }
         return redirect()->route("auth.login");
@@ -156,7 +153,7 @@ class CourseController extends Controller
      */
     public function update(UpdateCourseRequest $request, int $id)
     {
-        if (Auth::user()->id == 3) return redirect()->route("auth.login");
+        if (Auth::user()->role_id == 3) return redirect()->route("courses.index");
         else {
             $c = Course::find($id);
             $data = $request->validated();
@@ -187,8 +184,7 @@ class CourseController extends Controller
 
 
     public function delete(int $id) {
-        if (!Auth::check()) return redirect()->route("auth.login");
-        if (Auth::user()->role_id == 3) return redirect()->route("home");
+        if (Auth::user()->role_id == 3) return redirect()->route("courses.index");
         $c = Course::find($id);
         return view("courses.delete", ["c" => $c]);
     }
@@ -198,7 +194,6 @@ class CourseController extends Controller
      */
     public function destroy(int $id)
     {
-        if (!Auth::check()) return redirect()->route("auth.login");
         if (Auth::user()->role_id == 3) return redirect()->route("home");
         $c = Course::find($id);
         $c->visible = 0;
