@@ -16,22 +16,33 @@ class EnrollmentController extends Controller
 
         if (Auth::user()->role_id != 3) return redirect()->route("courses.index");
 
-        if (session("stripe_redirected") && session()->input("transaction")=="completed") {
-            $enrl = Enrollment::where([["course_id", "=", $id], ["user_id", "=", Auth::user()->id]])->get();
-            $e = Enrollment::find($enrl[0]->id);
-            $e->payment_date = date("Y-m-d");
-            $e->save();
-            session()->forget('stripe_redirected');
+        if (session()->has("session_id")) {
+
+            \Stripe\Stripe::setApiKey(env("STRIPE_SECRET"));
+            $sessionId = session("session_id");
+            $session = \Stripe\Checkout\Session::retrieve($sessionId);
+            session()->forget("session_id");
+            print_r($session);
+
+            if ($session["payment_status"]=="paid") {
+
+                $enrl = Enrollment::where([["course_id", "=", $id], ["user_id", "=", Auth::user()->id]])->get();
+                $e = Enrollment::find($enrl[0]->id);
+                $e->payment_date = date("Y-m-d");
+                $e->save();
+
+            }
         }
 
         return redirect()->route("course.show", ["id"=>$id]);
+
     }
 
     public function form(int $id) {
         if (Auth::user()->role_id != 3) return redirect()->route("courses.index");
         else {
 
-            if (session("stripe_redirected")) session()->forget("stripe_redirected");
+            if (session()->has("session_id")) session()->forget("session_id");
 
             $action = $_POST["submit"];
 
@@ -83,10 +94,10 @@ class EnrollmentController extends Controller
                             ]
                         ],
                         'mode' => 'payment',
-                        'success_url' => route("enrollment.payed", ["id"=>$id, "transaction"=>"completed"]),
+                        'success_url' => route("enrollment.payed", ["id"=>$id]),
                         'cancel_url' => request()->fullUrl(),
                     ]);
-                    session()->put('stripe_redirected', true);
+                    session()->put('session_id', $checkout_session->id);
                     return redirect($checkout_session->url);
 
                 } catch (Exception $e) {
