@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -38,5 +39,14 @@ class StoreCourseRequest extends FormRequest
             "img" => "nullable",
             "description" => "required|min:50",
         ];
+    }
+
+    /**
+     *
+     * @param Validator $validator
+     */
+    protected function failedValidation(Validator $validator)
+    {
+        return back()->withInput()->withErrors($validator->errors());
     }
 }

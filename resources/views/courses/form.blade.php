@@ -33,7 +33,7 @@
 
                     <div class="form-group mb-2">
                         <label for="name">Name</label>
-                        <input id="name" name="name" @if (str_contains(request()->path(), 'edit')) value="{{ $c->name }}" @endif type="text" class="form-control" required>
+                        <input id="name" name="name" @if (str_contains(request()->path(), 'edit')) value="{{ $c->name }}" @else value="{{ old("name") }}" @endif type="text" class="form-control" required>
                     </div>
 
                     <div class="row">
@@ -41,7 +41,7 @@
 
                             <div class="form-group mb-2">
                                 <label for="language">Language</label>
-                                <input id="language" name="language" @if (str_contains(request()->path(), 'edit')) value="{{ $c->language }}" @endif type="text" class="form-control" required>
+                                <input id="language" name="language" @if (str_contains(request()->path(), 'edit')) value="{{ $c->language }}" @else value="{{ old("language") }}" @endif type="text" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
@@ -64,13 +64,13 @@
                         <div class="col-12 col-md-6">
                             <div class="form-group mb-2">
                                 <label for="head">Headquarter</label>
-                                <input id="head" name="headquarter" @if (str_contains(request()->path(), 'edit')) value="{{ $c->headquarter }}" @endif type="text" class="form-control" required>
+                                <input id="head" name="headquarter" @if (str_contains(request()->path(), 'edit')) value="{{ $c->headquarter }}" @else value="{{ old("headquarter") }}" @endif type="text" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="form-group mb-2">
                                 <label for="price">Price</label>
-                                <input id="price" @if (str_contains(request()->path(), 'edit')) value="{{ $c->price }}"  @endif name="price" type="number" min="0" step="0.01" class="form-control" required>
+                                <input id="price" @if (str_contains(request()->path(), 'edit')) value="{{ $c->price }}" @else value="{{ old("price") }}" @endif name="price" type="number" min="0" step="0.01" class="form-control" required>
                             </div>
                         </div>
 
@@ -80,14 +80,14 @@
                         <div class="col-12 col-md-6">
                             <div class="form-group mb-2">
                                 <label for="start">Scheduled start</label><br>
-                                <input id="start" name="start" @if (str_contains(request()->path(), 'edit')) value="{{ $c->scheduled_start }}" @endif type="date" class="form-control" required>
+                                <input id="start" name="start" @if (str_contains(request()->path(), 'edit')) value="{{ $c->scheduled_start }}" @else value="{{ old("start") }}" @endif type="date" class="form-control" required>
                             </div>
 
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="form-group mb-2">
                                 <label for="hours">Number of hours</label><br>
-                                <input id="hours" @if (str_contains(request()->path(), 'edit')) value="{{ $c->hours }}" @endif name="hours" type="number" min="0" class="form-control" required>
+                                <input id="hours" @if (str_contains(request()->path(), 'edit')) value="{{ $c->hours }}" @else value="{{ old("hours") }}" @endif name="hours" type="number" min="0" class="form-control" required>
                             </div>
 
                         </div>
@@ -111,7 +111,7 @@
                     @endif
                     <div class="form-group mb-2">
                         <label for="description">Description</label>
-                        <textarea class="form-control" id="description" name="description" rows="8" required>@if (str_contains(request()->path(), 'edit')){{ $c->description }} @endif</textarea>
+                        <textarea class="form-control"  id="description" name="description" rows="8" required>@if (str_contains(request()->path(), 'edit')){{ $c->description }} @else {{ old("description") }} @endif</textarea>
                     </div>
 
                     <div class="w-100 text-center">

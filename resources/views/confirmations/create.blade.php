@@ -26,10 +26,10 @@
                     @endif
 
                     <label for="subject">Subject</label>
-                    <input type="text" class="form-control" id="subject" name="subject" required>
+                    <input type="text" class="form-control" id="subject" value="{{ old("subject") }}" name="subject" required>
 
                     <label class="mt-3" for="message">Message</label>
-                    <textarea name="message" id="message" class="form-control" rows="8" required></textarea>
+                    <textarea name="message" id="message" class="form-control" rows="8" required>{{ old("message") }}</textarea>
 
 
                     <label class="mt-3" for="competences">Competences</label>

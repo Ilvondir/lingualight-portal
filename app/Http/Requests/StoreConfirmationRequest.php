@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,5 +30,14 @@ class StoreConfirmationRequest extends FormRequest
             "message" => "required|min:20",
             "competences" => "file",
         ];
+    }
+
+    /**
+     *
+     * @param Validator $validator
+     */
+    protected function failedValidation(Validator $validator)
+    {
+        return back()->withInput()->withErrors($validator->errors());
     }
 }
