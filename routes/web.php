@@ -30,13 +30,13 @@ Route::get("/", function() {
 Route::controller(CourseController::class)->group(function () {
     Route::get('/courses', 'index')->name('courses.index');
     Route::post("/courses", "filter")->name("course.filter");
-    Route::get('/courses/{id}', 'show')->name('course.show');
+    Route::get('/course/{id}', 'show')->name('course.show');
     Route::get("/courses/{id}/delete", "delete")->name("courses.delete")->middleware("auth");
     Route::post("/courses/{id}/delete", "destroy")->name("courses.destroy")->middleware("auth");
     Route::get('/courses/{id}/edit', 'edit')->name('course.edit')->middleware("auth");
     Route::post('/courses/{id}/edit', 'update')->name('course.update')->middleware("auth");
-    Route::get("courses/create", "create")->name("courses.create")->middleware("auth");
-    Route::post("courses/create", "store")->name("courses.store")->middleware("auth");
+    Route::get("/courses/create", "create")->name("courses.create")->middleware("auth");
+    Route::post("/courses/create", "store")->name("courses.store")->middleware("auth");
 });
 
 Route::controller(AuthController::class)->group(function () {
@@ -56,8 +56,8 @@ Route::controller(UserController::class)->group(function () {
 });
 
 Route::controller(EnrollmentController::class)->group(function () {
-    Route::post("/courses/{id}", "form")->name("enrollment.form")->middleware("auth");
-    Route::get("/courses/{id}/payed", "payed")->name("enrollment.payed")->middleware("auth");
+    Route::post("/course/{id}", "form")->name("enrollment.form")->middleware("auth");
+    Route::get("/course/{id}/payed", "payed")->name("enrollment.payed")->middleware("auth");
 });
 
 Route::controller(AccountController::class)->group(function () {

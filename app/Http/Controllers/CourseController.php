@@ -141,11 +141,16 @@ class CourseController extends Controller
      */
     public function edit(int $id)
     {
-        if (Auth::check()) {
-            if (Auth::user()->role_id == 3) return redirect()->route("courses.index");
+        if (Auth::user()->role_id==1) return view("courses.form", ["c" => Course::find($id)]);
+
+        $c = Course::find($id);
+
+        if (Auth::user()->id == $c->author->id) {
             return view("courses.form", ["c" => Course::find($id)]);
         }
-        return redirect()->route("auth.login");
+
+        return redirect()->route("courses.index");
+
     }
 
     /**
