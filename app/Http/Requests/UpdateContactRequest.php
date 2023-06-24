@@ -19,7 +19,7 @@ class UpdateContactRequest extends FormRequest
         }
     }
 
-    /**
+    /**email
      * Get the validation rules that apply to the request.
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
@@ -27,8 +27,8 @@ class UpdateContactRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "email" => "required|email|min:5|max:255",
-            "phone" => "required|min:9"
+            "email" => ["required", "email", "min:5", "max:255"],
+            "phone" => ["required", "min:9"]
         ];
     }
 }

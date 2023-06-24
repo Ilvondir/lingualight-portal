@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\Rules\Password;
 
 class ChangePasswordRequest extends FormRequest
 {
@@ -25,9 +26,9 @@ class ChangePasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "oldPassword" => "required",
-            "password" => "required|min:7|max:255|required_with:repeatPassword|same:repeatPassword",
-            "repeatPassword" => "required|min:7|max:255",
+            "oldPassword" => ["required"],
+            "password" => ["required", Password::min(7)->mixedCase()->numbers(), "max:255", "required_with:repeatPassword", "same:repeatPassword"],
+            "repeatPassword" => ["required"],
         ];
     }
 

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string("surname");
             $table->date("registered");
             $table->integer("confirmed")->nullable();
+            $table->rememberToken();
         });
     }
 

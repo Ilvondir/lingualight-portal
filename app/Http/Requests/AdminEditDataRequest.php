@@ -24,12 +24,12 @@ class AdminEditDataRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => 'required|min:2|max:255',
-            "surname" => 'required|min:2|max:255',
+            "name" => ["required", "min:2", "max:255"],
+            "surname" => ["required", "min:2", "max:255"],
             "login" => ["required", "min:6", "max:30", Rule::unique('users')->ignore(request()->route("id"))],
             "email" => ["required", "min:7", "max:255", "email", Rule::unique('users')->ignore(request()->route("id"))],
-            "password" => "nullable|min:7|max:255|required_with:repeatPassword|same:repeatPassword",
-            "repeatPassword" => "nullable|min:7|max:255",
+            "password" => ["nullable", "min:7", "max:255", "required_with:repeatPassword", "same:repeatPassword"],
+            "repeatPassword" => ["nullable", "min:7", "max:255"],
         ];
     }
 

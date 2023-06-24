@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\Rules\Password;
 
 class StoreUserRequest extends FormRequest
 {
@@ -30,12 +31,12 @@ class StoreUserRequest extends FormRequest
         }
 
         return [
-            "name" => 'required|min:2|max:255',
-            "surname" => 'required|min:2|max:255',
-            "login" => "required|min:6|max:30|unique:users",
-            "email" => "required|min:7|max:255|unique:users|email",
-            "password" => "required|min:7|max:255|required_with:repeatPassword|same:repeatPassword",
-            "repeatPassword" => "required|min:7|max:255",
+            "name" => ["required", "min:2", "max:255"],
+            "surname" => ["required", "min:2", "max:255"],
+            "login" => ["required", "min:6", "max:30", "unique:users"],
+            "email" => ["required", "min:7", "max:255", "unique:users", "email"],
+            "password" => ["required", Password::min(7)->mixedCase()->numbers(), "max:255", "required_with:repeatPassword", "same:repeatPassword"],
+            "repeatPassword" => ["required"],
             "role" => Rule::in($roles),
         ];
     }

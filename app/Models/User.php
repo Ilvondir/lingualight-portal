@@ -14,6 +14,7 @@ class User extends Authenticatable
 
     protected $primaryKey = "id";
     public $timestamps = false;
+    protected $rememberTokenName = false;
 
     protected $connection = "mysql";
 
