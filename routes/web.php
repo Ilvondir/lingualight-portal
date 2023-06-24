@@ -32,7 +32,7 @@ Route::controller(CourseController::class)->group(function () {
     Route::post("/courses", "filter")->name("course.filter");
     Route::get('/course/{id}', 'show')->name('course.show');
     Route::get("/courses/{id}/delete", "delete")->name("courses.delete")->middleware("auth");
-    Route::post("/courses/{id}/delete", "destroy")->name("courses.destroy")->middleware("auth");
+    Route::delete("/courses/{id}/delete", "destroy")->name("courses.destroy")->middleware("auth");
     Route::get('/courses/{id}/edit', 'edit')->name('course.edit')->middleware("auth");
     Route::post('/courses/{id}/edit', 'update')->name('course.update')->middleware("auth");
     Route::get("/courses/create", "create")->name("courses.create")->middleware("auth");
@@ -50,7 +50,7 @@ Route::controller(UserController::class)->group(function () {
     Route::post("/users/register", "store")->name("users.store");
     Route::get("/users/index", "index")->name("users.index")->middleware("auth");
     Route::get("/users/{id}/delete", "delete")->name("users.delete")->middleware("auth");
-    Route::post("/users/{id}/delete", "destroy")->name("users.destroy")->middleware("auth");
+    Route::delete("/users/{id}/delete", "destroy")->name("users.destroy")->middleware("auth");
     Route::get("/users/{id}/edit", "edit")->name("users.edit")->middleware("auth");
     Route::post("/users/{id}/edit", "update")->name("users.update")->middleware("auth");
 });
@@ -67,7 +67,7 @@ Route::controller(AccountController::class)->group(function () {
     Route::get("/account/edit", "edit")->name("account.edit")->middleware("auth");
     Route::post("/account/edit", "update")->name("account.edit.update")->middleware("auth");
     Route::get("/account/delete", "delete")->name("account.delete")->middleware("auth");
-    Route::post("/account/delete", "destroy")->name("account.destroy")->middleware("auth");
+    Route::delete("/account/delete", "destroy")->name("account.destroy")->middleware("auth");
     Route::get("/account/courses", "courses")->name("account.courses")->middleware("auth");
     Route::post("/account/courses", "filterCourse")->name("account.filterCourse")->middleware("auth");
     Route::get("/account/your_courses", "your_courses")->name("account.your_courses")->middleware("auth");

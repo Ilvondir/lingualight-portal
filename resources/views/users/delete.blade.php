@@ -16,6 +16,7 @@
             <div class="rounded bg-black text-white p-5 w-100">
                 <form action="{{ route("users.destroy", ["id"=>$user->id]) }}" method="POST">
                     @csrf
+                    @method("delete")
                     <div>Are you sure you want to delete user <b>{{ $user->name }} {{ $user->surname }}</b>? This operation is irreversible.</div>
 
                     <div class="w-100 text-center">
