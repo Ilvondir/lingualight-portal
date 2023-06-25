@@ -34,19 +34,13 @@ class FilterCourseRequest extends FormRequest
         array_push($headquarters, "All");
 
         return [
-            "title" => "nullable|max:255",
-            "language" => [
-                "nullable",
-                Rule::in($languages),
-            ],
-            "difficulty" => [
-                "nullable",
-                Rule::in($difficulties),
-            ],
+            "title" => ["nullable", "max:255"],
+            "language" => ["nullable", Rule::in($languages)],
+            "difficulty" => ["nullable", Rule::in($difficulties)],
             "form" => Rule::in($forms),
             "headquarter" => Rule::in($headquarters),
-            "minPrice" => "nullable|min:0",
-            "maxPrice" => "nullable|min:0",
+            "minPrice" => ["nullable", "min:0"],
+            "maxPrice" => ["nullable", "min:0"],
         ];
     }
 }

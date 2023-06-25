@@ -50,27 +50,31 @@
             <h3>On our portal</h3>
 
             <div class="row text-center fs-3">
-                <div class="col-12 col-lg-4 mb-4 mb-lg-0">
+
+                <div class="col-12 col-lg-4 mb-5 mb-lg-0">
                     We have
-                    <h1 class="mt-5 mb-5 display-1">
+                    <h1 class="mt-lg-5 mb-lg-5 mt-4 mb-4 display-1">
                         <input id="courses" value="0" size="2" disabled>
                     </h1>
                     course offers in our database!
                 </div>
-                <div class="col-12 col-lg-4 mb-4 mb-lg-0">
+
+                <div class="col-12 col-lg-4 mb-5 mb-lg-0">
                     Together we have
-                    <h1 id="users" class="mt-5 mb-5 display-1">
+                    <h1 id="users" class="mt-lg-5 mb-lg-5 mt-4 mb-4 display-1">
                         <input id="users" value="0" size="2" disabled>
                     </h1>
                     registered users who trusted us on their career path!
                 </div>
-                <div class="col-12 col-lg-4">
+
+                <div class="col-12 col-lg-4 mb-5 mb-lg-0">
                     We have enrolled
-                    <h1 id="enrollments" class="mt-5 mb-5 display-1">
+                    <h1 id="enrollments" class="mt-lg-5 mb-lg-5 mt-4 mb-4 display-1">
                         <input id="enrollments" value="0" size="2" disabled>
                     </h1>
                     people in our courses, which proves our popularity.
                 </div>
+
             </div>
         </div>
 

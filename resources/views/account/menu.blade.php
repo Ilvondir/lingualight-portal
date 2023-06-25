@@ -19,33 +19,33 @@
             </div>
         </div>
 
-        <div class="menu mt-5">
+        <div class="menu bg-black rounded p-2 mt-5 col-12 col-lg-8">
 
             @if (Auth::user()->role_id==1)
-                <a href="{{ route("confirmations.index") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-top" style="font-size: 1.5rem">Confirmation requests</div></a>
+                <a href="{{ route("confirmations.index") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-2 pb-2 border-bottom" style="font-size: 1.1rem">Confirmation requests</div></a>
 
-                <a href="{{ route("users.index") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-top border-bottom" style="font-size: 1.5rem">Users panel</div></a>
+                <a href="{{ route("users.index") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-2 pb-2 border-bottom" style="font-size: 1.1rem">Users panel</div></a>
             @endif
 
             @if (Auth::user()->role_id==2 && Auth::user()->confirmed==1)
-                <a href="{{ route("courses.create") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-top border-bottom" style="font-size: 1.5rem">Create course</div></a>
+                <a href="{{ route("courses.create") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-2 pb-2 border-bottom" style="font-size: 1.1rem">Create course</div></a>
 
-                <a href="{{ route("account.your_courses") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-bottom" style="font-size: 1.5rem">Your courses</div></a>
+                <a href="{{ route("account.your_courses") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-2 pb-2 border-bottom" style="font-size: 1.1rem">Your courses</div></a>
             @elseif (Auth::user()->role_id==2 && Auth::user()->confirmed==0)
-                <a href="{{ route("confirmation.create") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-top border-bottom" style="font-size: 1.5rem">Confirm trainer account</div></a>
+                <a href="{{ route("confirmation.create") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-2 pb-2 border-top border-bottom" style="font-size: 1.1rem">Confirm trainer account</div></a>
             @endif
 
             @if (Auth::user()->role_id==3)
-                <a href="{{ route("account.courses") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-top border-bottom" style="font-size: 1.5rem">Enrolled courses</div></a>
+                <a href="{{ route("account.courses") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-2 pb-2 border-bottom" style="font-size: 1.1rem">Enrolled courses</div></a>
             @endif
 
-            <a href="{{ route("account.edit") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-bottom" style="font-size: 1.5rem">Update personal data</div></a>
+            <a href="{{ route("account.edit") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-2 pb-2 border-bottom" style="font-size: 1.1rem">Update personal data</div></a>
 
 
-            <a href=" {{ route("account.password") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-bottom" style="font-size: 1.5rem">Change password</div></a>
+            <a href=" {{ route("account.password") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-2 pb-2 @if (Auth::user()->role_id != 1) border-bottom @endif" style="font-size: 1.1rem">Change password</div></a>
 
             @if (Auth::user()->role_id!=1)
-                <a href="{{ route("account.delete") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-3 pb-3 border-bottom" style="font-size: 1.5rem">Delete account</div></a>
+                <a href="{{ route("account.delete") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-2 pb-2" style="font-size: 1.1rem">Delete account</div></a>
             @endif
         </div>
 

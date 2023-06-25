@@ -26,9 +26,9 @@ class StoreConfirmationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "subject" => "required|min:10|max:255",
-            "message" => "required|min:20",
-            "competences" => "file",
+            "subject" => ["required", "min:10", "max:255"],
+            "message" => ["required", "min:20"],
+            "competences" => ["file"],
         ];
     }
 
