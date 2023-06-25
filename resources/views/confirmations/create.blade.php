@@ -17,24 +17,34 @@
                 <form action="{{ route("confirmation.store") }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
-                    @if ($errors->any())
-                        <div class="mb-3 text-danger">
-                            @foreach ($errors->all() as $error)
-                                {{ $error }}<br>
-                            @endforeach
-                        </div>
-                    @endif
-
                     <label for="subject">Subject</label>
-                    <input type="text" class="form-control" id="subject" value="{{ old("subject") }}" name="subject" required>
+                    <input type="text" class="form-control @error("subject") is-invalid @enderror" id="subject" value="{{ old("subject") }}" name="subject" required>
+                    @error ("subject")
+                        <label for="subject" class="invalid-feedback">
+                            <b>{{ $message }}</b>
+                        </label>
+                    @enderror
+
 
                     <label class="mt-3" for="message">Message</label>
-                    <textarea name="message" id="message" class="form-control" rows="8" required>{{ old("message") }}</textarea>
+                    <textarea name="message" id="message" class="form-control @error("message") is-invalid @enderror" rows="8" required>{{ old("message") }}</textarea>
+                    @error ("message")
+                        <label for="message" class="invalid-feedback">
+                            <b>{{ $message }}</b>
+                        </label>
+                    @enderror
+
 
 
                     <label class="mt-3" for="competences">Competences</label>
-                    <input type="file" id="competences" name="competences" class="form-control" accept=".pdf,.zip,.rar,.7z" required>
+                    <input type="file" id="competences" name="competences" class="form-control @error("competences") is-invalid @enderror" accept=".pdf,.zip,.rar,.7z" required>
                     <p>Please send your documents packed in one archive or send single pdf file. The field accepts files with the extension .pdf, .zip, .rar and .7z.</p>
+                    @error ("competences")
+                        <label for="competences" class="invalid-feedback">
+                            <b>{{ $message }}</b>
+                        </label>
+                    @enderror
+
 
                     <div class="w-100 text-center">
                         <button class="btn btn-dark mt-4" type="submit"><i class="fa fa-send"></i>  Send</button>

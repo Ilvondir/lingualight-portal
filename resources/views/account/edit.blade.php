@@ -17,28 +17,41 @@
                 <form action="{{ route("account.edit.update") }}" method="POST">
                     @csrf
 
-                    @if ($errors->any())
-                        <div class="mb-3 text-danger">
-                            @foreach ($errors->all() as $error)
-                                {{ $error }}<br>
-                            @endforeach
-                        </div>
-                    @endif
-
                     <div class="row">
                         <div class="col-lg-6 col-12">
                             <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" name="name" value="{{ Auth::user()->name }}" required>
+                            <input type="text" class="form-control @error("name") is-invalid @enderror" id="name" name="name" value="{{ Auth::user()->name }}" required>
+                            @error ("name")
+                                <label for="name" class="invalid-feedback">
+                                    <b>{{ $message }}</b>
+                                </label>
+                            @enderror
 
                             <label class="mt-3" for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" required>
+                            <input type="email" class="form-control @error("email") is-invalid @enderror" id="email" name="email" value="{{ Auth::user()->email }}" required>
+                            @error ("email")
+                                <label for="email" class="invalid-feedback">
+                                    <b>{{ $message }}</b>
+                                </label>
+                            @enderror
+
                         </div>
                         <div class="col-lg-6 col-12">
                             <label class="mt-3 mt-lg-0" for="surname">Surname</label>
-                            <input type="text" class="form-control" id="surname" name="surname" value="{{ Auth::user()->surname }}" required>
+                            <input type="text" class="form-control @error("surname") is-invalid @enderror" id="surname" name="surname" value="{{ Auth::user()->surname }}" required>
+                            @error ("surname")
+                                <label for="surname" class="invalid-feedback">
+                                    <b>{{ $message }}</b>
+                                </label>
+                            @enderror
 
                             <label class="mt-3" for="login">Login</label>
-                            <input type="text" class="form-control" id="login" name="login" value="{{ Auth::user()->login }}" required>
+                            <input type="text" class="form-control @error("login") is-invalid @enderror" id="login" name="login" value="{{ Auth::user()->login }}" required>
+                            @error ("login")
+                                <label for="login" class="invalid-feedback">
+                                    <b>{{ $message }}</b>
+                                </label>
+                            @enderror
                         </div>
                     </div>
 

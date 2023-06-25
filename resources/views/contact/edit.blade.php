@@ -17,20 +17,22 @@
                 <form action="{{ route("contact.update") }}" method="POST">
                     @csrf
 
-                    @if ($errors->any())
-                        <div class="mb-3 text-danger">
-                            @foreach ($errors->all() as $error)
-                                {{ $error }}<br>
-                            @endforeach
-                        </div>
-                    @endif
-
                     <div>
                         <label class="mt-3" for="phone">Phone number</label>
-                        <input type="text" class="form-control" id="phone" name="phone" value="{{ $phone }}" required>
+                        <input type="text" class="form-control @error("phone") is-invalid @enderror" id="phone" name="phone" value="{{ $phone }}" required>
+                        @error ("phone")
+                            <label for="phone" class="invalid-feedback">
+                                <b>{{ $message }}</b>
+                            </label>
+                        @enderror
 
                         <label class="mt-3" for="email">Email</label>
-                        <input type="text" class="form-control" id="email" name="email" value="{{ $email }}" required>
+                        <input type="text" class="form-control @error("email") is-invalid @enderror" id="email" name="email" value="{{ $email }}" required>
+                        @error ("email")
+                            <label for="email" class="invalid-feedback">
+                                <b>{{ $message }}</b>
+                            </label>
+                        @enderror
                     </div>
 
 

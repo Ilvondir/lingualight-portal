@@ -32,7 +32,7 @@
 
                 <a href="{{ route("account.your_courses") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-2 pb-2 border-bottom" style="font-size: 1.1rem">Your courses</div></a>
             @elseif (Auth::user()->role_id==2 && Auth::user()->confirmed==0)
-                <a href="{{ route("confirmation.create") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-2 pb-2 border-top border-bottom" style="font-size: 1.1rem">Confirm trainer account</div></a>
+                <a href="{{ route("confirmation.create") }}" class="text-white text-decoration-none"><div class="nav-item w-100 pt-2 pb-2 border-bottom" style="font-size: 1.1rem">Confirm trainer account</div></a>
             @endif
 
             @if (Auth::user()->role_id==3)

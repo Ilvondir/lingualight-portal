@@ -17,44 +17,61 @@
                 <form action="{{ route("users.store") }}" method="POST">
                     @csrf
 
-                    @if ($errors->any())
-                        <div class="mb-3 text-danger">
-                            @foreach ($errors->all() as $error)
-                                {{ $error }}<br>
-                            @endforeach
-                        </div>
-                    @endif
-
                     <div class="row">
                         <div class="col-lg-6 col-12">
                             <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" value="{{ old("name") }}" name="name" required>
+                            <input type="text" class="form-control @error("name") is-invalid @enderror" id="name" value="{{ old("name") }}" name="name" required>
+                            @error ("name")
+                                <label for="name" class="invalid-feedback">
+                                    <b>{{ $message }}</b>
+                                </label>
+                            @enderror
                         </div>
                         <div class="col-lg-6 col-12">
                             <label class="mt-3 mt-lg-0" for="surname">Surname</label>
-                            <input type="text" class="form-control" id="surname" value="{{ old("surname") }}" name="surname" required>
+                            <input type="text" class="form-control @error("surname") is-invalid @enderror" id="surname" value="{{ old("surname") }}" name="surname" required>
+                            @error ("surname")
+                                <label for="surname" class="invalid-feedback">
+                                    <b>{{ $message }}</b>
+                                </label>
+                            @enderror
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-6 col-12">
                             <label class="mt-3" for="email">Email</label>
-                            <input type="email" class="form-control" id="email" value="{{ old("email") }}" name="email" required>
+                            <input type="email" class="form-control @error("email") is-invalid @enderror" id="email" value="{{ old("email") }}" name="email" required>
+                            @error ("email")
+                                <label for="email" class="invalid-feedback">
+                                    <b>{{ $message }}</b>
+                                </label>
+                            @enderror
                         </div>
                         <div class="col-lg-6 col-12">
                             <label class="mt-3" for="login">Login</label>
-                            <input type="text" class="form-control" id="login" value="{{ old("login") }}" name="login" required>
+                            <input type="text" class="form-control @error("login") is-invalid @enderror" id="login" value="{{ old("login") }}" name="login" required>
+                            @error ("login")
+                                <label for="login" class="invalid-feedback">
+                                    <b>{{ $message }}</b>
+                                </label>
+                            @enderror
                         </div>
                     </div>
 
                     <label class="mt-3" for="role">Role</label>
-                    <select class="form-select" id="role" name="role" onchange="infobox()" required>
+                    <select class="form-select @error("role") is-invalid @enderror" id="role" name="role" onchange="infobox()" required>
                         <option value="User">User</option>
                         <option value="Trainer">Trainer</option>
                         @if (Auth::check())
                             <option value="Administrator">Administrator</option>
                         @endif
                     </select>
+                        @error ("role")
+                            <label for="role" class="invalid-feedback">
+                                <b>{{ $message }}</b>
+                            </label>
+                        @enderror
 
                     <div class="mt-2" id="info" style="text-align: justify;">As a user, you can enroll in all courses and use other resources of the application. If you want to create new course offerings, you need to change your role. This choice cannot be changed later!</div>
 
@@ -62,14 +79,22 @@
                         <div class="col-lg-6 col-12">
 
                             <label class="mt-3" for="password">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
-
+                            <input type="password" class="form-control @error("password") is-invalid @enderror" id="password" name="password" required>
+                            @error ("password")
+                                <label for="password" class="invalid-feedback">
+                                    <b>{{ $message }}</b>
+                                </label>
+                            @enderror
                         </div>
                         <div class="col-lg-6 col-12">
 
                             <label class="mt-3" for="password2">Repeat password</label>
-                            <input type="password" class="form-control" id="password2" name="repeatPassword" required>
-
+                            <input type="password" class="form-control @error("repeatPassword") is-invalid @enderror" id="password2" name="repeatPassword" required>
+                            @error ("repeatPassword")
+                                <label for="password2" class="invalid-feedback">
+                                    <b>{{ $message }}</b>
+                                </label>
+                            @enderror
                         </div>
                     </div>
 
