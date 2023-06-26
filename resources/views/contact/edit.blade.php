@@ -16,6 +16,7 @@
             <div class="rounded bg-black text-white p-5 w-100">
                 <form action="{{ route("contact.update") }}" method="POST">
                     @csrf
+                    @method("PUT")
 
                     <div>
                         <label class="mt-3" for="phone">Phone number</label>

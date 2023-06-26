@@ -22,7 +22,7 @@
             <div class="rounded bg-black text-white p-5 w-100">
                 <form action="@if (!str_contains(request()->path(), 'edit')) {{ route("courses.store") }} @else {{ route("course.update", ["id"=>$c->id]) }} @endif" method="POST" enctype="multipart/form-data">
                     @csrf
-
+                    @if (str_contains(request()->path(), 'edit')) @method("PUT") @endif
                     <div class="form-group mb-2">
                         <label for="name">Name</label>
                         <input id="name" name="name" @if (str_contains(request()->path(), 'edit')) value="{{ $c->name }}" @else value="{{ old("name") }}" @endif type="text" class="form-control @error("name") is-invalid @enderror" required>

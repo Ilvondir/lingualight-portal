@@ -16,6 +16,7 @@
             <div class="rounded bg-black text-white p-5 w-100">
                 <form action="{{ route("account.password.change") }}" method="POST" class="needs-validation" novalidate>
                     @csrf
+                    @method("PUT")
 
                     <div class="form-group mb-2">
                         <label for="oldPassword">Old password</label>

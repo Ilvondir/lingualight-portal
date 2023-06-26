@@ -16,6 +16,7 @@
             <div class="rounded bg-black text-white p-5 w-100">
                 <form action="{{ route("account.edit.update") }}" method="POST">
                     @csrf
+                    @method("PUT")
 
                     <div class="row">
                         <div class="col-lg-6 col-12">
