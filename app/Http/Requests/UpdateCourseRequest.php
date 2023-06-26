@@ -31,9 +31,9 @@ class UpdateCourseRequest extends FormRequest
             "language" => ["required", "min:3", "max:255"],
             "difficulty" => Rule::in($difs),
             "headquarter" => ["required", "min:2", "max:255"],
-            "price" => ["required", "numeric", "min:0"],
+            "price" => ["required", "numeric", "between:1,50000"],
             "start" => ["required", "date", "after:today"],
-            "hours" => ["required", "integer", "min:0"],
+            "hours" => ["required", "integer", "between:1,1000"],
             "form" => Rule::in(["Stationary", "Hybrid", "Remote"]),
             "description" => ["required", "min:50", Rule::unique('courses')->ignore(request()->route("id"))],
         ];

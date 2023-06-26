@@ -29,7 +29,7 @@ class AdminEditDataRequest extends FormRequest
             "login" => ["required", "min:6", "max:30", Rule::unique('users')->ignore(request()->route("id"))],
             "email" => ["required", "min:7", "max:255", "email", Rule::unique('users')->ignore(request()->route("id"))],
             "password" => ["nullable", "min:7", "max:255", "required_with:repeatPassword", "same:repeatPassword"],
-            "repeatPassword" => ["nullable", "min:7", "max:255"],
+            "repeatPassword" => ["nullable"],
         ];
     }
 
