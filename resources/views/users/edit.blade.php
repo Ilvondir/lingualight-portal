@@ -60,7 +60,7 @@
                         <div class="col-lg-6 col-12">
 
                             <label class="mt-3" for="password">Password</label>
-                            <input type="password" class="form-control @error("login") is-invalid @enderror" id="password" name="password">
+                            <input type="password" class="form-control @error("password") is-invalid @enderror" id="password" name="password">
                             @error ("password")
                                 <label for="password" class="invalid-feedback">
                                     <b>{{ $message }}</b>

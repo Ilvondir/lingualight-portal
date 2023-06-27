@@ -134,18 +134,18 @@
                         @enderror
                     </div>
 
-                    @if (!str_contains(request()->path(), 'edit'))
+
                         <div class="form-group mb-2">
-                            <label for="img">Image (optionally)</label>
+                            <label for="img">Image (optionally) </label>
                             <input type="file" id="img" name="img" class="form-control @error("file") is-invalid @enderror" accept=".jpg,.jpeg,.bmp,.png,.ico">
                         </div>
-                        <p>Please ensure that the images you upload have an aspect ratio of 1:1 and a resolution close to 300x300 pixels to prevent distortion. This operation is irreversible! You cannot change the course image after that!</p>
+                        <div><p>Please ensure that the images you upload have an aspect ratio of 1:1 and a resolution close to 300x300 pixels to prevent distortion. This operation is irreversible! You cannot change the course image after that!</p></div>
                         @error ("img")
                         <label for="img" class="invalid-feedback">
                             <b>{{ $message }}</b>
                         </label>
                     @enderror
-                        @endif
+
                     <div class="form-group mb-2">
                         <label for="description">Description</label>
                         <textarea class="form-control @error("description") is-invalid @enderror"  id="description" name="description" rows="8" required>@if (str_contains(request()->path(), 'edit')){{ $c->description }} @else {{ old("description") }} @endif</textarea>

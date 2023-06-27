@@ -35,6 +35,7 @@ class UpdateCourseRequest extends FormRequest
             "start" => ["required", "date", "after:today"],
             "hours" => ["required", "integer", "between:1,1000"],
             "form" => Rule::in(["Stationary", "Hybrid", "Remote"]),
+            "img" => ["nullable", "image", "mimes:jpg,jpeg,bmp,png,ico"],
             "description" => ["required", "min:50", Rule::unique('courses')->ignore(request()->route("id"))],
         ];
     }

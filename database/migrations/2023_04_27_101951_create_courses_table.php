@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string("img")->nullable();
             $table->date("created");
             $table->integer("visible");
-            $table->unsignedBigInteger("author_id");
-            $table->foreign("author_id")->references("id")->on("users")->onDelete("cascade");
+            $table->unsignedBigInteger("author_id")->nullable();
+            $table->foreign("author_id")->references("id")->on("users")->nullOnDelete();
         });
     }
 
@@ -39,3 +39,6 @@ return new class extends Migration
         Schema::dropIfExists('courses');
     }
 };
+
+
+?>

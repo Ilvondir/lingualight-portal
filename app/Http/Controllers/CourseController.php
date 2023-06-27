@@ -181,6 +181,16 @@ class CourseController extends Controller
             if ($data["form"]=="Remote") $c->form_id = 1;
             if ($data["form"]=="Hybrid") $c->form_id = 2;
 
+            if (isset($data["img"])) {
+                if ($data["img"]!=null) {
+                    $name = $id.".png";
+                    $c->img = $name;
+
+                    if(Storage::exists('public/img/courses/'.$name)) Storage::delete('public/img/courses/'.$name);
+                    Storage::putFileAs("public/img/courses", $data["img"], $name);
+                }
+            }
+
             $c->save();
 
             return view("courses.success");
