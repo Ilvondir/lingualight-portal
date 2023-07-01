@@ -18,7 +18,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::idDescending()->with(["author", "difficulty", "form"])->where("visible", "=", 1)->get();
+        $courses = Course::idDescending()->with(["author", "difficulty", "form"])->where("visible", "=", 1)->paginate(8);
         return view("courses.courses", ["courses"=>$courses, "languages" => $this->getLanguages($courses), "headquarters" => $this->getHeadquarters($courses)]);
     }
 
@@ -258,7 +258,7 @@ class CourseController extends Controller
 
         if ($headquarter != "All") array_push($whereTable, ["headquarter", "=", $headquarter]);
 
-        $courses = Course::idDescending()->where( $whereTable )->get();
+        $courses = Course::idDescending()->where( $whereTable )->paginate(8);
         $cToF = Course::get();
 
         return view("courses.courses", ["courses"=>$courses, "languages" => $this->getLanguages($cToF), "headquarters" => $this->getHeadquarters($cToF)]);

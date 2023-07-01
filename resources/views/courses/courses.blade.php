@@ -119,6 +119,11 @@
                 @endforelse
 
             </div>
+
+            <div class="d-flex mt-4 justify-content-center align-items-center">
+                {{ $courses->links("paginator.paginator") }}
+            </div>
+
         </div>
 
         @include("shared.footer")
