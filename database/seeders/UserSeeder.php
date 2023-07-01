@@ -48,6 +48,15 @@ class UserSeeder extends Seeder
             [
                 "login"=>"Jacky", "password"=>Hash::make("1234"), "email"=>"jBoe@gmail.com", "name"=>"Jack", "surname"=>"Boe", "registered"=>date("Y-m-d", strtotime("-4 days")), "role_id"=>2,  "confirmed" => 0,
             ],
+            [
+                "login"=>"Alonso", "password"=>Hash::make("user"), "email"=>"aLigosa@email.com", "name"=>"Alfonso", "surname"=>"Jacket", "registered"=>date("Y-m-d", strtotime("-7 days")), "role_id"=>3,  "confirmed" => null,
+            ],
+            [
+                "login"=>"Zombie", "password"=>Hash::make("user"), "email"=>"dl123@gmail.com", "name"=>"Kyle", "surname"=>"Crane", "registered"=>date("Y-m-d", strtotime("-8 days")), "role_id"=>3,  "confirmed" => null,
+            ],
+            [
+                "login"=>"Dragon1", "password"=>Hash::make("1234"), "email"=>"dragonite@gmail.com", "name"=>"Edvardo", "surname"=>"Seicenzi", "registered"=>date("Y-m-d", strtotime("-1 days")), "role_id"=>2,  "confirmed" => 0,
+            ],
         ]
         );
     }

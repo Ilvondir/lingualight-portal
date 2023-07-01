@@ -13,9 +13,9 @@
                 <div class="d-flex justify-content-center align-items-center">
                     <img src="@if ($c->img == NULL) {{asset('storage/img/courses/logo.png')}} @else {{asset('storage/img/courses')."/".$c->img}} @endif" width="240" height="240" class="rounded">
                 </div>
-                <p class="mt-4">Author: <b>{{ $c->author->name }} {{ $c->author->surname }}</b></p>
-                <p>Created: <b>{{ $c->created }}</b></p>
-                <p>Contact: <b>{{ $c->author->email }}</b></p>
+                @if ($c->author_id!=null) <p class="mt-4">Author: <b>{{ $c->author->name }} {{ $c->author->surname }}</b></p> @endif
+                <p @if ($c->author_id==null) class="mt-4" @endif>Created: <b>{{ $c->created }}</b></p>
+                @if ($c->author_id!=null) <p>Contact: <b>{{ $c->author->email }}</b></p> @endif
 
 
                 @auth

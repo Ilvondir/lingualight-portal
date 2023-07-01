@@ -88,7 +88,7 @@
 
                             <div class="row">
                                 <div class="col-12 mb-4 mb-lg-0 col-lg-2 d-flex justify-content-center align-items-center">
-                                    <img src="@if ($course->img == NULL) {{asset('storage/img/courses/logo.png')}} @else {{asset('storage/img/courses')."/".$course->img}} @endif" width="120" height="120" class="rounded">
+                                    <img src="@if ($course->img == NULL) {{asset('storage/img/courses/logo.png')}} @else {{asset('storage/img/courses')."/".$course->img}} @endif" width="120" height="120" alt="Logo." class="rounded">
                                 </div>
                                 <div class="col-12 col-lg-8">
                                     <h4>{{ $course->name }}</h4>
@@ -119,6 +119,11 @@
                 @endforelse
 
             </div>
+
+            <div class="d-flex mt-4 justify-content-center align-items-center">
+                {{ $courses->links("paginator.paginator") }}
+            </div>
+
         </div>
 
         @include("shared.footer")

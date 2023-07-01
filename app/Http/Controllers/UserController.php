@@ -15,10 +15,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        if (!Auth::check()) return redirect()->route("auth/login");
         if (Auth::user()->role_id != 1) return redirect()->route("home");
 
-        $users = User::with("role")->where([["id", "!=", Auth::user()->id]])->get();
+        $users = User::with("role")->where([["id", "!=", Auth::user()->id]])->paginate(10);
         return view("users.index", ["users"=>$users]);
     }
 
