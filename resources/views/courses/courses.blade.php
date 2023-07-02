@@ -120,9 +120,11 @@
 
             </div>
 
-            <div class="d-flex mt-4 justify-content-center align-items-center">
-                {{ $courses->links("paginator.paginator") }}
-            </div>
+            @if (!str_contains(request()->path(), 'account'))
+                <div class="d-flex mt-4 justify-content-center align-items-center">
+                    {{ $courses->links("paginator.paginator") }}
+                </div>
+            @endif
 
         </div>
 
