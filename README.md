@@ -1,6 +1,6 @@
 # LinguaLight
 
-LinguaLight Portal is a web application designed for publishing and enrolling in foreign language courses. The frontend of the application was built primarily using the Bootstrap framework. The backend of the application is written in PHP, specifically utilizing the Laravel framework.
+LinguaLight Portal is a web application designed for publishing and enrolling in foreign language courses. The frontend of the application was built primarily using the Bootstrap framework. The backend of the application is written in PHP, specifically utilizing the Laravel framework. The entire application is written in the MVC architecture.
 
 The portal allows us to log in with three user roles: client, trainer, and administrator. The client role can only enroll in courses and make payments for them. The simulated payment system was developed using the Stripe platform, specifically the Stripe-PHP library.
 
