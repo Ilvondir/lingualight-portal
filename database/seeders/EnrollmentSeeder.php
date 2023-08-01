@@ -59,7 +59,55 @@ class EnrollmentSeeder extends Seeder
             [
                 "user_id"=>10, "course_id"=>6, "enrollment_date"=>date("Y-m-d", strtotime("-1 days")), "to_pay"=>3500.00, "payment_date"=>date("Y-m-d", strtotime("-1 days")),
             ],
-        ]
-        );
+
+            [
+                "user_id"=>12, "course_id"=>8, "enrollment_date"=>date("Y-m-d"), "to_pay"=>1450.00, "payment_date"=>null,
+            ],
+            [
+                "user_id"=>13, "course_id"=>8, "enrollment_date"=>date("Y-m-d"), "to_pay"=>1450.00, "payment_date"=>date("Y-m-d"),
+            ],
+            [
+                "user_id"=>5, "course_id"=>8, "enrollment_date"=>date("Y-m-d"), "to_pay"=>1450.00, "payment_date"=>null,
+            ],
+            [
+                "user_id"=>12, "course_id"=>1, "enrollment_date"=>date("Y-m-d"), "to_pay"=>1300.00, "payment_date"=>date("Y-m-d"),
+            ],
+            [
+                "user_id"=>12, "course_id"=>11, "enrollment_date"=>date("Y-m-d"), "to_pay"=>900.00, "payment_date"=>null,
+            ],
+            [
+                "user_id"=>5, "course_id"=>9, "enrollment_date"=>date("Y-m-d"), "to_pay"=>900.00, "payment_date"=>null,
+            ],
+            [
+                "user_id"=>6, "course_id"=>9, "enrollment_date"=>date("Y-m-d"), "to_pay"=>900.00, "payment_date"=>null,
+            ],
+            [
+                "user_id"=>7, "course_id"=>9, "enrollment_date"=>date("Y-m-d"), "to_pay"=>900.00, "payment_date"=>null,
+            ],
+            [
+                "user_id"=>8, "course_id"=>9, "enrollment_date"=>date("Y-m-d"), "to_pay"=>900.00, "payment_date"=>null,
+            ],
+            [
+                "user_id"=>9, "course_id"=>9, "enrollment_date"=>date("Y-m-d"), "to_pay"=>900.00, "payment_date"=>null,
+            ],
+            [
+                "user_id"=>10, "course_id"=>9, "enrollment_date"=>date("Y-m-d"), "to_pay"=>900.00, "payment_date"=>null,
+            ],
+            [
+                "user_id"=>12, "course_id"=>9, "enrollment_date"=>date("Y-m-d"), "to_pay"=>900.00, "payment_date"=>null,
+            ],
+            [
+                "user_id"=>13, "course_id"=>9, "enrollment_date"=>date("Y-m-d"), "to_pay"=>900.00, "payment_date"=>date("Y-m-d"),
+            ],
+            [
+                "user_id"=>13, "course_id"=>10, "enrollment_date"=>date("Y-m-d"), "to_pay"=>2500.00, "payment_date"=>date("Y-m-d"),
+            ],
+            [
+                "user_id"=>7, "course_id"=>7, "enrollment_date"=>date("Y-m-d"), "to_pay"=>950.00, "payment_date"=>null,
+            ],
+            [
+                "user_id"=>8, "course_id"=>7, "enrollment_date"=>date("Y-m-d"), "to_pay"=>950.00, "payment_date"=>null,
+            ],
+        ]);
     }
 }
