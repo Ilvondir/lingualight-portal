@@ -6,7 +6,7 @@ use App\Models\Course;
 use App\Models\Enrollment;
 use App\Models\User;
 
-class Index extends Controller
+class IndexController extends Controller
 {
     public function show() {
         $enrls = Enrollment::with("course")->get();
