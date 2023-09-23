@@ -33,19 +33,15 @@ Route::controller(CourseController::class)->group(function () {
     Route::get('/courses/{id}', 'show')->name('course.show');
     Route::get('/courses/{id}/edit', 'edit')->name('course.edit')->middleware("auth");
     Route::get("/courses/{id}/delete", "delete")->name("courses.delete")->middleware("auth");
-
     Route::post("/courses", "filter")->name("course.filter");
     Route::post("/courses/create", "store")->name("courses.store")->middleware("auth");
-
     Route::put('/courses/{id}/edit', 'update')->name('course.update')->middleware("auth");
-
     Route::delete("/courses/{id}/delete", "destroy")->name("courses.destroy")->middleware("auth");
 });
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('/auth/login', 'login')->name('auth.login');
     Route::get('/auth/logout', 'logout')->name('auth.logout');
-
     Route::post('/auth/login', 'authenticate')->name('auth.login.authenticate');
 });
 
@@ -54,17 +50,13 @@ Route::controller(UserController::class)->group(function () {
     Route::get("/users/index", "index")->name("users.index")->middleware("auth");
     Route::get("/users/{id}/delete", "delete")->name("users.delete")->middleware("auth");
     Route::get("/users/{id}/edit", "edit")->name("users.edit")->middleware("auth");
-
     Route::post("/users/register", "store")->name("users.store");
-
     Route::put("/users/{id}/edit", "update")->name("users.update")->middleware("auth");
-
     Route::delete("/users/{id}/delete", "destroy")->name("users.destroy")->middleware("auth");
 });
 
 Route::controller(EnrollmentController::class)->group(function () {
     Route::get("/courses/{id}/payed", "payed")->name("enrollment.payed")->middleware("auth");
-
     Route::post("/courses/{id}", "form")->name("enrollment.form")->middleware("auth");
 });
 
@@ -75,13 +67,10 @@ Route::controller(AccountController::class)->group(function () {
     Route::get("/account/edit", "edit")->name("account.edit")->middleware("auth");
     Route::get("/account/courses", "courses")->name("account.courses")->middleware("auth");
     Route::get("/account/your_courses", "your_courses")->name("account.your_courses")->middleware("auth");
-
     Route::post("/account/your_courses", "filter_your_courses")->name("account.filter_your_courses")->middleware("auth");
     Route::post("/account/courses", "filterCourse")->name("account.filterCourse")->middleware("auth");
-
     Route::put("/account/password", "change")->name("account.password.change")->middleware("auth");
     Route::put("/account/edit", "update")->name("account.edit.update")->middleware("auth");
-
     Route::delete("/account/delete", "destroy")->name("account.destroy")->middleware("auth");
 });
 
