@@ -8,6 +8,8 @@ Users with the trainer role can create course offers, edit them, and pseudo-dele
 
 Administrators have full access to the application's resources. They can edit and delete all course offers, as well as confirm or reject requests for trainer verification, as mentioned before. Additionally, they have access to a panel that allows them to edit and delete user accounts. As an administrator, you can also create additional accounts with the administrator role.
 
+The project was created to fulfill the requirements of the university course Web Applications in the Computer Science degree. The project received a grade of 5.0 on a scale from 2 to 5.
+
 ## Used Tools
 - HTML 5
 - CSS 3
